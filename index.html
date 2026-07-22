@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!--
+  OYZLA LEADS — HOMEPAGE (static site, self-contained, no external dependencies)
+  ==============================================================================
+  v3 — flatter, plainer "real business" design. Solid brand colors, hairline
+  borders, editorial layout, serif headlines. No gradients/glass/decorative
+  graphics. Three real priced tiers ($2k / $4k / $8k).
+  Notes:
+    - Primary CTAs (nav, hero, Standard plan, final CTA) go to the live
+      founding Stripe checkout. Growth/Scale CTAs go to #contact.
+    - Footer legal links point to the local /terms-of-service.html and
+      /privacy-policy.html pages in this repo.
+    - The chat bubble bottom-right is a visual placeholder for the site's
+      chat widget.
+    - Photo slots: see the two <figure class="photo"> blocks. Owner drops
+      real photos at img/hero.jpg and img/office.jpg.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Oyzla Leads — Exclusive Insurance Leads | One Area, One Agency</title>
+<meta name="description" content="Exclusive local insurance leads for independent agencies. We run the online ads; every lead in your territory is yours alone — one agency per area. Backed by our 3-lead guarantee." />
+<link rel="canonical" href="https://oyzlaleads.com/" />
+<!-- Icons (swap in an official logo file here if one exists — same paths) -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Oyzla Leads" />
+<meta property="og:title" content="Oyzla Leads — Exclusive Insurance Leads. One Area, One Agency." />
+<meta property="og:description" content="We run local online ads and deliver every lead exclusively to one agency per area. Backed by our 3-lead guarantee." />
+<meta property="og:url" content="https://oyzlaleads.com/" />
+<meta property="og:image" content="https://oyzlaleads.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Oyzla Leads — Exclusive Insurance Leads. One Area, One Agency." />
+<meta name="twitter:description" content="We run local online ads and deliver every lead exclusively to one agency per area. Backed by our 3-lead guarantee." />
+<meta name="twitter:image" content="https://oyzlaleads.com/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Oyzla Leads",
+  "url": "https://oyzlaleads.com/",
+  "logo": "https://oyzlaleads.com/apple-touch-icon.png",
+  "email": "info@oyzlaleads.com",
+  "description": "Exclusive local insurance leads for independent agencies — one agency per area, never shared.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Saratoga Springs",
+    "addressRegion": "UT",
+    "addressCountry": "US"
+  }
+}
+</script>
+<style>
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --ink:#111827; --ink-2:#2b3448; --mut:#5b6474; --mut-2:#8a92a3;
+    --brand:#2456d6; --brand-deep:#1a3fa8; --navy:#0c2340;
+    --brand-soft:#eef3fc; --brand-line:#cfdcf5;
+    --good:#0e7a4f; --good-soft:#eef8f2; --good-line:#cbe7d8;
+    --line:#e3e7ee; --line-2:#d6dbe5; --bg:#fbfbf9; --card:#ffffff;
+    --sh-sm:0 1px 2px rgba(17,24,39,.06);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font:19px/1.7 var(--font);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(36,86,214,.15)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{margin:0}
+  h1,h2{font-family:var(--serif);font-weight:700;letter-spacing:-.012em;line-height:1.12}
+  h3{font-weight:700;letter-spacing:-.015em;line-height:1.25}
+  p{margin:0}
+  .eyebrow{display:block;font-size:14px;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--brand)}
+  .sub{color:var(--mut)}
+
+  /* ============ BUTTONS ============ */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:var(--font);font-weight:700;font-size:18px;letter-spacing:-.005em;
+    border:0;border-radius:8px;padding:16px 28px;cursor:pointer;
+    transition:background .15s ease,border-color .15s ease,color .15s ease}
+  .btn-primary{color:#fff;background:var(--brand)}
+  .btn-primary:hover{background:var(--brand-deep)}
+  .btn-ghost{color:var(--ink);background:#fff;border:1px solid var(--line-2)}
+  .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+  .btn-lg{padding:19px 34px;font-size:19px}
+
+  /* ============ NAV ============ */
+  header.nav{position:sticky;top:0;z-index:50;background:#fff;
+    border-bottom:1px solid var(--line);transition:box-shadow .2s ease}
+  header.nav.scrolled{box-shadow:0 6px 18px -12px rgba(17,24,39,.25)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.045em;color:var(--navy)}
+  .logo .mark{width:32px;height:32px;flex:0 0 auto}
+  .logo span{color:var(--brand)}
+  .nav-links{display:flex;gap:4px;font-weight:600;font-size:17px;color:var(--ink-2)}
+  .nav-links a{padding:9px 14px;border-radius:8px;transition:color .15s ease}
+  .nav-links a:hover{color:var(--brand)}
+  .nav-cta .btn{padding:12px 20px;font-size:16.5px}
+  @media(max-width:900px){.nav-links{display:none}}
+  @media(max-width:620px){
+    .nav-in{height:64px}
+    .logo{font-size:16.5px;gap:9px;letter-spacing:.035em}
+    .logo .mark{width:27px;height:27px}
+    .nav-cta .btn{padding:10px 14px;font-size:15px;white-space:nowrap}
+  }
+
+  /* ============ HERO ============ */
+  .hero{background:#fff;border-bottom:1px solid var(--line)}
+  .hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;
+    padding:84px 0 88px}
+  .hero h1{font-size:clamp(40px,5.2vw,58px);margin:18px 0 0}
+  .hero h1 em{font-style:normal;color:var(--brand)}
+  .hero .lede{font-size:21px;line-height:1.65;margin-top:22px;max-width:40ch;color:var(--mut)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .micro{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;color:var(--mut);font-size:16px;font-weight:600}
+  .micro span{display:inline-flex;align-items:center;gap:7px}
+  .tick{color:var(--good);font-weight:800}
+
+  /* photo slots — owner replaces src with a real photo */
+  .photo{position:relative;margin:0;border:1px solid var(--line-2);border-radius:10px;
+    overflow:hidden;background:#f0f2ee;min-height:300px}
+  .photo img{position:relative;z-index:2;display:block;width:100%;height:100%;
+    min-height:300px;object-fit:cover}
+  .photo img.missing{display:none}
+  .photo figcaption{position:absolute;z-index:1;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:6px;text-align:center;padding:24px;
+    color:var(--mut-2);font-size:15.5px;font-weight:600;line-height:1.5}
+  .photo figcaption b{color:var(--mut);font-size:16.5px}
+  .photo.tall{min-height:400px}
+  .photo.tall img{min-height:400px}
+  @media(max-width:900px){
+    .hero-in{grid-template-columns:1fr;gap:40px;padding:56px 0 62px}
+    .hero .lede{max-width:none}
+    .photo,.photo img,.photo.tall,.photo.tall img{min-height:260px}
+  }
+  @media(max-width:560px){
+    .cta-row{flex-direction:column;align-items:stretch}
+    .cta-row .btn{width:100%}
+  }
+
+  /* ============ STAT STRIP ============ */
+  .stats{background:var(--navy);color:#fff}
+  .stats-in{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:34px 0}
+  .stat{text-align:center;padding:8px 12px}
+  .stat .n{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+  .stat .l{color:#9fb0c7;font-size:16px;font-weight:600;margin-top:6px}
+  .stat + .stat{border-left:1px solid rgba(255,255,255,.14)}
+  @media(max-width:720px){
+    .stats-in{grid-template-columns:repeat(2,1fr);gap:18px 8px;padding:28px 0}
+    .stat:nth-child(3){border-left:0}
+  }
+
+  /* ============ SECTION SHELL ============ */
+  section.band{padding:96px 0}
+  .head{max-width:680px;margin:0 0 48px}
+  .head .eyebrow{margin-bottom:14px}
+  .head h2{font-size:clamp(30px,3.6vw,40px)}
+  .head p{margin-top:16px;font-size:19.5px;line-height:1.65;color:var(--mut)}
+  @media(max-width:720px){section.band{padding:68px 0}.head{margin-bottom:36px}}
+
+  /* ============ HOW IT WORKS ============ */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-2)}
+  .step{padding:30px 30px 6px 0}
+  .step + .step{border-left:1px solid var(--line);padding-left:30px}
+  .step .num{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--brand);margin-bottom:10px}
+  .step h3{font-size:21px}
+  .step p{margin-top:10px;color:var(--mut);font-size:17px;line-height:1.65}
+  @media(max-width:900px){
+    .steps{grid-template-columns:1fr;border-top:0}
+    .step{border-top:1px solid var(--line);padding:24px 0 6px}
+    .step + .step{border-left:0;padding-left:0}
+  }
+
+  /* ============ BENEFIT LIST ============ */
+  .benefits{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  .benefit{border-top:1px solid var(--line);padding:22px 0 20px}
+  .benefit h3{font-size:19.5px}
+  .benefit p{margin-top:6px;color:var(--mut);font-size:17px;line-height:1.6}
+  @media(max-width:820px){.benefits{grid-template-columns:1fr;gap:0}}
+
+  /* ============ COMPARISONS ============ */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:920px}
+  .cmp{border-radius:10px;padding:28px;border:1px solid var(--line);background:var(--card)}
+  .cmp.good{background:var(--good-soft);border-color:var(--good-line)}
+  .cmp h3{font-size:20px;display:flex;align-items:center;gap:10px}
+  .cmp ul{margin:14px 0 0;padding:0;list-style:none}
+  .cmp li{display:flex;gap:11px;margin:12px 0;color:var(--ink-2);font-size:17px;line-height:1.6}
+  .cmp li b{font-weight:700}
+  .mk{flex:0 0 auto;font-weight:800}
+  .cmp.bad .mk{color:#c0452e}
+  .cmp.good .mk{color:var(--good)}
+  @media(max-width:720px){.compare{grid-template-columns:1fr;gap:14px}}
+
+  /* online-ads section: text + photo, comparison below */
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;margin-bottom:52px}
+  @media(max-width:900px){.split{grid-template-columns:1fr;gap:32px;margin-bottom:40px}}
+
+  /* ============ PRICING ============ */
+  .offer .head{max-width:720px}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .plan{position:relative;background:var(--card);border:1px solid var(--line-2);
+    border-radius:12px;padding:32px 28px;display:flex;flex-direction:column}
+  .plan.featured{border:2px solid var(--brand)}
+  .pop{position:absolute;top:-14px;left:26px;font-size:13px;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;color:#fff;background:var(--brand);padding:5px 12px;border-radius:6px;white-space:nowrap}
+  .plan h3{font-size:23px}
+  .p-offer{margin-top:6px;font-size:14.5px;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;color:#9a5b00}
+  .p-price{display:flex;align-items:flex-end;gap:9px;margin-top:18px}
+  .p-price .big{font-family:var(--serif);font-size:46px;font-weight:700;letter-spacing:-.02em;line-height:1}
+  .p-price .per{color:var(--mut);font-weight:600;padding-bottom:5px}
+  .p-then{margin-top:8px;color:var(--ink-2);font-weight:600;font-size:16.5px}
+  .p-sub{margin-top:8px;color:var(--good);font-weight:700;font-size:16px}
+  .p-note{color:var(--mut-2);font-size:14px;margin-top:4px}
+  .p-tax{color:var(--mut);font-size:15px;margin-top:4px}
+  .p-desc{color:var(--ink-2);font-size:16.5px;line-height:1.6;margin-top:14px}
+  .plist{margin:18px 0 0;padding:0;list-style:none}
+  .plist li{display:flex;gap:10px;margin:11px 0;font-size:16.5px;color:var(--ink-2);line-height:1.55}
+  .plist .tick{color:var(--brand)}
+  .guar{display:flex;gap:12px;margin-top:20px;padding:16px;border-radius:10px;
+    background:var(--good-soft);border:1px solid var(--good-line);font-size:16px;line-height:1.6}
+  .guar .shield{flex:0 0 auto;width:30px;height:30px}
+  .guar .shield svg{width:30px;height:30px;stroke:var(--good);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .guar b{color:var(--good)}
+  .p-cta{margin-top:auto;padding-top:24px}
+  .p-cta .btn{width:100%}
+  .p-fine{color:var(--mut);font-size:14.5px;margin-top:12px;text-align:center;line-height:1.6}
+  .plans-foot{margin-top:26px;text-align:center;color:var(--mut);font-size:16px}
+  @media(max-width:980px){.plans{grid-template-columns:1fr;max-width:560px;margin:0 auto}
+    .offer .head{margin-left:auto;margin-right:auto;text-align:center}}
+  @media(max-width:560px){.plan{padding:26px 20px}.p-price .big{font-size:40px}}
+
+  /* ============ FAQ ============ */
+  .faq{max-width:800px}
+  details{border-top:1px solid var(--line);padding:0 2px}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{list-style:none;cursor:pointer;font-weight:700;font-size:18.5px;letter-spacing:-.01em;padding:22px 0;
+    display:flex;align-items:center;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary .chev{flex:0 0 auto;color:var(--brand);font-weight:700;font-size:20px;line-height:1;
+    transition:transform .2s ease}
+  details[open] summary .chev{transform:rotate(45deg)}
+  details p{color:var(--mut);padding:0 0 24px;font-size:17px;line-height:1.7;max-width:62ch}
+
+  /* ============ FINAL CTA ============ */
+  .final{background:var(--navy);color:#fff;border-radius:14px;
+    padding:68px 44px;text-align:center}
+  .final .eyebrow{color:#f0b268}
+  .final h2{font-size:clamp(28px,3.4vw,38px);margin-top:16px}
+  .final p{color:#c3cede;margin-top:16px;font-size:19.5px;line-height:1.65;max-width:56ch;margin-left:auto;margin-right:auto}
+  .final .btn{margin-top:30px;background:#fff;color:var(--navy)}
+  .final .btn:hover{background:#e8edf4}
+  .final .micro{justify-content:center;color:#8fa1b8;margin-top:22px}
+  @media(max-width:560px){
+    .final{padding:50px 22px;border-radius:12px}
+    .final .btn{width:100%}
+  }
+
+  /* ============ FOOTER ============ */
+  footer{padding:60px 0 40px;border-top:1px solid var(--line);margin-top:80px;color:var(--mut);background:#fff}
+  .foot-in{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start}
+  .foot-links{display:flex;gap:8px 22px;flex-wrap:wrap;font-weight:600;font-size:16.5px;color:var(--ink-2)}
+  .foot-links a{transition:color .15s ease}
+  .foot-links a:hover{color:var(--brand)}
+  .foot-meta{font-size:16px;line-height:1.9}
+  .foot-meta a:hover{color:var(--brand)}
+  .foot-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
+
+  /* ============ CHAT BUBBLE PLACEHOLDER (chat widget in production) ============ */
+  .concierge{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+    background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:9px 17px 9px 10px;
+    box-shadow:0 8px 24px -10px rgba(17,24,39,.28);font-weight:700;font-size:15.5px}
+  .concierge .dot{width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:16px}
+  @media(max-width:520px){.concierge span.t{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="/"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="#2456d6" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#online">Why online ads</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">One area · One agency · Never shared</span>
+      <h1>Insurance leads that are <em>yours alone</em>.</h1>
+      <p class="lede">We run online ads in your territory and send every lead they generate straight to you. One agency per area — we never sell the same lead twice. That's the whole model.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory — $1,000 first month →</a>
+      </div>
+      <div class="micro">
+        <span><span class="tick">✓</span> Month-to-month</span>
+        <span><span class="tick">✓</span> No contracts</span>
+        <span><span class="tick">✓</span> No sales calls</span>
+        <span><span class="tick">✓</span> 3-lead guarantee</span>
+      </div>
+    </div>
+
+    <!-- OWNER: drop a real photo here — e.g. an insurance agent at their desk,
+         your local office, or a handshake with a client. Save it as
+         img/hero.jpg (or update the src below). The gray box shows until you do. -->
+    <figure class="photo tall">
+      <img src="img/hero.jpg" alt="Independent insurance agent meeting with a local client" onerror="this.classList.add('missing')">
+      <figcaption><b>Photo slot</b>Add a real photo of an agent, office, or client meeting<br>(save as img/hero.jpg)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== STAT STRIP (honest, provable framings) ===================== -->
+<section class="stats">
+  <div class="wrap stats-in">
+    <div class="stat"><div class="n">1</div><div class="l">Agency per area</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">Shared or resold leads</div></div>
+    <div class="stat"><div class="n">100%</div><div class="l">Self-serve — no calls</div></div>
+    <div class="stat"><div class="n">3-lead</div><div class="l">First-month guarantee</div></div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">How it works</span>
+      <h2>Pay. Set up. Get leads.</h2>
+      <p>The whole thing happens online. Here's what to expect.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1.</div>
+        <h3>Claim your territory</h3>
+        <p>Secure checkout. One agency per area — once you're in, yours is locked.</p>
+      </div>
+      <div class="step">
+        <div class="num">2.</div>
+        <h3>Complete a 2-minute setup</h3>
+        <p>Right after payment, a short form captures your territory, lines, and where leads should go.</p>
+      </div>
+      <div class="step">
+        <div class="num">3.</div>
+        <h3>We launch. Leads arrive.</h3>
+        <p>We build and run your local ads. Every lead routes to you in real time — yours alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BENEFIT LIST ===================== -->
+<section class="band" id="benefits" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Why agencies choose Oyzla</span>
+      <h2>The deal, in plain terms</h2>
+    </div>
+    <div class="benefits">
+      <div class="benefit">
+        <h3>Exclusive leads only</h3>
+        <p>Every lead is yours alone. Never resold.</p>
+      </div>
+      <div class="benefit">
+        <h3>One agency per area</h3>
+        <p>Claim your ZIP or city. Competitors are locked out.</p>
+      </div>
+      <div class="benefit">
+        <h3>No-call, self-serve</h3>
+        <p>Sign up online in minutes. No demos, no sales calls.</p>
+      </div>
+      <div class="benefit">
+        <h3>3-lead guarantee</h3>
+        <p>3 valid exclusive leads in your first 30 days, or your first month is refunded.</p>
+      </div>
+      <div class="benefit">
+        <h3>Done-for-you ads</h3>
+        <p>We build, run, and optimize the campaigns. You quote and close.</p>
+      </div>
+      <div class="benefit">
+        <h3>Flat monthly fee</h3>
+        <p>One price. No per-lead charges, no contracts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY EXCLUSIVE BEATS SHARED ===================== -->
+<section class="band" id="why">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The model</span>
+      <h2>Why exclusive beats shared</h2>
+      <p>Most vendors sell the same lead to several agents. We never do.</p>
+    </div>
+    <div class="compare">
+      <div class="cmp bad">
+        <h3><span class="mk">✕</span> Shared lead vendors</h3>
+        <ul>
+          <li><span class="mk">✕</span> One prospect, sold to <b>several agents</b> at once.</li>
+          <li><span class="mk">✕</span> Race to dial first. Compete on price.</li>
+          <li><span class="mk">✕</span> Per-lead pricing that climbs as you grow.</li>
+        </ul>
+      </div>
+      <div class="cmp good">
+        <h3><span class="mk">✓</span> Oyzla Leads</h3>
+        <ul>
+          <li><span class="mk">✓</span> Every lead in your area is <b>yours alone</b>.</li>
+          <li><span class="mk">✓</span> No racing, no bidding wars.</li>
+          <li><span class="mk">✓</span> One flat fee. We run the ads.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY ONLINE ADS BEAT THE OLD WAY ===================== -->
+<section class="band" id="online" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="split">
+      <div class="head" style="margin-bottom:0">
+        <span class="eyebrow">A smarter way to prospect</span>
+        <h2>Why online ads beat the old way</h2>
+        <p>Door-knocking interrupts strangers. Online ads reach people who are already shopping for coverage — and every one of them in your area comes to you.</p>
+      </div>
+      <!-- OWNER: drop a real photo here — e.g. your team at work, a storefront,
+           or a client conversation. Save it as img/office.jpg (or update the
+           src below). The gray box shows until you do. -->
+      <figure class="photo">
+        <img src="img/office.jpg" alt="Local insurance office at work" onerror="this.classList.add('missing')">
+        <figcaption><b>Photo slot</b>Add a real photo — team, storefront, or client conversation<br>(save as img/office.jpg)</figcaption>
+      </figure>
+    </div>
+    <div class="compare">
+      <div class="cmp bad">
+        <h3><span class="mk">✕</span> Door-to-door &amp; in-store pitching</h3>
+        <ul>
+          <li><span class="mk">✕</span> Interrupts people who aren't shopping for insurance.</li>
+          <li><span class="mk">✕</span> A handful of doors or walk-ups a day.</li>
+          <li><span class="mk">✕</span> Hours, gas, and rejection at the door.</li>
+          <li><span class="mk">✕</span> No way to measure what worked.</li>
+        </ul>
+      </div>
+      <div class="cmp good">
+        <h3><span class="mk">✓</span> Online advertising</h3>
+        <ul>
+          <li><span class="mk">✓</span> Reaches people <b>actively searching</b> for coverage.</li>
+          <li><span class="mk">✓</span> Targeted precisely to your territory.</li>
+          <li><span class="mk">✓</span> Runs around the clock, at scale.</li>
+          <li><span class="mk">✓</span> Measured and optimized — every lead <b>exclusively yours</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING — THREE TIERS ===================== -->
+<section class="band offer" id="pricing">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Pricing</span>
+      <h2>Priced by lead flow. Exclusive to you.</h2>
+      <p>You're buying exclusive lead flow, not a fixed zip list — we manage and adjust your coverage to keep the leads coming, and they're only ever sent to you.</p>
+    </div>
+    <div class="plans">
+
+      <!-- Tier 1: Standard — founding offer, live Stripe checkout -->
+      <div class="plan featured">
+        <span class="pop">Most popular</span>
+        <h3>Standard</h3>
+        <div class="p-offer">Special limited-time offer</div>
+        <div class="p-price">
+          <span class="big">$1,000</span>
+          <span class="per">first month</span>
+        </div>
+        <div class="p-then">then <b>$2,000/month</b> — month to month</div>
+        <div class="p-tax">Before applicable tax. Cancel anytime.</div>
+        <p class="p-desc">A steady flow of exclusive leads in your area. We manage the coverage and zip mix to keep them coming.</p>
+        <ul class="plist">
+          <li><span class="tick">✓</span> Exclusive leads — never shared with another agency</li>
+          <li><span class="tick">✓</span> Done-for-you ad campaigns</li>
+          <li><span class="tick">✓</span> We manage your coverage to keep leads flowing</li>
+          <li><span class="tick">✓</span> Real-time delivery</li>
+          <li><span class="tick">✓</span> No per-lead charges, no contracts</li>
+        </ul>
+        <div class="guar">
+          <span class="shield"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
+          <div>
+            <b>Guarantee:</b> If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.
+          </div>
+        </div>
+        <div class="p-cta">
+          <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Get started →</a>
+        </div>
+        <p class="p-fine">Secure checkout · 2-minute setup after payment · Cancel anytime</p>
+      </div>
+
+      <!-- Tier 2: Growth — placeholder price, message to start -->
+      <div class="plan">
+        <h3>Growth</h3>
+        <div class="p-price">
+          <span class="big">$4,000</span>
+          <span class="per">/month</span>
+        </div>
+        <div class="p-sub">Higher lead volume &amp; wider reach</div>
+        <div class="p-note">(placeholder — final number TBD)</div>
+        <p class="p-desc">For agencies that can handle more volume.</p>
+        <ul class="plist">
+          <li><span class="tick">✓</span> Higher monthly lead volume</li>
+          <li><span class="tick">✓</span> Expanded coverage &amp; reach</li>
+          <li><span class="tick">✓</span> Same exclusivity — never shared</li>
+          <li><span class="tick">✓</span> Priority delivery + support</li>
+        </ul>
+        <div class="p-cta">
+          <a class="btn btn-ghost btn-lg" href="#contact">Get started</a>
+        </div>
+        <p class="p-fine">Message us to start.</p>
+      </div>
+
+      <!-- Tier 3: Scale — placeholder price, message to start -->
+      <div class="plan">
+        <h3>Scale</h3>
+        <div class="p-price">
+          <span class="big">$8,000</span>
+          <span class="per">/month</span>
+        </div>
+        <div class="p-sub">Highest volume · multi-market</div>
+        <div class="p-note">(placeholder — final number TBD)</div>
+        <p class="p-desc">For high-volume agencies covering more than one market.</p>
+        <ul class="plist">
+          <li><span class="tick">✓</span> Highest monthly lead volume</li>
+          <li><span class="tick">✓</span> Multiple territories or metros</li>
+          <li><span class="tick">✓</span> Same exclusivity — never shared</li>
+          <li><span class="tick">✓</span> Priority delivery + support</li>
+        </ul>
+        <div class="p-cta">
+          <a class="btn btn-ghost btn-lg" href="#contact">Get started</a>
+        </div>
+        <p class="p-fine">Message us to start.</p>
+      </div>
+
+    </div>
+    <p class="plans-foot">Need more than this? Message us for enterprise volume.</p>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="band" id="faq" style="background:#fff;border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions, answered</h2>
+      <p>Anything else? Message us through the chat in the corner.</p>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Are the leads really exclusive? <span class="chev">＋</span></summary>
+        <p>Yes. One agency per area. Every lead we generate in your territory goes to you alone — never shared or resold.</p>
+      </details>
+      <details>
+        <summary>What happens right after I pay? <span class="chev">＋</span></summary>
+        <p>You land on a short setup form — about two minutes. It captures your territory, insurance lines, and where leads should go. Then we build and launch your campaign.</p>
+      </details>
+      <details>
+        <summary>What does it cost? <span class="chev">＋</span></summary>
+        <p>As a Special Limited-Time Offer: $1,000 first month before applicable tax, then $2,000/month before applicable tax, month to month. One flat fee — no per-lead charges.</p>
+      </details>
+      <details>
+        <summary>How does the guarantee work? <span class="chev">＋</span></summary>
+        <p>If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.</p>
+      </details>
+      <details>
+        <summary>Do I have to get on a call? <span class="chev">＋</span></summary>
+        <p>No. Everything is self-serve online. Questions? Message us through the chat in the corner.</p>
+      </details>
+      <details>
+        <summary>Can I cancel anytime? <span class="chev">＋</span></summary>
+        <p>Yes. Month-to-month, no contracts, no cancellation fee.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="band">
+  <div class="wrap">
+    <div class="final">
+      <span class="eyebrow">Special Limited-Time Offer</span>
+      <h2>Claim your area before it's taken.</h2>
+      <p>One agency per territory. $1,000 first month, then $2,000/month — backed by the 3-lead guarantee.</p>
+      <a class="btn btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory →</a>
+      <div class="micro">
+        <span><span class="tick" style="color:#7fd8ab">✓</span> Self-serve</span>
+        <span><span class="tick" style="color:#7fd8ab">✓</span> No calls</span>
+        <span><span class="tick" style="color:#7fd8ab">✓</span> Cancel anytime</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <div class="logo" style="font-size:19px"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="#2456d6" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></div>
+        <p class="foot-meta sub" style="margin-top:10px;max-width:34ch">
+          Exclusive insurance leads for independent agencies.
+        </p>
+      </div>
+      <div class="foot-meta" id="contact">
+        <strong>Contact</strong><br>
+        <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
+        Based in Saratoga Springs, Utah — serving nationwide
+      </div>
+      <div class="foot-links">
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="foot-bottom sub">
+      <span>© 2026 Oyzla Leads. All rights reserved.</span>
+      <span>One area · One agency · Never shared.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Production chat widget lives here (placeholder shown for layout) -->
+<div class="concierge" title="The live site shows the chat widget here">
+  <span class="dot">💬</span>
+  <span class="t">Chat with us</span>
+</div>
+
+<script>
+  // Nav elevation on scroll
+  (function(){
+    var nav = document.querySelector('header.nav');
+    function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  })();
+</script>
+</body>
+</html>

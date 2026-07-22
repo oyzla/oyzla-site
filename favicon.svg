@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Oyzla Leads brand mark: bold open "O" ring with a gap at the top, on a navy tile -->
+  <defs>
+    <linearGradient id="o" x1="24" y1="6" x2="24" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5b8dff"/>
+      <stop offset="1" stop-color="#2f6fed"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="11" fill="#0a2a4f"/>
+  <path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#o)" stroke-width="7" stroke-linecap="round"/>
+</svg>

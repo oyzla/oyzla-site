@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<!-- DRAFT: reconcile with existing Sept-2025 ToS/Privacy currently on Wix; have an attorney review before publishing -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — Oyzla Leads</title>
+<meta name="description" content="Privacy Policy for Oyzla Leads — how we collect, use, and protect personal information." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Oyzla Leads" />
+<meta property="og:title" content="Privacy Policy — Oyzla Leads" />
+<meta property="og:url" content="https://oyzlaleads.com/privacy-policy.html" />
+<meta property="og:image" content="https://oyzlaleads.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  /* ============ DESIGN TOKENS (shared with homepage) ============ */
+  :root{
+    --ink:#0a0f1e; --ink-2:#242e4d; --mut:#5b6579; --mut-2:#949db2;
+    --brand:#2f6fed; --brand-hi:#4f86ff; --brand-2:#1d4ed8; --brand-deep:#0a2a4f; --navy:#0a2a4f;
+    --brand-soft:#eef4ff; --brand-line:#d9e6ff;
+    --accent:#ff8a2a;
+    --good:#10a56b; --good-deep:#0b7a4c; --good-soft:#e9f9f1; --good-line:#c4ecd8;
+    --line:#e7ecf5; --line-2:#dde4f0; --bg:#f7f9fd; --card:#ffffff;
+    --ring:rgba(37,99,235,.30);
+    --sh-xs:0 1px 2px rgba(10,15,30,.05);
+    --sh-sm:0 1px 2px rgba(10,15,30,.04), 0 10px 30px -14px rgba(10,15,30,.14);
+    --sh-md:0 2px 4px rgba(10,15,30,.04), 0 28px 60px -28px rgba(10,15,30,.28);
+    --radius:20px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Lato,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font:19px/1.7 var(--font);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(37,99,235,.16)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{letter-spacing:-.028em;line-height:1.15;margin:0;font-weight:800}
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:inherit;font-weight:700;font-size:18px;letter-spacing:-.01em;
+    border:0;border-radius:14px;padding:17px 30px;cursor:pointer;overflow:hidden;
+    transition:transform .2s var(--ease), box-shadow .25s var(--ease), filter .2s ease}
+  .btn-primary{color:#fff;
+    background:linear-gradient(180deg,var(--brand-hi) 0%,var(--brand) 52%,var(--brand-2) 100%);
+    box-shadow:0 1px 2px rgba(16,48,111,.45), 0 14px 34px -12px var(--ring),
+      inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(16,48,111,.28)}
+  .btn-primary:hover{transform:translateY(-2px);
+    box-shadow:0 2px 3px rgba(16,48,111,.4), 0 22px 46px -14px var(--ring),
+      inset 0 1px 0 rgba(255,255,255,.34)}
+  .btn-primary:active{transform:translateY(0) scale(.985);filter:brightness(.97)}
+  .sub{color:var(--mut)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--brand-2);
+    background:linear-gradient(180deg,#f4f8ff,var(--brand-soft));border:1px solid var(--brand-line);
+    padding:8px 15px;border-radius:999px;box-shadow:var(--sh-xs)}
+
+  /* ---------- NAV (shared) ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(250,252,255,.78);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);
+    border-bottom:1px solid rgba(222,229,241,.7)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.045em;color:var(--navy)}
+  .logo .mark{width:34px;height:34px;flex:0 0 auto;filter:drop-shadow(0 3px 6px rgba(47,111,237,.35))}
+  .logo span{color:var(--brand)}
+  .nav-links{display:flex;gap:6px;font-weight:600;font-size:17px;color:var(--ink-2)}
+  .nav-links a{padding:10px 15px;border-radius:10px;transition:background .15s ease,color .15s ease}
+  .nav-links a:hover{color:var(--brand-2);background:var(--brand-soft)}
+  .nav-cta{display:flex;align-items:center;gap:14px}
+  .nav-cta .btn{padding:13px 22px;font-size:16.5px;border-radius:12px}
+  @media(max-width:900px){.nav-links{display:none}}
+  @media(max-width:620px){
+    .nav-in{height:66px}
+    .logo{font-size:16.5px;gap:9px;letter-spacing:.035em}
+    .logo .mark{width:29px;height:29px}
+    .nav-cta .btn{padding:11px 14px;font-size:15px;white-space:nowrap}
+  }
+
+  /* ---------- LEGAL PAGE ---------- */
+  .page-head{position:relative;overflow:hidden;
+    background:
+      radial-gradient(900px 460px at 85% -10%, rgba(255,138,42,.09), transparent 55%),
+      radial-gradient(1100px 620px at 4% -6%, rgba(37,99,235,.11), transparent 55%),
+      linear-gradient(180deg,#fdfeff, var(--bg));
+    border-bottom:1px solid var(--line);padding:68px 0 52px}
+  .page-head::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(10,15,30,.05) 1px, transparent 1.5px);
+    background-size:24px 24px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 80%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 80%)}
+  .page-head .wrap{position:relative}
+  .page-head h1{font-size:clamp(32px,4.5vw,44px);font-weight:800;letter-spacing:-.034em;margin-top:18px}
+  .page-head .meta{margin-top:14px;color:var(--mut);font-size:17px;line-height:1.7}
+  .legal{max-width:840px;margin:0 auto;padding:56px 24px 20px}
+  .legal-card{position:relative;background:var(--card);border:1px solid rgba(219,227,240,.9);border-radius:24px;
+    box-shadow:var(--sh-md);padding:44px 42px}
+  .legal-card::after{content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(79,134,255,.5),transparent)}
+  .legal h2{font-size:23px;font-weight:800;letter-spacing:-.022em;margin:40px 0 14px}
+  .legal h2:first-child{margin-top:0}
+  .legal p{margin:0 0 15px;color:var(--ink-2);line-height:1.72}
+  .legal ul{margin:0 0 15px;padding-left:22px;color:var(--ink-2)}
+  .legal li{margin:8px 0;line-height:1.68}
+  .legal .callout{background:linear-gradient(180deg,#f4f8ff,var(--brand-soft));border:1px solid var(--brand-line);
+    border-radius:16px;padding:17px 19px;margin:16px 0;color:var(--ink-2);line-height:1.68;
+    box-shadow:var(--sh-xs)}
+  .legal .callout b{color:var(--brand-2)}
+  .legal a{color:var(--brand);font-weight:600}
+  .legal a:hover{color:var(--brand-2)}
+  @media(max-width:640px){
+    .page-head{padding:48px 0 40px}
+    .legal{padding:36px 20px 12px}
+    .legal-card{padding:28px 22px;border-radius:20px}
+  }
+
+  /* ---------- FOOTER (shared) ---------- */
+  footer{padding:64px 0 44px;border-top:1px solid var(--line);margin-top:88px;color:var(--mut);
+    background:linear-gradient(180deg,var(--bg),#f2f6fc)}
+  .foot-in{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start}
+  .foot-links{display:flex;gap:8px 22px;flex-wrap:wrap;font-weight:600;font-size:16.5px;color:var(--ink-2)}
+  .foot-links a{transition:color .15s ease}
+  .foot-links a:hover{color:var(--brand)}
+  .foot-meta{font-size:16px;line-height:1.9}
+  .foot-meta a:hover{color:var(--brand)}
+  .foot-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .btn{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="/"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/index.html#how">How it works</a>
+      <a href="/index.html#pricing">Pricing</a>
+      <a href="/terms-of-service.html">Terms</a>
+      <a href="/privacy-policy.html">Privacy</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HEAD ===================== -->
+<section class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Last updated: July 21, 2026 · Questions? Message us through the chat or email <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a>.</p>
+  </div>
+</section>
+
+<!-- ===================== POLICY ===================== -->
+<main class="legal">
+  <div class="legal-card">
+
+    <h2>1. Who We Are</h2>
+    <p>Oyzla Leads ("Oyzla," "we," "us," or "our") operates oyzlaleads.com and provides exclusive local consumer-insurance leads to independent insurance agencies in the United States. This Privacy Policy explains what personal information we collect, how we use it, who we share it with, and the choices you have.</p>
+    <p>This policy covers three groups of people: (a) visitors to our website, (b) agency customers who subscribe to our service, and (c) consumers who respond to our advertising and ask to be connected with a local insurance agency.</p>
+
+    <h2>2. Information We Collect</h2>
+    <p><b>From website visitors:</b></p>
+    <ul>
+      <li>Basic usage information such as pages viewed, approximate location (city level), browser type, device type, and referring page.</li>
+      <li>Anything you send us through the chat or by email.</li>
+    </ul>
+    <p><b>From agency customers:</b></p>
+    <ul>
+      <li>Business and contact details you provide at checkout and in our onboarding questionnaire — such as agency name, contact name, email address, territory preference, the insurance lines you sell, and the CRM you use.</li>
+      <li>Billing information, which is collected and processed by Stripe, our payment processor. We do not store full card numbers on our systems.</li>
+    </ul>
+    <p><b>From consumers responding to our advertising:</b></p>
+    <ul>
+      <li>Contact details you submit in our forms — typically name, email address, telephone number, and ZIP code — along with the type of insurance you're interested in and any details you choose to share about your coverage needs.</li>
+    </ul>
+
+    <h2>3. How We Use Information</h2>
+    <ul>
+      <li>To provide the service: building and running local advertising campaigns, delivering consumer leads to the one subscribing agency for their territory, and supporting customers through chat and email.</li>
+      <li>To process payments and manage subscriptions (via Stripe).</li>
+      <li>To respond to questions and requests sent through the chat or email.</li>
+      <li>To improve our website, forms, and campaigns.</li>
+      <li>To comply with law and enforce our <a href="/terms-of-service.html">Terms of Service</a>.</li>
+    </ul>
+    <div class="callout">
+      <b>For consumers:</b> if you submit a request through one of our advertising forms, your information is shared with the single independent insurance agency that serves your area so they can follow up with a quote. We do not sell the same request to multiple agencies, and we do not sell your information to data brokers.
+    </div>
+
+    <h2>4. Cookies and Similar Technologies</h2>
+    <p>Our website and advertising may use cookies and similar technologies to keep the site working properly, remember basic preferences, measure how visitors use the site, and measure the performance of our advertising campaigns (for example, conversion tracking from ad platforms). You can control cookies through your browser settings; disabling them may affect some site features. We do not use cookies to build profiles for sale to third parties.</p>
+
+    <h2>5. Who We Share Information With</h2>
+    <ul>
+      <li><b>The subscribing agency for your territory</b> — consumer lead details are delivered to the one agency that holds that territory, for insurance-quoting purposes only.</li>
+      <li><b>Stripe</b> — payment processing for agency subscriptions. Stripe's own privacy policy governs the payment data it collects.</li>
+      <li><b>Service providers</b> — companies that help us run the business, such as website hosting, form and data storage, email delivery, chat support, and advertising platforms. They may process information only to provide services to us.</li>
+      <li><b>Legal reasons</b> — if required by law, regulation, legal process, or to protect the rights, safety, or property of Oyzla, our customers, or others.</li>
+      <li><b>Business transfers</b> — if Oyzla is involved in a merger, acquisition, or sale of assets, information may transfer as part of that transaction, subject to this policy.</li>
+    </ul>
+    <p>We do not sell personal information for money, and we do not share consumer lead information with anyone other than the single agency described above and the service providers that make delivery possible.</p>
+
+    <h2>6. Your Choices and Data Requests</h2>
+    <ul>
+      <li><b>Access, correction, deletion.</b> You may ask us what personal information we hold about you and ask us to correct or delete it. Message us through the chat or email <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a> and we will respond within a reasonable time, and within any timeline required by applicable state privacy law.</li>
+      <li><b>Consumers:</b> if you submitted a quote request and no longer want to be contacted, tell the agency directly or contact us and we will pass the request along and remove your details from our active records.</li>
+      <li><b>Email marketing:</b> any marketing email we send includes an unsubscribe link.</li>
+      <li>Depending on your state (for example, California, Colorado, Virginia, Utah, or Texas), you may have additional rights, including the right not to be discriminated against for exercising them. We honor applicable state privacy rights for all US residents.</li>
+    </ul>
+
+    <h2>7. Data Retention</h2>
+    <p>We keep personal information only as long as needed for the purposes described here: customer account records for the life of the subscription plus the period needed for tax, accounting, and legal requirements; consumer lead records for as long as reasonably needed to deliver and support the service; and website analytics on a rolling basis. When information is no longer needed, we delete or de-identify it.</p>
+
+    <h2>8. Security</h2>
+    <p>We use reasonable administrative and technical safeguards to protect personal information, including encrypted connections (HTTPS) on our website and reputable third-party providers for payments and data storage. No method of transmission or storage is perfectly secure, so we cannot guarantee absolute security.</p>
+
+    <h2>9. Children</h2>
+    <p>Our website and services are intended for adults. We do not knowingly collect personal information from anyone under 18. If you believe a minor has provided us information, contact us and we will delete it.</p>
+
+    <h2>10. Third-Party Links</h2>
+    <p>Our site links to third-party services such as Stripe checkout. Those services have their own privacy policies, and we are not responsible for their practices.</p>
+
+    <h2>11. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Updates will be posted on this page with a new "Last updated" date. Material changes will be highlighted on this page and, for active customers, noted by email where appropriate.</p>
+
+    <h2>12. Contact Us</h2>
+    <p>For privacy questions or data requests, message us through the chat on our website or email <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a>. Oyzla Leads is based in Saratoga Springs, Utah, USA.</p>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <div class="logo" style="font-size:19px"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></div>
+        <p class="foot-meta sub" style="margin-top:10px;max-width:34ch">
+          Exclusive insurance leads for independent agencies.
+        </p>
+      </div>
+      <div class="foot-meta">
+        <strong>Contact</strong><br>
+        <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
+        Based in Saratoga Springs, Utah — serving nationwide
+      </div>
+      <div class="foot-links">
+        <a href="/">Home</a>
+        <a href="/index.html#how">How it works</a>
+        <a href="/index.html#pricing">Pricing</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="foot-bottom sub">
+      <span>© 2026 Oyzla Leads. All rights reserved.</span>
+      <span>One area · One agency · Never shared.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<!-- DRAFT: reconcile with existing Sept-2025 ToS/Privacy currently on Wix; have an attorney review before publishing -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terms of Service — Oyzla Leads</title>
+<meta name="description" content="Terms of Service for Oyzla Leads — exclusive local insurance leads for independent agencies." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Oyzla Leads" />
+<meta property="og:title" content="Terms of Service — Oyzla Leads" />
+<meta property="og:url" content="https://oyzlaleads.com/terms-of-service.html" />
+<meta property="og:image" content="https://oyzlaleads.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  /* ============ DESIGN TOKENS (shared with homepage) ============ */
+  :root{
+    --ink:#0a0f1e; --ink-2:#242e4d; --mut:#5b6579; --mut-2:#949db2;
+    --brand:#2f6fed; --brand-hi:#4f86ff; --brand-2:#1d4ed8; --brand-deep:#0a2a4f; --navy:#0a2a4f;
+    --brand-soft:#eef4ff; --brand-line:#d9e6ff;
+    --accent:#ff8a2a;
+    --good:#10a56b; --good-deep:#0b7a4c; --good-soft:#e9f9f1; --good-line:#c4ecd8;
+    --line:#e7ecf5; --line-2:#dde4f0; --bg:#f7f9fd; --card:#ffffff;
+    --ring:rgba(37,99,235,.30);
+    --sh-xs:0 1px 2px rgba(10,15,30,.05);
+    --sh-sm:0 1px 2px rgba(10,15,30,.04), 0 10px 30px -14px rgba(10,15,30,.14);
+    --sh-md:0 2px 4px rgba(10,15,30,.04), 0 28px 60px -28px rgba(10,15,30,.28);
+    --radius:20px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Lato,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font:19px/1.7 var(--font);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(37,99,235,.16)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{letter-spacing:-.028em;line-height:1.15;margin:0;font-weight:800}
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:inherit;font-weight:700;font-size:18px;letter-spacing:-.01em;
+    border:0;border-radius:14px;padding:17px 30px;cursor:pointer;overflow:hidden;
+    transition:transform .2s var(--ease), box-shadow .25s var(--ease), filter .2s ease}
+  .btn-primary{color:#fff;
+    background:linear-gradient(180deg,var(--brand-hi) 0%,var(--brand) 52%,var(--brand-2) 100%);
+    box-shadow:0 1px 2px rgba(16,48,111,.45), 0 14px 34px -12px var(--ring),
+      inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(16,48,111,.28)}
+  .btn-primary:hover{transform:translateY(-2px);
+    box-shadow:0 2px 3px rgba(16,48,111,.4), 0 22px 46px -14px var(--ring),
+      inset 0 1px 0 rgba(255,255,255,.34)}
+  .btn-primary:active{transform:translateY(0) scale(.985);filter:brightness(.97)}
+  .sub{color:var(--mut)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--brand-2);
+    background:linear-gradient(180deg,#f4f8ff,var(--brand-soft));border:1px solid var(--brand-line);
+    padding:8px 15px;border-radius:999px;box-shadow:var(--sh-xs)}
+
+  /* ---------- NAV (shared) ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(250,252,255,.78);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);
+    border-bottom:1px solid rgba(222,229,241,.7)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.045em;color:var(--navy)}
+  .logo .mark{width:34px;height:34px;flex:0 0 auto;filter:drop-shadow(0 3px 6px rgba(47,111,237,.35))}
+  .logo span{color:var(--brand)}
+  .nav-links{display:flex;gap:6px;font-weight:600;font-size:17px;color:var(--ink-2)}
+  .nav-links a{padding:10px 15px;border-radius:10px;transition:background .15s ease,color .15s ease}
+  .nav-links a:hover{color:var(--brand-2);background:var(--brand-soft)}
+  .nav-cta{display:flex;align-items:center;gap:14px}
+  .nav-cta .btn{padding:13px 22px;font-size:16.5px;border-radius:12px}
+  @media(max-width:900px){.nav-links{display:none}}
+  @media(max-width:620px){
+    .nav-in{height:66px}
+    .logo{font-size:16.5px;gap:9px;letter-spacing:.035em}
+    .logo .mark{width:29px;height:29px}
+    .nav-cta .btn{padding:11px 14px;font-size:15px;white-space:nowrap}
+  }
+
+  /* ---------- LEGAL PAGE ---------- */
+  .page-head{position:relative;overflow:hidden;
+    background:
+      radial-gradient(900px 460px at 85% -10%, rgba(255,138,42,.09), transparent 55%),
+      radial-gradient(1100px 620px at 4% -6%, rgba(37,99,235,.11), transparent 55%),
+      linear-gradient(180deg,#fdfeff, var(--bg));
+    border-bottom:1px solid var(--line);padding:68px 0 52px}
+  .page-head::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(10,15,30,.05) 1px, transparent 1.5px);
+    background-size:24px 24px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 80%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 80%)}
+  .page-head .wrap{position:relative}
+  .page-head h1{font-size:clamp(32px,4.5vw,44px);font-weight:800;letter-spacing:-.034em;margin-top:18px}
+  .page-head .meta{margin-top:14px;color:var(--mut);font-size:17px;line-height:1.7}
+  .legal{max-width:840px;margin:0 auto;padding:56px 24px 20px}
+  .legal-card{position:relative;background:var(--card);border:1px solid rgba(219,227,240,.9);border-radius:24px;
+    box-shadow:var(--sh-md);padding:44px 42px}
+  .legal-card::after{content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(79,134,255,.5),transparent)}
+  .legal h2{font-size:23px;font-weight:800;letter-spacing:-.022em;margin:40px 0 14px}
+  .legal h2:first-child{margin-top:0}
+  .legal p{margin:0 0 15px;color:var(--ink-2);line-height:1.72}
+  .legal ul{margin:0 0 15px;padding-left:22px;color:var(--ink-2)}
+  .legal li{margin:8px 0;line-height:1.68}
+  .legal .callout{background:linear-gradient(180deg,#f4fdf8,var(--good-soft));border:1px solid var(--good-line);
+    border-radius:16px;padding:17px 19px;margin:16px 0;color:var(--ink-2);line-height:1.68;
+    box-shadow:var(--sh-xs)}
+  .legal .callout b{color:var(--good-deep)}
+  .legal a{color:var(--brand);font-weight:600}
+  .legal a:hover{color:var(--brand-2)}
+  .legal .toplink{display:inline-block;margin-top:6px;font-size:16px}
+  @media(max-width:640px){
+    .page-head{padding:48px 0 40px}
+    .legal{padding:36px 20px 12px}
+    .legal-card{padding:28px 22px;border-radius:20px}
+  }
+
+  /* ---------- FOOTER (shared) ---------- */
+  footer{padding:64px 0 44px;border-top:1px solid var(--line);margin-top:88px;color:var(--mut);
+    background:linear-gradient(180deg,var(--bg),#f2f6fc)}
+  .foot-in{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start}
+  .foot-links{display:flex;gap:8px 22px;flex-wrap:wrap;font-weight:600;font-size:16.5px;color:var(--ink-2)}
+  .foot-links a{transition:color .15s ease}
+  .foot-links a:hover{color:var(--brand)}
+  .foot-meta{font-size:16px;line-height:1.9}
+  .foot-meta a:hover{color:var(--brand)}
+  .foot-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .btn{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="/"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/index.html#how">How it works</a>
+      <a href="/index.html#pricing">Pricing</a>
+      <a href="/terms-of-service.html">Terms</a>
+      <a href="/privacy-policy.html">Privacy</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PAGE HEAD ===================== -->
+<section class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Legal</span>
+    <h1>Terms of Service</h1>
+    <p class="meta">Last updated: July 21, 2026 · Questions? Message us through the chat or email <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a>.</p>
+  </div>
+</section>
+
+<!-- ===================== TERMS ===================== -->
+<main class="legal">
+  <div class="legal-card">
+
+    <h2>1. Agreement to These Terms</h2>
+    <p>These Terms of Service (the "Terms") are a binding agreement between Oyzla Leads ("Oyzla," "we," "us," or "our") and the insurance agency or business that purchases a subscription or uses our website at oyzlaleads.com (the "Service"). By purchasing a subscription, completing checkout, or using the Service, you agree to these Terms on behalf of yourself and the agency you represent. If you do not agree, do not use the Service.</p>
+
+    <h2>2. What the Service Is</h2>
+    <p>Oyzla Leads provides exclusive local consumer-insurance leads to independent insurance agencies. For your approved territory, we create, run, and optimize local advertising campaigns and deliver the prospects generated in that territory ("Leads") to you. The Service is self-serve: you activate online, complete a short setup questionnaire after checkout, and communicate with us through the chat on our website or by email.</p>
+
+    <h2>3. Subscription, Fees, and Billing</h2>
+    <ul>
+      <li><b>Pricing.</b> $1,000 first month before applicable tax, then $2,000/month before applicable tax, month to month.</li>
+      <li><b>Auto-renewal.</b> Your subscription renews each month and your payment method on file is charged at the start of each billing period until you cancel. Payments are processed by Stripe, our third-party payment processor.</li>
+      <li><b>Taxes.</b> Prices are stated before applicable tax. Any applicable sales or similar taxes are added at checkout or on invoices as required by law.</li>
+      <li><b>Flat fee.</b> There are no per-lead charges. Your monthly fee does not vary based on which territory you choose.</li>
+      <li><b>Failed payments.</b> If a renewal payment fails, we may pause lead delivery and campaign activity until payment is completed. Territory exclusivity may lapse if payment is not completed within a reasonable period after notice.</li>
+    </ul>
+
+    <h2>4. Territory Exclusivity</h2>
+    <p>Oyzla partners with one agency per approved territory. While your subscription is active and in good standing, we will not sell Leads generated in your approved territory to any other agency, and we will not knowingly resell or share those Leads with anyone else.</p>
+    <div class="callout">
+      <b>If your requested territory is already taken:</b> we will offer you the nearest available adjacent territory. If you do not accept the alternative, your first payment is refunded in full.
+    </div>
+    <p>Territory boundaries are defined by the city or ZIP code(s) confirmed during onboarding. We may reasonably clarify boundaries with you in writing (chat or email) before your campaign goes live. Exclusivity applies to Leads generated by Oyzla's campaigns; it does not restrict prospects who find your agency through other channels.</p>
+
+    <h2>5. First-Month Guarantee</h2>
+    <div class="callout">
+      <b>Our guarantee:</b> If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.
+    </div>
+    <ul>
+      <li><b>"Valid" lead</b> means a prospect with working contact information, located in (or seeking coverage in) your approved territory, who expressed interest in an insurance product. A lead is not invalid merely because it does not result in a sale, does not respond to your outreach, or chooses another provider.</li>
+      <li><b>"Campaign goes live"</b> means the date your advertising campaign begins running, which follows your completion of the onboarding questionnaire. Delays caused by incomplete onboarding information extend the start of the 30-day window accordingly.</li>
+      <li><b>How to claim.</b> Request the refund within 14 days after the 30-day window ends by messaging us through the chat or emailing <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a>. Approved refunds are issued to the original payment method.</li>
+      <li>The guarantee applies once per agency, to the first month of a new territory subscription only.</li>
+    </ul>
+
+    <h2>6. Leads and Data Handling</h2>
+    <ul>
+      <li>Leads are provided for your agency's own insurance-quoting and sales purposes only. You may not resell, share, publish, or transfer Leads to any third party outside your agency.</li>
+      <li>You are responsible for your own outreach to Leads and for complying with all laws that apply to that outreach, including the TCPA, CAN-SPAM, state insurance-marketing rules, and do-not-contact requirements.</li>
+      <li>You must handle Lead data securely and honor consumers' requests to delete their information or stop hearing from you.</li>
+      <li>We deliver Leads by email and/or dashboard access as configured during onboarding. We may also help you organize Leads in a CRM as part of setup.</li>
+      <li>Our collection and use of personal information is described in our <a href="/privacy-policy.html">Privacy Policy</a>.</li>
+    </ul>
+
+    <h2>7. Your Responsibilities</h2>
+    <ul>
+      <li>Provide accurate business information during checkout and onboarding, and complete the onboarding questionnaire promptly so your campaign can launch.</li>
+      <li>Hold and maintain any licenses required to sell insurance in your territory.</li>
+      <li>Respond to Leads professionally; your conduct with consumers is your responsibility, not Oyzla's.</li>
+      <li>Keep your payment method current.</li>
+    </ul>
+
+    <h2>8. Cancellation</h2>
+    <ul>
+      <li>Your subscription is month to month with no long-term contract and no cancellation fee.</li>
+      <li>Cancel anytime by messaging us through the chat or emailing <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a> before your next renewal date. Cancellation takes effect at the end of the current paid billing period.</li>
+      <li>You keep receiving Leads through the end of the period you have paid for. Except for the First-Month Guarantee in Section 5 or where required by law, fees already paid are not refunded or prorated.</li>
+      <li>When your subscription ends, your territory becomes available to other agencies.</li>
+    </ul>
+
+    <h2>9. Disclaimers</h2>
+    <p>Except for the express guarantee in Section 5, the Service is provided "as is" and "as available." We do not guarantee any particular number of Leads beyond the guarantee, any conversion rate, closed policies, or revenue outcome. Lead volume varies with local demand, seasonality, and advertising conditions. To the maximum extent permitted by law, we disclaim all implied warranties, including merchantability, fitness for a particular purpose, and non-infringement.</p>
+
+    <h2>10. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by law, Oyzla's total liability arising out of or relating to the Service is limited to the amounts you paid to Oyzla in the three (3) months before the event giving rise to the claim. Oyzla is not liable for indirect, incidental, consequential, special, or punitive damages, or for lost profits or lost business opportunities, even if advised of the possibility.</p>
+
+    <h2>11. Indemnification</h2>
+    <p>You agree to indemnify and hold Oyzla harmless from claims, damages, and expenses (including reasonable attorneys' fees) arising from your outreach to Leads, your violation of applicable law, your breach of these Terms, or your sale of insurance products.</p>
+
+    <h2>12. Intellectual Property</h2>
+    <p>Oyzla owns the Service, our website, our campaign materials, and our branding. You receive no rights in them except the right to use the Service as described in these Terms while your subscription is active.</p>
+
+    <h2>13. Changes to the Service or These Terms</h2>
+    <p>We may update these Terms from time to time. If we make material changes, we will post the updated Terms on this page with a new "Last updated" date and, where appropriate, notify active subscribers by email. Continued use of the Service after changes take effect constitutes acceptance. Price changes never apply retroactively and take effect no earlier than your next renewal, with prior notice.</p>
+
+    <h2>14. Governing Law and Disputes</h2>
+    <p>These Terms are governed by the laws of the State of Utah, without regard to conflict-of-laws rules. Any dispute that cannot be resolved informally will be brought in the state or federal courts located in Utah, and both parties consent to their jurisdiction. Before filing any claim, you agree to first contact us and give us 30 days to try to resolve the issue.</p>
+
+    <h2>15. Contact</h2>
+    <p>Questions about these Terms? Message us through the chat on our website or email <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a>.</p>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <div class="logo" style="font-size:19px"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></div>
+        <p class="foot-meta sub" style="margin-top:10px;max-width:34ch">
+          Exclusive insurance leads for independent agencies.
+        </p>
+      </div>
+      <div class="foot-meta">
+        <strong>Contact</strong><br>
+        <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
+        Based in Saratoga Springs, Utah — serving nationwide
+      </div>
+      <div class="foot-links">
+        <a href="/">Home</a>
+        <a href="/index.html#how">How it works</a>
+        <a href="/index.html#pricing">Pricing</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="foot-bottom sub">
+      <span>© 2026 Oyzla Leads. All rights reserved.</span>
+      <span>One area · One agency · Never shared.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

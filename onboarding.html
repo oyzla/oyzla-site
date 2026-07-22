@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<!--
+  OYZLA LEADS — POST-PAYMENT ONBOARDING QUESTIONNAIRE
+  ===================================================
+  This is the page customers land on right after Stripe checkout.
+  IMPORTANT: set BACKEND_WEBHOOK_URL in the CONFIG block at the top of the
+  <script> at the bottom of this file before go-live.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Set Up Your Territory — Oyzla Leads</title>
+<meta name="description" content="Payment confirmed — set up your exclusive territory with Oyzla Leads." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<style>
+  /* ============ DESIGN TOKENS (shared with homepage) ============ */
+  :root{
+    --ink:#0a0f1e; --ink-2:#242e4d; --mut:#5b6579; --mut-2:#949db2;
+    --brand:#2f6fed; --brand-hi:#4f86ff; --brand-2:#1d4ed8; --brand-deep:#0a2a4f; --navy:#0a2a4f;
+    --brand-soft:#eef4ff; --brand-line:#d9e6ff;
+    --accent:#ff8a2a;
+    --good:#10a56b; --good-deep:#0b7a4c; --good-soft:#e9f9f1; --good-line:#c4ecd8;
+    --line:#e7ecf5; --line-2:#dde4f0; --bg:#f7f9fd; --card:#ffffff;
+    --ring:rgba(37,99,235,.30);
+    --sh-xs:0 1px 2px rgba(10,15,30,.05);
+    --sh-sm:0 1px 2px rgba(10,15,30,.04), 0 10px 30px -14px rgba(10,15,30,.14);
+    --sh-md:0 2px 4px rgba(10,15,30,.04), 0 28px 60px -28px rgba(10,15,30,.28);
+    --sh-lg:0 2px 5px rgba(10,15,30,.05), 0 48px 100px -36px rgba(16,48,111,.35);
+    --radius:20px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Lato,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);
+    background:
+      radial-gradient(900px 420px at 90% -8%, rgba(255,138,42,.07), transparent 55%),
+      radial-gradient(1100px 560px at 0% -6%, rgba(37,99,235,.09), transparent 55%),
+      var(--bg);
+    font:19px/1.7 var(--font);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(37,99,235,.16)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{letter-spacing:-.028em;line-height:1.15;margin:0;font-weight:800}
+  p{margin:0}
+  .sub{color:var(--mut)}
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:inherit;font-weight:700;font-size:18px;letter-spacing:-.01em;
+    border:0;border-radius:14px;padding:17px 30px;cursor:pointer;overflow:hidden;
+    transition:transform .2s var(--ease), box-shadow .25s var(--ease), filter .2s ease}
+  .btn-primary{color:#fff;
+    background:linear-gradient(180deg,var(--brand-hi) 0%,var(--brand) 52%,var(--brand-2) 100%);
+    box-shadow:0 1px 2px rgba(16,48,111,.45), 0 14px 34px -12px var(--ring),
+      inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(16,48,111,.28)}
+  .btn-primary:hover{transform:translateY(-2px);
+    box-shadow:0 2px 3px rgba(16,48,111,.4), 0 22px 46px -14px var(--ring),
+      inset 0 1px 0 rgba(255,255,255,.34)}
+  .btn-primary:active{transform:translateY(0) scale(.985);filter:brightness(.97)}
+  .btn-primary:disabled{opacity:.6;cursor:default;transform:none}
+  .btn-ghost{color:var(--ink);background:#fff;border:1px solid var(--line-2);box-shadow:var(--sh-xs)}
+  .btn-ghost:hover{transform:translateY(-1px);border-color:#c8d5ec;box-shadow:var(--sh-sm)}
+  .btn-ghost:active{transform:translateY(0)}
+
+  /* ---------- NAV (shared) ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(250,252,255,.78);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);
+    border-bottom:1px solid rgba(222,229,241,.7)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.045em;color:var(--navy)}
+  .logo .mark{width:34px;height:34px;flex:0 0 auto;filter:drop-shadow(0 3px 6px rgba(47,111,237,.35))}
+  .logo span{color:var(--brand)}
+  .nav-links{display:flex;gap:6px;font-weight:600;font-size:17px;color:var(--ink-2)}
+  .nav-links a{padding:10px 15px;border-radius:10px;transition:background .15s ease,color .15s ease}
+  .nav-links a:hover{color:var(--brand-2);background:var(--brand-soft)}
+  @media(max-width:900px){.nav-links{display:none}}
+  @media(max-width:620px){
+    .nav-in{height:66px}
+    .logo{font-size:16.5px;gap:9px;letter-spacing:.035em}
+    .logo .mark{width:29px;height:29px}
+  }
+
+  /* ---------- ONBOARDING ---------- */
+  .ob-shell{max-width:660px;margin:0 auto;padding:64px 22px 40px}
+  .paid-pill{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;
+    color:var(--good-deep);background:linear-gradient(180deg,#f4fdf8,var(--good-soft));
+    border:1px solid var(--good-line);
+    padding:8px 15px;border-radius:999px;box-shadow:var(--sh-xs)}
+  .paid-pill .dot{width:9px;height:9px;border-radius:50%;background:var(--good);
+    box-shadow:0 0 0 3px rgba(16,165,107,.18)}
+  .ob-head h1{font-size:clamp(28px,5vw,38px);font-weight:800;letter-spacing:-.034em;margin-top:18px}
+  .ob-head p{margin-top:14px;font-size:18.5px;line-height:1.65;color:var(--mut)}
+  .ob-card{position:relative;background:var(--card);border:1px solid rgba(219,227,240,.9);border-radius:24px;
+    box-shadow:var(--sh-lg);padding:36px 34px;margin-top:32px}
+  .ob-card::after{content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(79,134,255,.55),transparent)}
+  @media(max-width:560px){
+    .ob-shell{padding:44px 20px 32px}
+    .ob-card{padding:26px 20px;border-radius:20px}
+  }
+
+  /* progress */
+  .progress{display:flex;align-items:center;gap:8px;margin-bottom:26px}
+  .pstep{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden;position:relative;
+    transition:background .3s ease}
+  .pstep.done{background:linear-gradient(90deg,var(--brand-hi),var(--brand-2))}
+  .plabel{font-size:13.5px;font-weight:700;color:var(--mut);margin-bottom:20px;
+    text-transform:uppercase;letter-spacing:.09em}
+
+  /* steps */
+  .fstep{display:none}
+  .fstep.active{display:block;animation:fadein .4s var(--ease)}
+  @keyframes fadein{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .fstep h2{font-size:24px;font-weight:800;letter-spacing:-.025em}
+  .fstep .hint{margin-top:9px;color:var(--mut);font-size:17px;line-height:1.65}
+
+  label.fl{display:block;font-weight:600;font-size:16.5px;margin:22px 0 8px;color:var(--ink-2);letter-spacing:-.01em}
+  input[type=text],input[type=email]{
+    width:100%;padding:16px 17px;font:inherit;font-size:18px;color:var(--ink);
+    background:#fbfcff;border:1.5px solid var(--line-2);border-radius:13px;outline:none;
+    box-shadow:var(--sh-xs);
+    transition:border-color .18s ease, box-shadow .18s ease, background .18s ease}
+  input[type=text]::placeholder,input[type=email]::placeholder{color:var(--mut-2)}
+  input[type=text]:hover,input[type=email]:hover{border-color:#c8d5ec}
+  input[type=text]:focus,input[type=email]:focus{border-color:var(--brand);background:#fff;
+    box-shadow:0 0 0 4px rgba(37,99,235,.14)}
+  .err{display:none;color:#b03222;font-size:15.5px;font-weight:600;margin-top:10px}
+  .err.show{display:block}
+
+  /* checkbox / radio cards */
+  .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+  @media(max-width:480px){.opt-grid{grid-template-columns:1fr}}
+  .opt{position:relative;display:flex;align-items:center;gap:12px;padding:17px 18px;
+    background:#fbfcff;border:1.5px solid var(--line-2);border-radius:13px;cursor:pointer;
+    font-weight:600;font-size:17px;box-shadow:var(--sh-xs);
+    transition:border-color .18s ease, background .18s ease, transform .18s var(--ease), box-shadow .18s ease}
+  .opt:hover{border-color:#c8d5ec;transform:translateY(-1px);box-shadow:var(--sh-sm)}
+  .opt:active{transform:translateY(0)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .box{flex:0 0 auto;width:21px;height:21px;border-radius:7px;border:2px solid #c3ccdd;
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;
+    transition:all .18s ease;background:#fff}
+  .opt.radio .box{border-radius:50%}
+  .opt input:checked ~ .box{background:linear-gradient(180deg,var(--brand-hi),var(--brand-2));
+    border-color:var(--brand);box-shadow:0 3px 8px -3px var(--ring)}
+  .opt input:checked ~ .box::after{content:"✓"}
+  .opt.radio input:checked ~ .box::after{content:"●";font-size:9px}
+  .opt input:checked ~ .t{color:var(--brand-2)}
+  .opt:has(input:checked){border-color:var(--brand);background:var(--brand-soft);
+    box-shadow:0 0 0 3px rgba(37,99,235,.10)}
+
+  .branch{display:none;margin-top:18px}
+  .branch.show{display:block;animation:fadein .35s var(--ease)}
+  .note-box{background:linear-gradient(180deg,#f4f8ff,var(--brand-soft));border:1px solid var(--brand-line);
+    border-radius:13px;padding:16px 18px;font-size:16.5px;line-height:1.6;color:var(--ink-2)}
+  .note-box b{color:var(--brand-2)}
+
+  .nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:30px}
+  .nav-row .spacer{flex:1}
+  @media(max-width:480px){
+    .nav-row .btn{flex:1;padding:14px 18px}
+  }
+
+  /* success + error states */
+  .done-wrap{text-align:center;padding:18px 0 10px}
+  .done-ic{width:68px;height:68px;border-radius:50%;margin:0 auto 20px;
+    background:linear-gradient(180deg,#f4fdf8,var(--good-soft));border:1.5px solid var(--good-line);
+    box-shadow:0 14px 30px -16px rgba(16,165,107,.4);
+    display:flex;align-items:center;justify-content:center}
+  .done-ic svg{width:32px;height:32px;stroke:var(--good);fill:none;stroke-width:2.5;
+    stroke-linecap:round;stroke-linejoin:round}
+  .done-wrap h2{font-size:27px;font-weight:800;letter-spacing:-.025em}
+  .done-wrap p{margin-top:14px;color:var(--mut);font-size:17.5px;line-height:1.7}
+  .send-err{display:none;margin-top:18px;background:#fff8f6;border:1px solid #f6ded8;
+    border-radius:13px;padding:16px 18px;font-size:16px;line-height:1.6;color:#8c2f1f}
+  .send-err.show{display:block}
+  .fine{margin-top:22px;text-align:center;color:var(--mut);font-size:15px}
+
+  /* ---------- FOOTER (shared) ---------- */
+  footer{padding:64px 0 44px;border-top:1px solid var(--line);margin-top:88px;color:var(--mut);
+    background:linear-gradient(180deg,transparent,#f2f6fc)}
+  .foot-in{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start}
+  .foot-links{display:flex;gap:8px 22px;flex-wrap:wrap;font-weight:600;font-size:16.5px;color:var(--ink-2)}
+  .foot-links a{transition:color .15s ease}
+  .foot-links a:hover{color:var(--brand)}
+  .foot-meta{font-size:16px;line-height:1.9}
+  .foot-meta a:hover{color:var(--brand)}
+  .foot-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .fstep.active,.branch.show{animation:none}
+    .btn,.opt{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="/"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/index.html#how">How it works</a>
+      <a href="/index.html#pricing">Pricing</a>
+      <a href="/terms-of-service.html">Terms</a>
+      <a href="/privacy-policy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== ONBOARDING ===================== -->
+<main class="ob-shell">
+  <div class="ob-head">
+    <span class="paid-pill"><span class="dot"></span> Payment confirmed</span>
+    <h1>Let's set up your territory.</h1>
+    <p>About two minutes. Your answers tell us where to launch your campaign and how to route your exclusive leads.</p>
+  </div>
+
+  <div class="ob-card">
+    <div class="progress" aria-hidden="true">
+      <div class="pstep done" data-p="1"></div>
+      <div class="pstep" data-p="2"></div>
+      <div class="pstep" data-p="3"></div>
+      <div class="pstep" data-p="4"></div>
+    </div>
+    <div class="plabel" id="plabel">Step 1 of 4 — Your agency</div>
+
+    <form id="obForm" novalidate>
+
+      <!-- STEP 1: agency -->
+      <div class="fstep active" data-step="1">
+        <h2>Tell us about your agency</h2>
+        <p class="hint">We'll use this for your account and all lead delivery.</p>
+        <label class="fl" for="agencyName">Business / agency name</label>
+        <input type="text" id="agencyName" name="agencyName" autocomplete="organization" placeholder="e.g., Summit Insurance Group" />
+        <label class="fl" for="contactEmail">Contact email</label>
+        <input type="email" id="contactEmail" name="contactEmail" autocomplete="email" placeholder="you@youragency.com" />
+        <p class="err" id="err1">Please enter your agency name and a valid email address.</p>
+        <div class="nav-row">
+          <span class="spacer"></span>
+          <button type="button" class="btn btn-primary" data-next="2">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: territory -->
+      <div class="fstep" data-step="2">
+        <h2>Where should your territory be?</h2>
+        <p class="hint">Tell us the city or ZIP code(s) you want. One agency per area — if your first choice is already taken, we'll offer the nearest available adjacent territory (or refund your first payment; see our <a href="/terms-of-service.html" style="color:var(--brand);font-weight:600">Terms</a>).</p>
+        <label class="fl" for="territory">Requested territory (city and/or ZIP codes)</label>
+        <input type="text" id="territory" name="territory" placeholder="e.g., Saratoga Springs, UT — 84045" />
+        <label class="fl" for="territoryAlt">Backup choice <span style="font-weight:500;color:var(--mut)">(optional)</span></label>
+        <input type="text" id="territoryAlt" name="territoryAlt" placeholder="A nearby city or ZIP, in case your first choice is taken" />
+        <p class="err" id="err2">Please tell us the territory you'd like.</p>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" data-back="1">← Back</button>
+          <button type="button" class="btn btn-primary" data-next="3">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: lines -->
+      <div class="fstep" data-step="3">
+        <h2>Which insurance lines do you sell?</h2>
+        <p class="hint">Check all that apply — we'll focus your campaign on these.</p>
+        <div class="opt-grid" id="linesGrid">
+          <label class="opt"><input type="checkbox" name="lines" value="Auto" /><span class="box"></span><span class="t">Auto</span></label>
+          <label class="opt"><input type="checkbox" name="lines" value="Home" /><span class="box"></span><span class="t">Home</span></label>
+          <label class="opt"><input type="checkbox" name="lines" value="Life" /><span class="box"></span><span class="t">Life</span></label>
+          <label class="opt"><input type="checkbox" name="lines" value="Health" /><span class="box"></span><span class="t">Health</span></label>
+          <label class="opt"><input type="checkbox" name="lines" value="Commercial" /><span class="box"></span><span class="t">Commercial</span></label>
+        </div>
+        <p class="err" id="err3">Please select at least one line of insurance.</p>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" data-back="2">← Back</button>
+          <button type="button" class="btn btn-primary" data-next="4">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: CRM + submit -->
+      <div class="fstep" data-step="4">
+        <h2>Do you use a CRM to track leads?</h2>
+        <p class="hint">This tells us how to plug your exclusive leads into your workflow.</p>
+        <div class="opt-grid" style="grid-template-columns:1fr 1fr">
+          <label class="opt radio"><input type="radio" name="usesCrm" value="yes" /><span class="box"></span><span class="t">Yes</span></label>
+          <label class="opt radio"><input type="radio" name="usesCrm" value="no" /><span class="box"></span><span class="t">No</span></label>
+        </div>
+        <div class="branch" id="crmYes">
+          <label class="fl" for="crmName" style="margin-top:4px">Which CRM do you use?</label>
+          <input type="text" id="crmName" name="crmName" placeholder="e.g., AgencyZoom, HubSpot, Salesforce…" />
+        </div>
+        <div class="branch" id="crmNo">
+          <div class="note-box"><b>No problem.</b> Oyzla will set up a simple CRM for you as part of onboarding, so every lead lands somewhere organized from day one — at no extra cost.</div>
+        </div>
+        <p class="err" id="err4">Please tell us whether you use a CRM (and which one, if yes).</p>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" data-back="3">← Back</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Finish setup ✓</button>
+        </div>
+        <div class="send-err" id="sendErr">
+          Something went wrong sending your answers. Please try again — or message us through the chat or email
+          <a href="mailto:info@oyzlaleads.com" style="color:#8c2f1f;text-decoration:underline">info@oyzlaleads.com</a> and we'll take it from there.
+        </div>
+      </div>
+
+    </form>
+
+    <!-- SUCCESS STATE -->
+    <div class="done-wrap" id="doneWrap" style="display:none">
+      <div class="done-ic"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
+      <h2>Thank you — you're all set!</h2>
+      <p>We've received your setup details and our team is on it. We'll confirm your territory and campaign details by email, and we'll be in touch as your campaign goes live. Questions in the meantime? Just message us through the chat or email <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a>.</p>
+    </div>
+  </div>
+
+  <p class="fine">Your details are used only to set up your campaign — see our <a href="/privacy-policy.html" style="color:var(--mut)">Privacy Policy</a>.</p>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <div class="logo" style="font-size:19px"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></div>
+        <p class="foot-meta sub" style="margin-top:10px;max-width:34ch">
+          Exclusive insurance leads for independent agencies.
+        </p>
+      </div>
+      <div class="foot-meta">
+        <strong>Contact</strong><br>
+        <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
+        Based in Saratoga Springs, Utah — serving nationwide
+      </div>
+      <div class="foot-links">
+        <a href="/">Home</a>
+        <a href="/index.html#how">How it works</a>
+        <a href="/index.html#pricing">Pricing</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="foot-bottom sub">
+      <span>© 2026 Oyzla Leads. All rights reserved.</span>
+      <span>One area · One agency · Never shared.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ==========================================================================
+     CONFIG — SET THIS BEFORE GO-LIVE
+     --------------------------------------------------------------------------
+     Paste the deployed Google Apps Script Web App URL (or any webhook endpoint
+     that accepts a JSON POST) below. Until it is replaced, submissions are NOT
+     sent anywhere — the form still shows the thank-you screen so the page can
+     be previewed end-to-end.
+     ========================================================================== */
+  const BACKEND_WEBHOOK_URL = "REPLACE_WITH_APPS_SCRIPT_WEBHOOK_URL";
+  /* ======================== END CONFIG ==================================== */
+
+  (function(){
+    var form = document.getElementById('obForm');
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.fstep'));
+    var psteps = Array.prototype.slice.call(document.querySelectorAll('.pstep'));
+    var plabel = document.getElementById('plabel');
+    var labels = {
+      1: 'Step 1 of 4 — Your agency',
+      2: 'Step 2 of 4 — Your territory',
+      3: 'Step 3 of 4 — Insurance lines',
+      4: 'Step 4 of 4 — Your CRM'
+    };
+
+    function goTo(n){
+      steps.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step') === String(n)); });
+      psteps.forEach(function(p,i){ p.classList.toggle('done', i < n); });
+      plabel.textContent = labels[n];
+      var card = document.querySelector('.ob-card');
+      if (card && card.scrollIntoView) card.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function hideErr(id){ document.getElementById(id).classList.remove('show'); }
+    function showErr(id){ document.getElementById(id).classList.add('show'); }
+
+    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    function validateStep(n){
+      if(n === 1){
+        var name = document.getElementById('agencyName').value.trim();
+        var email = document.getElementById('contactEmail').value.trim();
+        if(!name || !validEmail(email)){ showErr('err1'); return false; }
+        hideErr('err1'); return true;
+      }
+      if(n === 2){
+        if(!document.getElementById('territory').value.trim()){ showErr('err2'); return false; }
+        hideErr('err2'); return true;
+      }
+      if(n === 3){
+        var any = form.querySelectorAll('input[name="lines"]:checked').length > 0;
+        if(!any){ showErr('err3'); return false; }
+        hideErr('err3'); return true;
+      }
+      if(n === 4){
+        var crm = form.querySelector('input[name="usesCrm"]:checked');
+        if(!crm){ showErr('err4'); return false; }
+        if(crm.value === 'yes' && !document.getElementById('crmName').value.trim()){ showErr('err4'); return false; }
+        hideErr('err4'); return true;
+      }
+      return true;
+    }
+
+    // next / back buttons
+    document.querySelectorAll('[data-next]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var target = parseInt(btn.getAttribute('data-next'), 10);
+        if(validateStep(target - 1)) goTo(target);
+      });
+    });
+    document.querySelectorAll('[data-back]').forEach(function(btn){
+      btn.addEventListener('click', function(){ goTo(parseInt(btn.getAttribute('data-back'), 10)); });
+    });
+
+    // CRM branch
+    document.querySelectorAll('input[name="usesCrm"]').forEach(function(r){
+      r.addEventListener('change', function(){
+        document.getElementById('crmYes').classList.toggle('show', r.value === 'yes' && r.checked);
+        document.getElementById('crmNo').classList.toggle('show', r.value === 'no' && r.checked);
+        hideErr('err4');
+      });
+    });
+
+    // submit
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!validateStep(4)) return;
+
+      var crm = form.querySelector('input[name="usesCrm"]:checked');
+      var payload = {
+        submittedAt: new Date().toISOString(),
+        source: 'oyzlaleads.com/onboarding',
+        agencyName: document.getElementById('agencyName').value.trim(),
+        contactEmail: document.getElementById('contactEmail').value.trim(),
+        territory: document.getElementById('territory').value.trim(),
+        territoryBackup: document.getElementById('territoryAlt').value.trim(),
+        insuranceLines: Array.prototype.map.call(
+          form.querySelectorAll('input[name="lines"]:checked'),
+          function(c){ return c.value; }
+        ),
+        usesCrm: crm.value,
+        crmName: crm.value === 'yes'
+          ? document.getElementById('crmName').value.trim()
+          : 'None — Oyzla to set one up'
+      };
+
+      var btn = document.getElementById('submitBtn');
+      var sendErr = document.getElementById('sendErr');
+      sendErr.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      function showSuccess(){
+        form.style.display = 'none';
+        document.querySelector('.progress').style.display = 'none';
+        plabel.style.display = 'none';
+        document.getElementById('doneWrap').style.display = 'block';
+      }
+      function showFailure(){
+        btn.disabled = false;
+        btn.textContent = 'Finish setup ✓';
+        sendErr.classList.add('show');
+      }
+
+      // If the backend URL hasn't been configured yet, don't attempt a network
+      // request — show the success state so the page can be previewed.
+      if (BACKEND_WEBHOOK_URL.indexOf('REPLACE_WITH') === 0) {
+        console.warn('Oyzla onboarding: BACKEND_WEBHOOK_URL is not configured; submission was not sent.');
+        showSuccess();
+        return;
+      }
+
+      // POST as text/plain to stay a CORS "simple request" (required for
+      // Google Apps Script web-app endpoints; body is still JSON).
+      fetch(BACKEND_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).then(function(res){
+        if (res.ok || res.type === 'opaque') { showSuccess(); } else { showFailure(); }
+      }).catch(function(){
+        // Some webhook hosts (incl. Apps Script) can trip CORS on the response
+        // even when the POST succeeds; retry once in no-cors mode.
+        fetch(BACKEND_WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).then(showSuccess).catch(showFailure);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
