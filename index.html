@@ -2,9 +2,11 @@
 <!--
   OYZLA LEADS — HOMEPAGE (static site, self-contained, no external dependencies)
   ==============================================================================
-  v3 — flatter, plainer "real business" design. Solid brand colors, hairline
-  borders, editorial layout, serif headlines. No gradients/glass/decorative
-  graphics. Three real priced tiers ($2k / $4k / $8k).
+  v4 — premium, "alive" business design: editorial layout with serif
+  headlines, warm brand palette, tasteful motion (scroll-reveal, animated
+  stat counters, hover lift, sticky-header shadow, animated hero wash) and
+  two self-contained designed SVG visuals. All motion respects
+  prefers-reduced-motion. Three real priced tiers ($2k / $4k / $8k).
   Notes:
     - Primary CTAs (nav, hero, Standard plan, final CTA) go to the live
       founding Stripe checkout. Growth/Scale CTAs go to #contact.
@@ -12,8 +14,8 @@
       /privacy-policy.html pages in this repo.
     - The chat bubble bottom-right is a visual placeholder for the site's
       chat widget.
-    - Photo slots: see the two <figure class="photo"> blocks. Owner drops
-      real photos at img/hero.jpg and img/office.jpg.
+    - Visuals: the two <figure class="photo"> blocks contain inline SVG
+      brand illustrations (no external image files required).
 -->
 <html lang="en">
 <head>
@@ -127,22 +129,17 @@
   .micro span{display:inline-flex;align-items:center;gap:7px}
   .tick{color:var(--good);font-weight:800}
 
-  /* photo slots — owner replaces src with a real photo */
-  .photo{position:relative;margin:0;border:1px solid var(--line-2);border-radius:10px;
-    overflow:hidden;background:#f0f2ee;min-height:300px}
-  .photo img{position:relative;z-index:2;display:block;width:100%;height:100%;
-    min-height:300px;object-fit:cover}
-  .photo img.missing{display:none}
-  .photo figcaption{position:absolute;z-index:1;inset:0;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:6px;text-align:center;padding:24px;
-    color:var(--mut-2);font-size:15.5px;font-weight:600;line-height:1.5}
-  .photo figcaption b{color:var(--mut);font-size:16.5px}
-  .photo.tall{min-height:400px}
-  .photo.tall img{min-height:400px}
+  /* visual panels — self-contained, on-brand designed illustrations */
+  .photo{position:relative;margin:0;border:1px solid var(--brand-line);border-radius:14px;
+    overflow:hidden;background:var(--navy);min-height:300px;
+    box-shadow:0 24px 60px -34px rgba(12,35,64,.55)}
+  .photo svg.art{position:absolute;inset:0;display:block;width:100%;height:100%}
+  .photo.tall{min-height:440px}
   @media(max-width:900px){
     .hero-in{grid-template-columns:1fr;gap:40px;padding:56px 0 62px}
     .hero .lede{max-width:none}
-    .photo,.photo img,.photo.tall,.photo.tall img{min-height:260px}
+    .photo{min-height:300px}
+    .photo.tall{min-height:340px}
   }
   @media(max-width:560px){
     .cta-row{flex-direction:column;align-items:stretch}
@@ -285,6 +282,100 @@
   .concierge .dot{width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;
     display:flex;align-items:center;justify-content:center;font-size:16px}
   @media(max-width:520px){.concierge span.t{display:none}}
+
+  /* ============ MOTION & ANIMATION ============ */
+  /* scroll-reveal base state */
+  .reveal{opacity:0;transform:translateY(26px);
+    transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  /* staggered children (cards, steps, benefits) */
+  .stagger > *{opacity:0;transform:translateY(22px);
+    transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+  .stagger.in > *{opacity:1;transform:none}
+  .stagger.in > *:nth-child(2){transition-delay:.08s}
+  .stagger.in > *:nth-child(3){transition-delay:.16s}
+  .stagger.in > *:nth-child(4){transition-delay:.24s}
+  .stagger.in > *:nth-child(5){transition-delay:.32s}
+  .stagger.in > *:nth-child(6){transition-delay:.40s}
+
+  /* hero entrance */
+  .hero-anim{opacity:0;transform:translateY(20px);animation:heroIn .9s cubic-bezier(.22,.61,.36,1) forwards}
+  .hero-anim.d1{animation-delay:.05s}
+  .hero-anim.d2{animation-delay:.15s}
+  .hero-anim.d3{animation-delay:.25s}
+  .hero-anim.d4{animation-delay:.35s}
+  .hero .photo.tall{opacity:0;transform:translateY(20px) scale(.985);
+    animation:heroArt 1s cubic-bezier(.22,.61,.36,1) .2s forwards}
+  @keyframes heroIn{to{opacity:1;transform:none}}
+  @keyframes heroArt{to{opacity:1;transform:none}}
+
+  /* subtle animated brand wash behind the hero */
+  .hero{position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;z-index:0;top:-30%;right:-12%;
+    width:620px;height:620px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 50% 50%,rgba(36,86,214,.10),rgba(36,86,214,0) 62%);
+    animation:floatBlob 16s ease-in-out infinite}
+  .hero::after{content:"";position:absolute;z-index:0;bottom:-34%;left:-14%;
+    width:540px;height:540px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 50% 50%,rgba(246,181,103,.10),rgba(246,181,103,0) 62%);
+    animation:floatBlob 20s ease-in-out infinite reverse}
+  .hero-in{position:relative;z-index:1}
+  @keyframes floatBlob{0%,100%{transform:translate(0,0)}50%{transform:translate(-26px,22px)}}
+
+  /* hover interactions */
+  .plan{transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease,border-color .2s ease}
+  .plan:hover{transform:translateY(-8px);box-shadow:0 26px 50px -26px rgba(17,24,39,.32)}
+  .plan.featured:hover{box-shadow:0 30px 56px -26px rgba(36,86,214,.42)}
+  .step{transition:transform .25s ease}
+  .step:hover{transform:translateY(-4px)}
+  .step:hover h3{color:var(--brand)}
+  .step h3{transition:color .2s ease}
+  .cmp{transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease}
+  .cmp:hover{transform:translateY(-5px);box-shadow:0 20px 40px -24px rgba(17,24,39,.30)}
+  .benefit{transition:transform .2s ease}
+  .benefit:hover{transform:translateX(5px)}
+  .btn{transition:background .15s ease,border-color .15s ease,color .15s ease,
+    transform .15s ease,box-shadow .2s ease}
+  .btn-primary:hover{box-shadow:0 12px 26px -12px rgba(36,86,214,.6)}
+  .btn:active{transform:translateY(1px)}
+  .btn-lg:hover{transform:translateY(-2px)}
+
+  /* stat counter subtle pop when revealed */
+  .stat .n{transition:transform .5s cubic-bezier(.22,.61,.36,1)}
+
+  /* ---- SVG art motion ---- */
+  .twinkle{animation:twk 3.6s ease-in-out infinite}
+  .twinkle.t2{animation-duration:4.4s;animation-delay:.6s}
+  .twinkle.t3{animation-duration:5.2s;animation-delay:1.1s}
+  @keyframes twk{0%,100%{opacity:.25}50%{opacity:.85}}
+  .lit{animation:litpulse 5s ease-in-out infinite}
+  .lit.l2{animation-delay:1.4s}
+  @keyframes litpulse{0%,100%{opacity:.82}50%{opacity:1}}
+  .halo{transform-origin:320px 470px;animation:haloPulse 6s ease-in-out infinite}
+  @keyframes haloPulse{0%,100%{opacity:.28;transform:scale(1)}50%{opacity:.55;transform:scale(1.05)}}
+  .mainpin{transform-box:fill-box;transform-origin:center bottom;
+    animation:pinBob 3.2s ease-in-out infinite}
+  @keyframes pinBob{0%,100%{transform:translate(320px,296px)}50%{transform:translate(320px,286px)}}
+  .pin{animation:pinFade 4s ease-in-out infinite}
+  .pins .pin:nth-child(2){animation-delay:.5s}
+  .pins .pin:nth-child(3){animation-delay:1s}
+  .pins .pin:nth-child(4){animation-delay:1.5s}
+  @keyframes pinFade{0%,100%{opacity:.55}50%{opacity:1}}
+  .route{stroke-dasharray:6 10;animation:dash 9s linear infinite}
+  .route.r2{animation-duration:11s}
+  .route.r3{animation-duration:8s}
+  .route.r4{animation-duration:12s}
+  @keyframes dash{to{stroke-dashoffset:-320}}
+
+  /* Respect reduced motion — disable all of the above */
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal,.stagger > *{opacity:1 !important;transform:none !important;transition:none !important}
+    .hero-anim,.hero .photo.tall{opacity:1 !important;transform:none !important;animation:none !important}
+    .hero::before,.hero::after{animation:none !important}
+    .twinkle,.lit,.halo,.mainpin,.pin,.route{animation:none !important}
+    .plan:hover,.step:hover,.cmp:hover,.benefit:hover,.btn-lg:hover{transform:none !important}
+  }
 </style>
 </head>
 <body>
@@ -309,13 +400,13 @@
 <section class="hero">
   <div class="wrap hero-in">
     <div>
-      <span class="eyebrow">One area · One agency · Never shared</span>
-      <h1>Insurance leads that are <em>yours alone</em>.</h1>
-      <p class="lede">We run online ads in your territory and send every lead they generate straight to you. One agency per area — we never sell the same lead twice. That's the whole model.</p>
-      <div class="cta-row">
+      <span class="eyebrow hero-anim d1">One area · One agency · Never shared</span>
+      <h1 class="hero-anim d1">Insurance leads that are <em>yours alone</em>.</h1>
+      <p class="lede hero-anim d2">We run online ads in your territory and send every lead they generate straight to you. One agency per area — we never sell the same lead twice. That's the whole model.</p>
+      <div class="cta-row hero-anim d3">
         <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory — $1,000 first month →</a>
       </div>
-      <div class="micro">
+      <div class="micro hero-anim d4">
         <span><span class="tick">✓</span> Month-to-month</span>
         <span><span class="tick">✓</span> No contracts</span>
         <span><span class="tick">✓</span> No sales calls</span>
@@ -323,22 +414,113 @@
       </div>
     </div>
 
-    <!-- OWNER: drop a real photo here — e.g. an insurance agent at their desk,
-         your local office, or a handshake with a client. Save it as
-         img/hero.jpg (or update the src below). The gray box shows until you do. -->
-    <figure class="photo tall">
-      <img src="img/hero.jpg" alt="Independent insurance agent meeting with a local client" onerror="this.classList.add('missing')">
-      <figcaption><b>Photo slot</b>Add a real photo of an agent, office, or client meeting<br>(save as img/hero.jpg)</figcaption>
+    <!-- Designed brand visual: a single highlighted home in a local
+         neighborhood, with nearby leads routing to one agency. -->
+    <figure class="photo tall" aria-label="Illustration: local leads in one territory routing exclusively to a single agency">
+      <svg class="art" viewBox="0 0 640 720" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0c2340"/>
+            <stop offset="0.5" stop-color="#163a6e"/>
+            <stop offset="1" stop-color="#1a3fa8"/>
+          </linearGradient>
+          <radialGradient id="hGlow" cx="0.78" cy="0.16" r="0.6">
+            <stop offset="0" stop-color="#f6b567" stop-opacity="0.75"/>
+            <stop offset="0.5" stop-color="#f0a24e" stop-opacity="0.18"/>
+            <stop offset="1" stop-color="#f0a24e" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="hHouse" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3f74e6"/>
+            <stop offset="1" stop-color="#2456d6"/>
+          </linearGradient>
+          <linearGradient id="hGround" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0e2952"/>
+            <stop offset="1" stop-color="#0a1c38"/>
+          </linearGradient>
+          <filter id="hSoft" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="9"/>
+          </filter>
+        </defs>
+
+        <!-- sky + warm dawn glow -->
+        <rect width="640" height="720" fill="url(#hSky)"/>
+        <rect width="640" height="720" fill="url(#hGlow)"/>
+
+        <!-- soft stars / ambient dots -->
+        <g fill="#ffffff" opacity="0.5">
+          <circle class="twinkle t1" cx="96" cy="92" r="2"/>
+          <circle class="twinkle t2" cx="188" cy="58" r="1.6"/>
+          <circle class="twinkle t3" cx="286" cy="104" r="1.8"/>
+          <circle class="twinkle t2" cx="520" cy="150" r="1.6"/>
+          <circle class="twinkle t1" cx="452" cy="70" r="1.6"/>
+        </g>
+
+        <!-- distant skyline -->
+        <g fill="#12305c" opacity="0.55">
+          <rect x="0" y="300" width="70" height="150"/>
+          <rect x="70" y="330" width="52" height="120"/>
+          <rect x="560" y="312" width="80" height="140"/>
+          <rect x="512" y="348" width="48" height="104"/>
+        </g>
+
+        <!-- connecting routes from neighbor pins to the central agency -->
+        <g fill="none" stroke="#7fa6f2" stroke-width="2.4" stroke-linecap="round" opacity="0.85">
+          <path class="route" d="M120 250 C 200 300, 250 360, 320 430"/>
+          <path class="route r2" d="M540 236 C 470 300, 410 360, 336 430"/>
+          <path class="route r3" d="M96 470 C 180 470, 250 460, 316 452"/>
+          <path class="route r4" d="M556 486 C 470 480, 400 462, 352 452"/>
+        </g>
+
+        <!-- neighbor location pins (the leads) -->
+        <g class="pins">
+          <g class="pin" transform="translate(120 250)"><circle r="13" fill="#ffffff" opacity="0.14"/><circle r="7" fill="#8fb0f4"/></g>
+          <g class="pin" transform="translate(540 236)"><circle r="13" fill="#ffffff" opacity="0.14"/><circle r="7" fill="#8fb0f4"/></g>
+          <g class="pin" transform="translate(96 470)"><circle r="12" fill="#ffffff" opacity="0.14"/><circle r="6" fill="#8fb0f4"/></g>
+          <g class="pin" transform="translate(556 486)"><circle r="12" fill="#ffffff" opacity="0.14"/><circle r="6" fill="#8fb0f4"/></g>
+        </g>
+
+        <!-- ground -->
+        <path d="M0 500 Q 320 452 640 500 L640 720 L0 720 Z" fill="url(#hGround)"/>
+
+        <!-- protective halo behind the central home -->
+        <circle cx="320" cy="470" r="150" fill="#5b8bff" opacity="0.16" filter="url(#hSoft)"/>
+        <circle class="halo" cx="320" cy="470" r="118" fill="none" stroke="#8fb0f4" stroke-width="2" opacity="0.5"/>
+
+        <!-- the ONE agency: highlighted home -->
+        <g transform="translate(320 470)">
+          <!-- shadow -->
+          <ellipse cx="0" cy="120" rx="118" ry="18" fill="#07172f" opacity="0.55"/>
+          <!-- body -->
+          <rect x="-74" y="6" width="148" height="108" rx="8" fill="url(#hHouse)"/>
+          <!-- roof -->
+          <path d="M-92 8 L0 -66 L92 8 Z" fill="#1a3fa8"/>
+          <path d="M-92 8 L0 -66 L92 8 Z" fill="#ffffff" opacity="0.06"/>
+          <!-- door -->
+          <rect x="-16" y="58" width="32" height="56" rx="5" fill="#0c2340"/>
+          <circle cx="9" cy="88" r="2.2" fill="#f6b567"/>
+          <!-- windows, warmly lit -->
+          <rect class="lit" x="-58" y="30" width="30" height="26" rx="4" fill="#ffd79b"/>
+          <rect class="lit l2" x="28" y="30" width="30" height="26" rx="4" fill="#ffd79b"/>
+        </g>
+
+        <!-- exclusive marker pin above the home -->
+        <g class="mainpin" transform="translate(320 296)">
+          <path d="M0 46 C -26 12, -26 -8, 0 -8 C 26 -8, 26 12, 0 46 Z" fill="#f6b567"/>
+          <path d="M0 46 C -26 12, -26 -8, 0 -8 C 26 -8, 26 12, 0 46 Z" fill="#ffffff" opacity="0.08"/>
+          <circle cx="0" cy="12" r="10" fill="#0c2340"/>
+          <path d="M-5 12 l3.4 3.6 L6 7.6" fill="none" stroke="#f6b567" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
     </figure>
   </div>
 </section>
 
 <!-- ===================== STAT STRIP (honest, provable framings) ===================== -->
 <section class="stats">
-  <div class="wrap stats-in">
-    <div class="stat"><div class="n">1</div><div class="l">Agency per area</div></div>
-    <div class="stat"><div class="n">0</div><div class="l">Shared or resold leads</div></div>
-    <div class="stat"><div class="n">100%</div><div class="l">Self-serve — no calls</div></div>
+  <div class="wrap stats-in reveal stagger">
+    <div class="stat"><div class="n" data-count="1">1</div><div class="l">Agency per area</div></div>
+    <div class="stat"><div class="n" data-count="0">0</div><div class="l">Shared or resold leads</div></div>
+    <div class="stat"><div class="n" data-count="100" data-suffix="%">100%</div><div class="l">Self-serve — no calls</div></div>
     <div class="stat"><div class="n">3-lead</div><div class="l">First-month guarantee</div></div>
   </div>
 </section>
@@ -346,12 +528,12 @@
 <!-- ===================== HOW IT WORKS ===================== -->
 <section class="band" id="how">
   <div class="wrap">
-    <div class="head">
+    <div class="head reveal">
       <span class="eyebrow">How it works</span>
       <h2>Pay. Set up. Get leads.</h2>
       <p>The whole thing happens online. Here's what to expect.</p>
     </div>
-    <div class="steps">
+    <div class="steps reveal stagger">
       <div class="step">
         <div class="num">1.</div>
         <h3>Claim your territory</h3>
@@ -374,11 +556,11 @@
 <!-- ===================== BENEFIT LIST ===================== -->
 <section class="band" id="benefits" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="head">
+    <div class="head reveal">
       <span class="eyebrow">Why agencies choose Oyzla</span>
       <h2>The deal, in plain terms</h2>
     </div>
-    <div class="benefits">
+    <div class="benefits reveal stagger">
       <div class="benefit">
         <h3>Exclusive leads only</h3>
         <p>Every lead is yours alone. Never resold.</p>
@@ -410,12 +592,12 @@
 <!-- ===================== WHY EXCLUSIVE BEATS SHARED ===================== -->
 <section class="band" id="why">
   <div class="wrap">
-    <div class="head">
+    <div class="head reveal">
       <span class="eyebrow">The model</span>
       <h2>Why exclusive beats shared</h2>
       <p>Most vendors sell the same lead to several agents. We never do.</p>
     </div>
-    <div class="compare">
+    <div class="compare reveal stagger">
       <div class="cmp bad">
         <h3><span class="mk">✕</span> Shared lead vendors</h3>
         <ul>
@@ -439,21 +621,95 @@
 <!-- ===================== WHY ONLINE ADS BEAT THE OLD WAY ===================== -->
 <section class="band" id="online" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="split">
+    <div class="split reveal">
       <div class="head" style="margin-bottom:0">
         <span class="eyebrow">A smarter way to prospect</span>
         <h2>Why online ads beat the old way</h2>
         <p>Door-knocking interrupts strangers. Online ads reach people who are already shopping for coverage — and every one of them in your area comes to you.</p>
       </div>
-      <!-- OWNER: drop a real photo here — e.g. your team at work, a storefront,
-           or a client conversation. Save it as img/office.jpg (or update the
-           src below). The gray box shows until you do. -->
-      <figure class="photo">
-        <img src="img/office.jpg" alt="Local insurance office at work" onerror="this.classList.add('missing')">
-        <figcaption><b>Photo slot</b>Add a real photo — team, storefront, or client conversation<br>(save as img/office.jpg)</figcaption>
+      <!-- Designed brand visual: a warm local insurance storefront at dusk. -->
+      <figure class="photo" aria-label="Illustration: a welcoming local insurance office storefront in the evening">
+        <svg class="art" viewBox="0 0 640 460" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="oSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#13315f"/>
+              <stop offset="1" stop-color="#26508f"/>
+            </linearGradient>
+            <linearGradient id="oGlow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffd79b"/>
+              <stop offset="1" stop-color="#f6b567"/>
+            </linearGradient>
+            <linearGradient id="oWall" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f3f5fa"/>
+              <stop offset="1" stop-color="#dbe3f1"/>
+            </linearGradient>
+            <radialGradient id="oWarm" cx="0.5" cy="0.5" r="0.6">
+              <stop offset="0" stop-color="#ffe6bd" stop-opacity="0.95"/>
+              <stop offset="1" stop-color="#ffcf8a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- dusk sky -->
+          <rect width="640" height="460" fill="url(#oSky)"/>
+          <circle cx="512" cy="96" r="150" fill="url(#oWarm)" opacity="0.5"/>
+          <g fill="#ffffff" opacity="0.45">
+            <circle class="twinkle t1" cx="120" cy="66" r="1.6"/>
+            <circle class="twinkle t3" cx="220" cy="44" r="1.4"/>
+            <circle class="twinkle t2" cx="360" cy="72" r="1.5"/>
+          </g>
+
+          <!-- sidewalk -->
+          <rect x="0" y="392" width="640" height="68" fill="#0e2952"/>
+          <rect x="0" y="388" width="640" height="8" fill="#2456d6" opacity="0.5"/>
+
+          <!-- storefront building -->
+          <rect x="86" y="150" width="468" height="242" fill="url(#oWall)"/>
+          <rect x="86" y="150" width="468" height="242" fill="none" stroke="#c3cfe6" stroke-width="2"/>
+
+          <!-- awning -->
+          <path d="M70 150 L570 150 L556 196 L84 196 Z" fill="#1a3fa8"/>
+          <g fill="#2456d6">
+            <path d="M84 196 h60 l-8 22 h-60 z"/>
+            <path d="M204 196 h60 l-8 22 h-60 z"/>
+            <path d="M324 196 h60 l-8 22 h-60 z"/>
+            <path d="M444 196 h60 l-8 22 h-60 z"/>
+          </g>
+          <!-- blank sign band (no text/logo) -->
+          <rect x="250" y="120" width="140" height="30" rx="6" fill="#0c2340"/>
+          <circle cx="270" cy="135" r="7" fill="none" stroke="#f6b567" stroke-width="3"/>
+          <path d="M266 128 a7 7 0 0 1 8 0" fill="none" stroke="#13315f" stroke-width="3"/>
+
+          <!-- warm lit display windows -->
+          <g>
+            <rect class="lit" x="120" y="228" width="150" height="128" rx="6" fill="url(#oGlow)"/>
+            <rect x="120" y="228" width="150" height="128" rx="6" fill="none" stroke="#c3cfe6" stroke-width="3"/>
+            <line x1="195" y1="228" x2="195" y2="356" stroke="#e3b877" stroke-width="2"/>
+            <line x1="120" y1="292" x2="270" y2="292" stroke="#e3b877" stroke-width="2"/>
+          </g>
+
+          <!-- door -->
+          <rect x="300" y="238" width="86" height="154" rx="4" fill="#12305c"/>
+          <rect x="308" y="248" width="70" height="96" rx="3" fill="#26508f" opacity="0.7"/>
+          <circle cx="372" cy="320" r="3" fill="#f6b567"/>
+
+          <!-- second warm window -->
+          <g>
+            <rect class="lit l2" x="418" y="228" width="112" height="128" rx="6" fill="url(#oGlow)"/>
+            <rect x="418" y="228" width="112" height="128" rx="6" fill="none" stroke="#c3cfe6" stroke-width="3"/>
+            <line x1="474" y1="228" x2="474" y2="356" stroke="#e3b877" stroke-width="2"/>
+            <line x1="418" y1="292" x2="530" y2="292" stroke="#e3b877" stroke-width="2"/>
+          </g>
+
+          <!-- potted plant by the door -->
+          <g transform="translate(268 356)">
+            <rect x="-11" y="18" width="22" height="18" rx="3" fill="#0c2340"/>
+            <path d="M0 18 C -14 4, -12 -14, -2 -22 C 2 -8, 4 4, 0 18 Z" fill="#2f9e6b"/>
+            <path d="M0 18 C 14 2, 14 -12, 4 -20 C 0 -6, -2 6, 0 18 Z" fill="#38b47c"/>
+          </g>
+        </svg>
       </figure>
     </div>
-    <div class="compare">
+    <div class="compare reveal stagger">
       <div class="cmp bad">
         <h3><span class="mk">✕</span> Door-to-door &amp; in-store pitching</h3>
         <ul>
@@ -479,12 +735,12 @@
 <!-- ===================== PRICING — THREE TIERS ===================== -->
 <section class="band offer" id="pricing">
   <div class="wrap">
-    <div class="head">
+    <div class="head reveal">
       <span class="eyebrow">Pricing</span>
       <h2>Priced by lead flow. Exclusive to you.</h2>
       <p>You're buying exclusive lead flow, not a fixed zip list — we manage and adjust your coverage to keep the leads coming, and they're only ever sent to you.</p>
     </div>
-    <div class="plans">
+    <div class="plans reveal stagger">
 
       <!-- Tier 1: Standard — founding offer, live Stripe checkout -->
       <div class="plan featured">
@@ -525,7 +781,6 @@
           <span class="per">/month</span>
         </div>
         <div class="p-sub">Higher lead volume &amp; wider reach</div>
-        <div class="p-note">(placeholder — final number TBD)</div>
         <p class="p-desc">For agencies that can handle more volume.</p>
         <ul class="plist">
           <li><span class="tick">✓</span> Higher monthly lead volume</li>
@@ -547,7 +802,6 @@
           <span class="per">/month</span>
         </div>
         <div class="p-sub">Highest volume · multi-market</div>
-        <div class="p-note">(placeholder — final number TBD)</div>
         <p class="p-desc">For high-volume agencies covering more than one market.</p>
         <ul class="plist">
           <li><span class="tick">✓</span> Highest monthly lead volume</li>
@@ -569,12 +823,12 @@
 <!-- ===================== FAQ ===================== -->
 <section class="band" id="faq" style="background:#fff;border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="head">
+    <div class="head reveal">
       <span class="eyebrow">FAQ</span>
       <h2>Questions, answered</h2>
       <p>Anything else? Message us through the chat in the corner.</p>
     </div>
-    <div class="faq">
+    <div class="faq reveal">
       <details open>
         <summary>Are the leads really exclusive? <span class="chev">＋</span></summary>
         <p>Yes. One agency per area. Every lead we generate in your territory goes to you alone — never shared or resold.</p>
@@ -606,7 +860,7 @@
 <!-- ===================== FINAL CTA ===================== -->
 <section class="band">
   <div class="wrap">
-    <div class="final">
+    <div class="final reveal">
       <span class="eyebrow">Special Limited-Time Offer</span>
       <h2>Claim your area before it's taken.</h2>
       <p>One agency per territory. $1,000 first month, then $2,000/month — backed by the 3-lead guarantee.</p>
@@ -663,6 +917,66 @@
     function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 8); }
     window.addEventListener('scroll', onScroll, {passive:true});
     onScroll();
+  })();
+
+  // Respect reduced-motion: skip observers/counters, show everything
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- Animated number counters ----
+    function runCounter(el){
+      var target = parseFloat(el.getAttribute('data-count'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      if (isNaN(target)) return;
+      if (reduce || target === 0){ el.textContent = target + suffix; return; }
+      var dur = 1100, start = null;
+      function tick(ts){
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    var reveals = document.querySelectorAll('.reveal');
+
+    if (reduce || !('IntersectionObserver' in window)){
+      reveals.forEach(function(n){ n.classList.add('in'); });
+      document.querySelectorAll('.n[data-count]').forEach(function(n){
+        n.textContent = n.getAttribute('data-count') + (n.getAttribute('data-suffix')||'');
+      });
+    } else {
+      var io = new IntersectionObserver(function(entries, obs){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in');
+          e.target.querySelectorAll && e.target.querySelectorAll('.n[data-count]').forEach(runCounter);
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach(function(n){ io.observe(n); });
+    }
+  })();
+
+  // Smooth-scroll for in-page anchors, accounting for sticky header
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nav = document.querySelector('header.nav');
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(ev){
+        var id = a.getAttribute('href');
+        if (id === '#' || id.length < 2) return;
+        var t = document.querySelector(id);
+        if (!t) return;
+        ev.preventDefault();
+        var offset = (nav ? nav.offsetHeight : 0) + 12;
+        var y = t.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    });
   })();
 </script>
 </body>
