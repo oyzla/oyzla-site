@@ -361,7 +361,7 @@
      sent anywhere — the form still shows the thank-you screen so the page can
      be previewed end-to-end.
      ========================================================================== */
-  const BACKEND_WEBHOOK_URL = "REPLACE_WITH_APPS_SCRIPT_WEBHOOK_URL";
+  const BACKEND_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzMfOUUaQS0q1U789mxp2KDIdweixkfdg030UCEpAjxThq9QaMGiB4y83oLHQ-gmPvyjA/exec?source=onboarding";
   /* ======================== END CONFIG ==================================== */
 
   (function(){
@@ -483,24 +483,18 @@
         return;
       }
 
-      // POST as text/plain to stay a CORS "simple request" (required for
-      // Google Apps Script web-app endpoints; body is still JSON).
+      // POST as text/plain in no-cors mode. Google Apps Script web apps 302-redirect
+      // to a googleusercontent URL that returns no CORS headers, so a normal "cors"
+      // fetch always rejects when reading the response even though the write succeeds.
+      // A cors-then-retry pattern would therefore fire twice and double-submit. A
+      // single no-cors request writes exactly one row; its opaque response resolves,
+      // so we show the success screen.
       fetch(BACKEND_WEBHOOK_URL, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
-      }).then(function(res){
-        if (res.ok || res.type === 'opaque') { showSuccess(); } else { showFailure(); }
-      }).catch(function(){
-        // Some webhook hosts (incl. Apps Script) can trip CORS on the response
-        // even when the POST succeeds; retry once in no-cors mode.
-        fetch(BACKEND_WEBHOOK_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        }).then(showSuccess).catch(showFailure);
-      });
+      }).then(showSuccess).catch(showFailure);
     });
   })();
 </script>
