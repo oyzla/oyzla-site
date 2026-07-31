@@ -432,11 +432,20 @@
   .final .eyebrow{color:var(--amber-bright)}
   .final h2{font-size:clamp(30px,3.6vw,42px);margin-top:18px}
   .final p{color:#c3cede;margin-top:18px;font-size:19.5px;line-height:1.65;max-width:56ch;margin-left:auto;margin-right:auto}
-  .final .btn{margin-top:32px;background:#fff;color:var(--navy);
+  .final .btn{margin-top:32px;color:var(--navy);
+    background:linear-gradient(100deg,#fff 0%,#fff 34%,#fff4e2 48%,#eaf1ff 60%,#fff 74%,#fff 100%);
+    background-size:230% 100%;background-position:0% 0;
+    animation:ctaShift 6.5s ease-in-out infinite;
     box-shadow:0 1px 2px rgba(0,0,0,.25),0 14px 30px -12px rgba(0,0,0,.5),
       inset 0 1px 0 rgba(255,255,255,.8)}
-  .final .btn:hover{background:#f3ecdf;
+  .final .btn::before{content:"";position:absolute;top:0;bottom:0;left:-65%;width:42%;
+    background:linear-gradient(105deg,transparent,rgba(31,82,198,.16),rgba(232,155,63,.22),transparent);
+    transform:skewX(-18deg);pointer-events:none;
+    animation:ctaSheen 6.5s var(--ease) infinite}
+  .final .btn:hover{background-image:linear-gradient(100deg,#f7efe1 0%,#f7efe1 34%,#fbe6cf 48%,#e6eefc 60%,#f7efe1 74%,#f7efe1 100%);
     box-shadow:0 2px 4px rgba(0,0,0,.25),0 20px 42px -14px rgba(0,0,0,.55)}
+  @keyframes ctaShift{0%{background-position:0% 0}50%{background-position:100% 0}100%{background-position:0% 0}}
+  @keyframes ctaSheen{0%{left:-65%}42%{left:145%}100%{left:145%}}
   .final .micro{justify-content:center;color:#8fa1b8;margin-top:24px}
   @media(max-width:560px){
     .final{padding:54px 22px;border-radius:16px}
@@ -538,6 +547,8 @@
     .drawline{stroke-dashoffset:0 !important;transition:none !important}
     .plan:hover,.step:hover,.cmp:hover,.benefit:hover,.btn-lg:hover,.concierge:hover{transform:none !important}
     .btn-primary::after,.btn-amber::after{display:none !important}
+    .final .btn{animation:none !important;background:#fff !important}
+    .final .btn::before{display:none !important}
     .stat .n.npop{animation:none !important}
   }
 </style>
