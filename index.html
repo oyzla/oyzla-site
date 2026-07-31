@@ -463,19 +463,87 @@
   .foot-bottom{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);
     display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
 
-  /* ============ CHAT BUBBLE PLACEHOLDER (chat widget in production) ============ */
-  .concierge{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  /* ============ AI CHAT WIDGET ============ */
+  .oyc{position:fixed;right:22px;bottom:22px;z-index:60;font-family:var(--font)}
+  .oyc-bubble{position:relative;display:inline-flex;align-items:center;gap:10px;cursor:pointer;
     background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:9px 17px 9px 10px;
-    box-shadow:0 10px 30px -10px rgba(10,28,51,.35);font-weight:700;font-size:15.5px;
-    transition:transform .3s var(--ease),box-shadow .3s ease}
-  .concierge:hover{transform:translateY(-3px);box-shadow:0 16px 38px -12px rgba(10,28,51,.4)}
-  .concierge .dot{position:relative;width:34px;height:34px;border-radius:50%;flex:0 0 auto;
+    box-shadow:0 10px 30px -10px rgba(10,28,51,.35);font-weight:700;font-size:15.5px;color:var(--ink);
+    font-family:var(--font);transition:transform .3s var(--ease),box-shadow .3s ease}
+  .oyc-bubble:hover{transform:translateY(-3px);box-shadow:0 16px 38px -12px rgba(10,28,51,.4)}
+  .oyc-dot{position:relative;width:34px;height:34px;border-radius:50%;flex:0 0 auto;
     background:linear-gradient(180deg,#2a5fd6,var(--brand));color:#fff;
     display:flex;align-items:center;justify-content:center;font-size:16px}
-  .concierge .dot::after{content:"";position:absolute;inset:0;border-radius:50%;
+  .oyc-dot::after{content:"";position:absolute;inset:0;border-radius:50%;
     border:2px solid rgba(31,82,198,.5);animation:ping 2.8s var(--ease) infinite}
   @keyframes ping{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(1.55);opacity:0}}
-  @media(max-width:520px){.concierge span.t{display:none}}
+  .oyc.open .oyc-bubble{display:none}
+
+  .oyc-panel{position:fixed;right:22px;bottom:22px;width:384px;max-width:calc(100vw - 32px);
+    height:564px;max-height:calc(100vh - 40px);display:flex;flex-direction:column;overflow:hidden;
+    background:#fff;border:1px solid var(--line-2);border-radius:18px;
+    box-shadow:0 24px 64px -22px rgba(10,28,51,.55),0 4px 12px rgba(10,28,51,.12);
+    transform:translateY(14px) scale(.98);opacity:0;transform-origin:bottom right;
+    transition:opacity .28s var(--ease),transform .28s var(--ease)}
+  .oyc.open .oyc-panel{opacity:1;transform:none}
+
+  .oyc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;
+    color:#fff;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 70%,#122c50 100%);
+    border-bottom:1px solid rgba(255,255,255,.08)}
+  .oyc-head-id{display:flex;align-items:center;gap:11px}
+  .oyc-avatar{width:38px;height:38px;flex:0 0 auto;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-family:var(--serif);font-weight:700;font-size:19px;color:var(--navy);
+    background:linear-gradient(180deg,var(--amber-bright),var(--amber))}
+  .oyc-title{font-weight:800;font-size:16px;letter-spacing:.02em}
+  .oyc-sub{display:flex;align-items:center;gap:7px;font-size:13px;color:#9fb0c7;margin-top:1px}
+  .oyc-online{width:8px;height:8px;border-radius:50%;flex:0 0 auto;background:#4ad991;
+    box-shadow:0 0 0 3px rgba(74,217,145,.22)}
+  .oyc-close{border:0;background:rgba(255,255,255,.12);color:#fff;width:30px;height:30px;border-radius:50%;
+    cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto;transition:background .2s ease}
+  .oyc-close:hover{background:rgba(255,255,255,.26)}
+
+  .oyc-msgs{flex:1 1 auto;overflow-y:auto;padding:18px 16px;background:var(--bg);
+    display:flex;flex-direction:column;gap:12px}
+  .oyc-row{display:flex;max-width:86%}
+  .oyc-row.user{align-self:flex-end;justify-content:flex-end}
+  .oyc-row.bot{align-self:flex-start}
+  .oyc-bub{padding:11px 14px;border-radius:15px;font-size:15px;line-height:1.5;
+    box-shadow:var(--sh-sm);word-wrap:break-word;overflow-wrap:anywhere}
+  .oyc-row.bot .oyc-bub{background:#fff;color:var(--ink);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .oyc-row.user .oyc-bub{background:linear-gradient(180deg,#2a5fd6,var(--brand));color:#fff;border-bottom-right-radius:5px}
+  .oyc-bub strong{font-weight:700}
+  .oyc-bub a{color:inherit;text-decoration:underline}
+  .oyc-row.bot .oyc-bub a{color:var(--brand)}
+
+  .oyc-typing{display:inline-flex;gap:4px;padding:13px 15px}
+  .oyc-typing span{width:7px;height:7px;border-radius:50%;background:var(--mut-2);
+    animation:oycBlink 1.3s infinite ease-in-out both}
+  .oyc-typing span:nth-child(2){animation-delay:.18s}
+  .oyc-typing span:nth-child(3){animation-delay:.36s}
+  @keyframes oycBlink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+
+  .oyc-form{display:flex;align-items:center;gap:8px;padding:12px;background:#fff;border-top:1px solid var(--line)}
+  .oyc-input{flex:1 1 auto;min-width:0;border:1px solid var(--line-2);border-radius:999px;padding:12px 16px;
+    font:15px/1.4 var(--font);color:var(--ink);outline:none;transition:border-color .2s ease,box-shadow .2s ease}
+  .oyc-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(31,82,198,.14)}
+  .oyc-send{flex:0 0 auto;width:42px;height:42px;border:0;border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    background:linear-gradient(180deg,#2a5fd6,var(--brand));box-shadow:0 6px 16px -8px rgba(31,82,198,.7);
+    transition:transform .2s ease,box-shadow .2s ease}
+  .oyc-send:hover{transform:translateY(-1px);box-shadow:0 10px 22px -8px rgba(31,82,198,.8)}
+  .oyc-send:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
+  .oyc-foot{text-align:center;font-size:11.5px;color:var(--mut-2);padding:0 12px 11px;background:#fff}
+
+  @media(max-width:520px){
+    .oyc-bubble .oyc-t{display:none}
+    .oyc-panel{right:0;bottom:0;width:100vw;max-width:100vw;height:100vh;max-height:100vh;border-radius:0;border:0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .oyc-panel{transition:none}
+    .oyc-dot::after{animation:none;opacity:0}
+    .oyc-bubble:hover{transform:none}
+    .oyc-typing span{animation:none;opacity:.45}
+  }
 
   /* ============ MOTION & ANIMATION ============ */
   /* scroll-reveal base state */
@@ -542,10 +610,9 @@
     .hero::before,.hero::after,.final::before,.final::after{animation:none !important}
     .twinkle,.lit,.glowsoft,.lamp,.mainpin,.route{animation:none !important}
     .ring,.pinring{animation:none !important;opacity:.35}
-    .concierge .dot::after{animation:none !important;opacity:0}
     .chip{animation:none !important}
     .drawline{stroke-dashoffset:0 !important;transition:none !important}
-    .plan:hover,.step:hover,.cmp:hover,.benefit:hover,.btn-lg:hover,.concierge:hover{transform:none !important}
+    .plan:hover,.step:hover,.cmp:hover,.benefit:hover,.btn-lg:hover,.oyc-bubble:hover{transform:none !important}
     .btn-primary::after,.btn-amber::after{display:none !important}
     .final .btn{animation:none !important;background:#fff !important}
     .final .btn::before{display:none !important}
@@ -1269,12 +1336,33 @@
   </div>
 </footer>
 
-<!-- Contact bubble — opens the visitor's email client (self-serve, no sales calls) -->
-<a class="concierge" href="mailto:info@oyzlaleads.com?subject=Question%20about%20Oyzla%20Leads"
-   aria-label="Email us at info@oyzlaleads.com" title="Email us — info@oyzlaleads.com">
-  <span class="dot" aria-hidden="true">💬</span>
-  <span class="t">Chat with us</span>
-</a>
+<!-- AI chat widget — in-page assistant (no mailto; never opens the Mail app) -->
+<div id="oyzla-chat" class="oyc">
+  <button id="oyc-toggle" class="oyc-bubble" type="button" aria-label="Chat with the Oyzla Leads assistant" aria-expanded="false" aria-controls="oyc-panel">
+    <span class="oyc-dot" aria-hidden="true">💬</span>
+    <span class="oyc-t">Chat with us</span>
+  </button>
+  <div id="oyc-panel" class="oyc-panel" role="dialog" aria-label="Oyzla Leads chat" aria-modal="false" hidden>
+    <div class="oyc-head">
+      <div class="oyc-head-id">
+        <span class="oyc-avatar" aria-hidden="true">O</span>
+        <div>
+          <div class="oyc-title">Oyzla Leads</div>
+          <div class="oyc-sub"><span class="oyc-online" aria-hidden="true"></span> Typically replies instantly</div>
+        </div>
+      </div>
+      <button id="oyc-close" class="oyc-close" type="button" aria-label="Close chat">✕</button>
+    </div>
+    <div id="oyc-msgs" class="oyc-msgs" aria-live="polite"></div>
+    <form id="oyc-form" class="oyc-form" autocomplete="off">
+      <input id="oyc-input" class="oyc-input" type="text" placeholder="Type your question…" maxlength="1000" aria-label="Type your message" />
+      <button id="oyc-send" class="oyc-send" type="submit" aria-label="Send message">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      </button>
+    </form>
+    <div class="oyc-foot">Powered by AI · For account help, email info@oyzlaleads.com</div>
+  </div>
+</div>
 
 <script>
   // Nav elevation on scroll
@@ -1352,6 +1440,144 @@
       });
     });
   })();
+</script>
+
+<!-- AI chat widget logic — JSONP to the Oyzla Apps Script backend (source=sitebot) -->
+<script>
+(function(){
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbzIQW_1mDolIl-BoWi1_Xa2QVJP6f58LTsvKF9DOZZgZ1b6saqWL_CV7HQdMo2VqoQ9Bg/exec";
+  var FALLBACK = "Sorry — I'm having trouble connecting right now. You can email us at info@oyzlaleads.com and we'll get right back to you.";
+
+  var root   = document.getElementById('oyzla-chat');
+  if (!root) return;
+  var toggle = document.getElementById('oyc-toggle');
+  var closeB = document.getElementById('oyc-close');
+  var panel  = document.getElementById('oyc-panel');
+  var msgs   = document.getElementById('oyc-msgs');
+  var form   = document.getElementById('oyc-form');
+  var input  = document.getElementById('oyc-input');
+  var sendB  = document.getElementById('oyc-send');
+
+  var history = [];          // [{role:'user'|'assistant', content:'...'}]
+  var greeted = false;
+  var pending = false;
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  // Minimal, safe formatting: escape first, then **bold**, emails -> mailto links, newlines -> <br>
+  function fmt(s){
+    var h = esc(s);
+    h = h.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    h = h.replace(/([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1">$1</a>');
+    h = h.replace(/\n/g, '<br>');
+    return h;
+  }
+  function addMsg(role, text){
+    var row = document.createElement('div');
+    row.className = 'oyc-row ' + (role === 'user' ? 'user' : 'bot');
+    var b = document.createElement('div');
+    b.className = 'oyc-bub';
+    b.innerHTML = fmt(text);
+    row.appendChild(b);
+    msgs.appendChild(row);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function showTyping(){
+    var row = document.createElement('div');
+    row.className = 'oyc-row bot';
+    row.id = 'oyc-typing-row';
+    row.innerHTML = '<div class="oyc-bub oyc-typing"><span></span><span></span><span></span></div>';
+    msgs.appendChild(row);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function hideTyping(){
+    var t = document.getElementById('oyc-typing-row');
+    if (t && t.parentNode) t.parentNode.removeChild(t);
+  }
+  function setPending(p){
+    pending = p;
+    sendB.disabled = p;
+    input.disabled = p;
+  }
+
+  function openChat(){
+    root.classList.add('open');
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    if (!greeted){
+      greeted = true;
+      addMsg('bot', "Hi! 👋 I'm the Oyzla Leads assistant. Ask me anything about our exclusive insurance leads, pricing, or how it all works.");
+    }
+    setTimeout(function(){ try{ input.focus(); }catch(e){} }, 80);
+  }
+  function closeChat(){
+    root.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    setTimeout(function(){ if (!root.classList.contains('open')) panel.hidden = true; }, 300);
+    try{ toggle.focus(); }catch(e){}
+  }
+  toggle.addEventListener('click', openChat);
+  closeB.addEventListener('click', closeChat);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && root.classList.contains('open')) closeChat();
+  });
+
+  function send(text){
+    if (pending) return;
+    addMsg('user', text);
+    history.push({ role:'user', content:text });
+    if (history.length > 12) history = history.slice(-12);
+    input.value = '';
+    setPending(true);
+    showTyping();
+
+    // Prior turns only (backend appends the current message itself)
+    var prior = history.slice(0, -1).slice(-8);
+
+    var cbName = 'oycCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+    var script = document.createElement('script');
+    var done = false, timer;
+
+    function cleanup(){
+      try{ delete window[cbName]; }catch(e){ window[cbName] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+    function finish(reply){
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      hideTyping();
+      setPending(false);
+      var r = (reply && String(reply).trim()) || FALLBACK;
+      addMsg('bot', r);
+      history.push({ role:'assistant', content:r });
+      if (history.length > 12) history = history.slice(-12);
+      cleanup();
+      try{ input.focus(); }catch(e){}
+    }
+
+    window[cbName] = function(data){ finish(data && data.reply); };
+    timer = setTimeout(function(){ finish(FALLBACK); }, 25000);
+    script.onerror = function(){ finish(FALLBACK); };
+
+    script.src = ENDPOINT
+      + '?source=sitebot'
+      + '&callback=' + encodeURIComponent(cbName)
+      + '&message='  + encodeURIComponent(text)
+      + '&history='  + encodeURIComponent(JSON.stringify(prior));
+    document.body.appendChild(script);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var t = (input.value || '').trim();
+    if (!t || pending) return;
+    send(t);
+  });
+})();
 </script>
 </body>
 </html>
