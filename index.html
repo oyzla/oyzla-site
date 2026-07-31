@@ -233,16 +233,24 @@
       radial-gradient(420px 200px at 12% 100%,rgba(75,126,240,.16),transparent 70%)}
   .stats::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;
     background:linear-gradient(90deg,transparent,var(--amber) 30%,var(--brand-bright) 70%,transparent)}
-  .stats-in{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:40px 0}
-  .stat{text-align:center;padding:8px 12px}
-  .stat .n{font-family:var(--serif);font-size:38px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
-  .stat .n.pop{animation:statPop .7s var(--ease)}
+  .stats-in{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:52px 24px}
+  .stat{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    text-align:center;padding:6px 14px}
+  .stat .n{display:block;font-family:var(--serif);font-size:38px;font-weight:700;
+    letter-spacing:-.01em;line-height:1.15}
+  /* count-up entrance pop — scoped class name so it never collides with the
+     pricing ".pop" badge (which is an absolutely-positioned amber pill) */
+  .stat .n.npop{animation:statPop .7s var(--ease)}
   @keyframes statPop{0%{transform:scale(.92)}55%{transform:scale(1.06)}100%{transform:scale(1)}}
-  .stat .l{color:#9fb0c7;font-size:16px;font-weight:600;margin-top:8px}
+  .stat .l{color:#9fb0c7;font-size:16px;font-weight:600;line-height:1.35;margin-top:8px}
   .stat + .stat{border-left:1px solid rgba(255,255,255,.12)}
   @media(max-width:720px){
-    .stats-in{grid-template-columns:repeat(2,1fr);gap:20px 8px;padding:30px 0}
+    .stats-in{grid-template-columns:repeat(2,1fr);gap:26px 8px;padding:40px 20px}
     .stat:nth-child(3){border-left:0}
+  }
+  @media(max-width:420px){
+    .stats-in{grid-template-columns:1fr;gap:22px}
+    .stat + .stat{border-left:0}
   }
 
   /* ============ SECTION SHELL ============ */
@@ -530,7 +538,7 @@
     .drawline{stroke-dashoffset:0 !important;transition:none !important}
     .plan:hover,.step:hover,.cmp:hover,.benefit:hover,.btn-lg:hover,.concierge:hover{transform:none !important}
     .btn-primary::after,.btn-amber::after{display:none !important}
-    .stat .n.pop{animation:none !important}
+    .stat .n.npop{animation:none !important}
   }
 </style>
 </head>
@@ -1250,11 +1258,12 @@
   </div>
 </footer>
 
-<!-- Production chat widget lives here (placeholder shown for layout) -->
-<div class="concierge" title="The live site shows the chat widget here">
-  <span class="dot">💬</span>
+<!-- Contact bubble — opens the visitor's email client (self-serve, no sales calls) -->
+<a class="concierge" href="mailto:info@oyzlaleads.com?subject=Question%20about%20Oyzla%20Leads"
+   aria-label="Email us at info@oyzlaleads.com" title="Email us — info@oyzlaleads.com">
+  <span class="dot" aria-hidden="true">💬</span>
   <span class="t">Chat with us</span>
-</div>
+</a>
 
 <script>
   // Nav elevation on scroll
@@ -1282,7 +1291,7 @@
       var suffix = el.getAttribute('data-suffix') || '';
       if (isNaN(target)) return;
       if (reduce || target === 0){ el.textContent = target + suffix; return; }
-      el.classList.add('pop');
+      el.classList.add('npop');
       var dur = 1200, start = null;
       function tick(ts){
         if (start === null) start = ts;
