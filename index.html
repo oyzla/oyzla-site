@@ -1525,6 +1525,16 @@
     if (e.key === 'Escape' && root.classList.contains('open')) closeChat();
   });
 
+  function renderReply(reply){
+    hideTyping();
+    setPending(false);
+    var r = (reply && String(reply).trim()) || FALLBACK;
+    addMsg('bot', r);
+    history.push({ role:'assistant', content:r });
+    if (history.length > 12) history = history.slice(-12);
+    try{ input.focus(); }catch(e){}
+  }
+
   function send(text){
     if (pending) return;
     addMsg('user', text);
@@ -1536,39 +1546,38 @@
 
     // Prior turns only (backend appends the current message itself)
     var prior = history.slice(0, -1).slice(-8);
-
-    var cbName = 'oycCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
-    var script = document.createElement('script');
-    var done = false, timer;
-
-    function cleanup(){
-      try{ delete window[cbName]; }catch(e){ window[cbName] = undefined; }
-      if (script.parentNode) script.parentNode.removeChild(script);
-    }
-    function finish(reply){
-      if (done) return;
-      done = true;
-      clearTimeout(timer);
-      hideTyping();
-      setPending(false);
-      var r = (reply && String(reply).trim()) || FALLBACK;
-      addMsg('bot', r);
-      history.push({ role:'assistant', content:r });
-      if (history.length > 12) history = history.slice(-12);
-      cleanup();
-      try{ input.focus(); }catch(e){}
-    }
-
-    window[cbName] = function(data){ finish(data && data.reply); };
-    timer = setTimeout(function(){ finish(FALLBACK); }, 25000);
-    script.onerror = function(){ finish(FALLBACK); };
-
-    script.src = ENDPOINT
-      + '?source=sitebot'
-      + '&callback=' + encodeURIComponent(cbName)
+    var base = ENDPOINT + '?source=sitebot'
       + '&message='  + encodeURIComponent(text)
       + '&history='  + encodeURIComponent(JSON.stringify(prior));
-    document.body.appendChild(script);
+
+    // JSONP request with one automatic retry on a transient failure,
+    // so a one-off network/script-load hiccup doesn't surface an error.
+    function attempt(tryNo){
+      var cbName = 'oycCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+      var script = document.createElement('script');
+      var settled = false, timer;
+
+      function cleanup(){
+        try{ delete window[cbName]; }catch(e){ window[cbName] = undefined; }
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+      function ok(reply){
+        if (settled) return; settled = true; clearTimeout(timer); cleanup();
+        renderReply(reply);
+      }
+      function fail(){
+        if (settled) return; settled = true; clearTimeout(timer); cleanup();
+        if (tryNo < 1) setTimeout(function(){ attempt(tryNo + 1); }, 800);
+        else renderReply(FALLBACK);
+      }
+
+      window[cbName] = function(data){ ok(data && data.reply); };
+      timer = setTimeout(fail, 20000);
+      script.onerror = fail;
+      script.src = base + '&callback=' + encodeURIComponent(cbName);
+      document.body.appendChild(script);
+    }
+    attempt(0);
   }
 
   form.addEventListener('submit', function(e){
