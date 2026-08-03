@@ -1567,7 +1567,9 @@
       }
       function fail(){
         if (settled) return; settled = true; clearTimeout(timer); cleanup();
-        if (tryNo < 1) setTimeout(function(){ attempt(tryNo + 1); }, 800);
+        // Apps Script web apps occasionally return a transient 503; retry a
+        // couple of times with a short backoff before showing the fallback.
+        if (tryNo < 2) setTimeout(function(){ attempt(tryNo + 1); }, 700 * (tryNo + 1));
         else renderReply(FALLBACK);
       }
 
