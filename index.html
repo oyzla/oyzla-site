@@ -48,14 +48,17 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Oyzla Leads",
+  "legalName": "OYZLA LEADS LLC",
   "url": "https://oyzlaleads.com/",
   "logo": "https://oyzlaleads.com/apple-touch-icon.png",
   "email": "info@oyzlaleads.com",
   "description": "Exclusive local insurance leads for independent agencies — one agency per area, never shared.",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "1429 S Hillside Drive",
     "addressLocality": "Saratoga Springs",
     "addressRegion": "UT",
+    "postalCode": "84045",
     "addressCountry": "US"
   }
 }
@@ -192,7 +195,8 @@
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .hero .lede{font-size:21px;line-height:1.65;margin-top:24px;max-width:42ch;color:var(--mut)}
   .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
-  .micro{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:24px;color:var(--mut);font-size:16px;font-weight:600}
+  .cta-note{margin-top:14px;color:var(--ink-2);font-weight:600;font-size:16px}
+  .micro{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px;color:var(--mut);font-size:16px;font-weight:600}
   .micro span{display:inline-flex;align-items:center;gap:7px}
   .tick{color:var(--good);font-weight:800}
 
@@ -384,6 +388,7 @@
   .plan.featured .guar b{color:#7fd8ab}
   .plan.featured .guar .shield svg{stroke:#7fd8ab}
   .plan.featured .p-fine{color:#9fb0c9}
+  .plan.featured .p-fine b{color:#fff}
   .pop{position:absolute;top:-15px;left:50%;transform:translateX(-50%);z-index:2;
     font-size:13px;font-weight:800;letter-spacing:.09em;white-space:nowrap;
     text-transform:uppercase;color:var(--navy);padding:6px 16px;border-radius:999px;
@@ -561,6 +566,57 @@
     .oyc-typing span{animation:none;opacity:.45}
   }
 
+  /* ============ CHECKOUT CONSENT STEP (pre-Stripe) ============ */
+  .cg-overlay{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
+    padding:20px;background:rgba(7,17,33,.6);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .cg-overlay.open{display:flex}
+  .cg-modal{width:100%;max-width:580px;max-height:calc(100vh - 40px);overflow-y:auto;
+    background:#fff;border:1px solid var(--line-2);border-radius:18px;
+    box-shadow:0 30px 80px -24px rgba(10,28,51,.6),0 4px 14px rgba(10,28,51,.18)}
+  .cg-overlay.open .cg-modal{animation:cgIn .4s var(--ease)}
+  @keyframes cgIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+  .cg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:26px 28px 0}
+  .cg-head h3{font-family:var(--serif);font-size:25px;letter-spacing:-.014em}
+  .cg-head .cg-sub{margin-top:6px;color:var(--mut);font-size:16px;line-height:1.55}
+  .cg-x{flex:0 0 auto;border:1px solid var(--line-2);background:#fff;color:var(--mut);
+    width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;
+    display:flex;align-items:center;justify-content:center;transition:color .2s ease,border-color .2s ease}
+  .cg-x:hover{color:var(--ink);border-color:var(--mut-2)}
+  .cg-price{margin:20px 28px 0;padding:22px 24px;border-radius:14px;text-align:center;color:#fff;
+    background:linear-gradient(160deg,#12294b 0%,var(--navy) 80%);border:1px solid #2c4a78;
+    box-shadow:0 14px 34px -18px rgba(10,28,51,.55)}
+  .cg-price .cg-big{display:block;font-family:var(--serif);font-weight:700;font-size:27px;
+    letter-spacing:-.015em;line-height:1.3}
+  .cg-price .cg-big b{color:var(--amber-bright);font-weight:700}
+  .cg-price .cg-cancel{display:block;margin-top:6px;color:#c8d4e6;font-size:15.5px;font-weight:600}
+  .cg-body{padding:20px 28px 26px}
+  .cg-check{display:flex;gap:13px;align-items:flex-start;cursor:pointer;
+    border:1px solid var(--line-2);border-radius:12px;padding:15px 17px;margin-top:12px;
+    transition:border-color .2s ease,background .2s ease}
+  .cg-check:first-child{margin-top:0}
+  .cg-check:hover{border-color:var(--brand-line);background:var(--brand-soft)}
+  .cg-check input{flex:0 0 auto;width:21px;height:21px;margin:3px 0 0;accent-color:var(--brand);cursor:pointer}
+  .cg-check span{font-size:16px;line-height:1.55;color:var(--ink-2)}
+  .cg-check span b{color:var(--ink)}
+  .cg-check a{color:var(--brand);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+  .cg-check a:hover{color:var(--brand-deep)}
+  .cg-go{width:100%;margin-top:18px}
+  .cg-go.is-off{pointer-events:none;opacity:.45;filter:saturate(.55);box-shadow:none}
+  .cg-hint{margin-top:10px;text-align:center;color:var(--mut);font-size:14.5px;min-height:1.4em}
+  .cg-fine{margin-top:12px;text-align:center;color:var(--mut);font-size:14.5px;line-height:1.6}
+  @media(max-width:560px){
+    .cg-overlay{padding:0;align-items:flex-end}
+    .cg-modal{max-width:none;max-height:calc(100vh - 24px);border-radius:18px 18px 0 0}
+    .cg-head{padding:22px 20px 0}
+    .cg-price{margin:16px 20px 0;padding:18px 16px}
+    .cg-price .cg-big{font-size:22px}
+    .cg-body{padding:16px 20px 22px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .cg-overlay.open .cg-modal{animation:none}
+  }
+
   /* ============ MOTION & ANIMATION ============ */
   /* scroll-reveal base state */
   .reveal{opacity:0;transform:translateY(28px);
@@ -649,7 +705,7 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn-primary" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory</a>
+      <a class="btn btn-primary" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory</a>
     </div>
   </div>
 </header>
@@ -662,8 +718,9 @@
       <h1 class="hero-anim d1">Insurance leads that are <em>yours alone</em>.</h1>
       <p class="lede hero-anim d2">We run online ads in your territory and send every lead they generate straight to you. One agency per area — we never sell the same lead twice. That's the whole model.</p>
       <div class="cta-row hero-anim d3">
-        <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory — $1,000 first month <span class="arr">→</span></a>
+        <a class="btn btn-primary btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory — $1,000 first month <span class="arr">→</span></a>
       </div>
+      <p class="cta-note hero-anim d3">$1,000 first month, then $2,000/month · month to month · cancel anytime</p>
       <div class="micro hero-anim d4">
         <span><span class="tick">✓</span> Month-to-month</span>
         <span><span class="tick">✓</span> No contracts</span>
@@ -1220,9 +1277,9 @@
           </div>
         </div>
         <div class="p-cta">
-          <a class="btn btn-amber btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Get started <span class="arr">→</span></a>
+          <a class="btn btn-amber btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Get started <span class="arr">→</span></a>
         </div>
-        <p class="p-fine">Secure checkout · 2-minute setup after payment · Cancel anytime</p>
+        <p class="p-fine"><b>$1,000 today, then $2,000/month.</b> Cancel anytime.<br>Secure Stripe checkout · 2-minute setup after payment</p>
       </div>
 
       <!-- Tier 2: Growth — message to start -->
@@ -1291,7 +1348,7 @@
       </details>
       <details>
         <summary>What does it cost? <span class="chev">＋</span></summary>
-        <p>As a Special Limited-Time Offer: $1,000 first month before applicable tax, then $2,000/month before applicable tax, month to month. One flat fee — no per-lead charges.</p>
+        <p>As a Special Limited-Time Offer: $1,000 first month before applicable tax, then $2,000/month before applicable tax, month to month. Your subscription renews automatically each month until you cancel. One flat fee — no per-lead charges. Full details in our <a href="/terms-of-service.html" style="color:var(--brand);font-weight:600">Terms of Service</a> and <a href="/refund-policy.html" style="color:var(--brand);font-weight:600">Refund Policy</a>.</p>
       </details>
       <details>
         <summary>How does the guarantee work? <span class="chev">＋</span></summary>
@@ -1303,7 +1360,7 @@
       </details>
       <details>
         <summary>Can I cancel anytime? <span class="chev">＋</span></summary>
-        <p>Yes. Month-to-month, no contracts, no cancellation fee.</p>
+        <p>Yes. Month-to-month, no contracts, no cancellation fee. To cancel, just email <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a> or message us in the chat before your next renewal date — no phone call, no hoops. You keep receiving leads through the end of the period you've paid for.</p>
       </details>
     </div>
   </div>
@@ -1316,7 +1373,7 @@
       <span class="eyebrow">Special Limited-Time Offer</span>
       <h2>Claim your area before it's taken.</h2>
       <p>One agency per territory. $1,000 first month, then $2,000/month — backed by the 3-lead guarantee.</p>
-      <a class="btn btn-lg" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory <span class="arr">→</span></a>
+      <a class="btn btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory <span class="arr">→</span></a>
       <div class="micro">
         <span><span class="tick" style="color:#7fd8ab">✓</span> Self-serve</span>
         <span><span class="tick" style="color:#7fd8ab">✓</span> No calls</span>
@@ -1339,7 +1396,9 @@
       <div class="foot-meta" id="contact">
         <strong>Contact</strong><br>
         <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
-        Based in Saratoga Springs, Utah — serving nationwide
+        OYZLA LEADS LLC<br>
+        1429 S Hillside Drive<br>
+        Saratoga Springs, UT 84045 — serving nationwide
       </div>
       <div class="foot-links">
         <a href="#how">How it works</a>
@@ -1347,14 +1406,47 @@
         <a href="#faq">FAQ</a>
         <a href="/privacy-policy.html">Privacy Policy</a>
         <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/refund-policy.html">Refund Policy</a>
       </div>
     </div>
     <div class="foot-bottom sub">
-      <span>© 2026 Oyzla Leads. All rights reserved.</span>
+      <span>© 2026 OYZLA LEADS LLC. All rights reserved.</span>
       <span>One area · One agency · Never shared.</span>
     </div>
   </div>
 </footer>
+
+<!-- Pre-checkout consent step — shown before the (unchanged) Stripe payment link.
+     Gives clear, affirmative, un-pre-checked consent to the auto-renewing charge
+     (FTC + state auto-renewal law). The Stripe URL itself is untouched. -->
+<div id="cg-overlay" class="cg-overlay" role="dialog" aria-modal="true" aria-labelledby="cg-title">
+  <div class="cg-modal">
+    <div class="cg-head">
+      <div>
+        <h3 id="cg-title">Quick confirmation before checkout</h3>
+        <p class="cg-sub">Two boxes so your billing is crystal clear — no surprises, cancel anytime.</p>
+      </div>
+      <button id="cg-close" class="cg-x" type="button" aria-label="Close">✕</button>
+    </div>
+    <div class="cg-price" aria-label="Price summary">
+      <span class="cg-big"><b>$1,000 today</b>, then $2,000/month — cancel anytime.</span>
+      <span class="cg-cancel">Month to month · No contract · Prices before applicable tax</span>
+    </div>
+    <div class="cg-body">
+      <label class="cg-check" for="cg-c1">
+        <input type="checkbox" id="cg-c1">
+        <span>I understand my first month is <b>$1,000</b> and my subscription then automatically renews at <b>$2,000/month</b> until I cancel.</span>
+      </label>
+      <label class="cg-check" for="cg-c2">
+        <input type="checkbox" id="cg-c2">
+        <span>I have read and agree to the <a href="/terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="/refund-policy.html" target="_blank" rel="noopener">Refund Policy</a>.</span>
+      </label>
+      <a id="cg-go" class="btn btn-amber btn-lg cg-go is-off" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top" aria-disabled="true">Continue to secure checkout <span class="arr">→</span></a>
+      <p id="cg-hint" class="cg-hint">Check both boxes above to continue.</p>
+      <p class="cg-fine">Secure checkout by Stripe · Backed by our 3-lead first-month guarantee · Cancel anytime by emailing <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a></p>
+    </div>
+  </div>
+</div>
 
 <!-- AI chat widget — in-page assistant (no mailto; never opens the Mail app) -->
 <div id="oyzla-chat" class="oyc">
@@ -1441,6 +1533,60 @@
       }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
       reveals.forEach(function(n){ io.observe(n); });
     }
+  })();
+
+  // Pre-checkout consent gate. Intercepts clicks on the checkout buttons
+  // (their Stripe hrefs are unchanged and still work if JS is unavailable),
+  // shows the consent step, and only enables "Continue to secure checkout"
+  // once BOTH boxes — never pre-checked — are ticked.
+  (function(){
+    var ov = document.getElementById('cg-overlay');
+    if (!ov) return;
+    var c1 = document.getElementById('cg-c1');
+    var c2 = document.getElementById('cg-c2');
+    var go = document.getElementById('cg-go');
+    var x  = document.getElementById('cg-close');
+    var hint = document.getElementById('cg-hint');
+    var lastTrigger = null;
+
+    function sync(){
+      var ok = c1.checked && c2.checked;
+      go.classList.toggle('is-off', !ok);
+      go.setAttribute('aria-disabled', ok ? 'false' : 'true');
+      if (hint) hint.textContent = ok ? 'You’re all set — continue when ready.' : 'Check both boxes above to continue.';
+    }
+    function openGate(){
+      c1.checked = false; c2.checked = false;   // always start unchecked
+      sync();
+      ov.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function(){ try{ c1.focus(); }catch(e){} }, 80);
+    }
+    function closeGate(){
+      ov.classList.remove('open');
+      document.body.style.overflow = '';
+      if (lastTrigger){ try{ lastTrigger.focus(); }catch(e){} }
+    }
+
+    c1.addEventListener('change', sync);
+    c2.addEventListener('change', sync);
+    x.addEventListener('click', closeGate);
+    ov.addEventListener('click', function(e){ if (e.target === ov) closeGate(); });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && ov.classList.contains('open')) closeGate();
+    });
+    // Belt-and-braces: block activation (incl. keyboard) while disabled
+    go.addEventListener('click', function(e){
+      if (go.getAttribute('aria-disabled') === 'true'){ e.preventDefault(); }
+    });
+
+    document.querySelectorAll('a[data-checkout]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        lastTrigger = a;
+        openGate();
+      });
+    });
   })();
 
   // Smooth-scroll for in-page anchors, accounting for sticky header
