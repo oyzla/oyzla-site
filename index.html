@@ -506,6 +506,8 @@
     transform:translateY(14px) scale(.98);opacity:0;transform-origin:bottom right;
     transition:opacity .28s var(--ease),transform .28s var(--ease)}
   .oyc.open .oyc-panel{opacity:1;transform:none}
+  /* When closed, the (invisible) panel must not swallow clicks meant for the bubble */
+  .oyc:not(.open) .oyc-panel{pointer-events:none}
 
   .oyc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;
     color:#fff;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 70%,#122c50 100%);
@@ -1424,7 +1426,7 @@
     <div class="cg-head">
       <div>
         <h3 id="cg-title">Quick confirmation before checkout</h3>
-        <p class="cg-sub">Two boxes so your billing is crystal clear — no surprises, cancel anytime.</p>
+        <p class="cg-sub">One box so your billing is crystal clear — no surprises, cancel anytime.</p>
       </div>
       <button id="cg-close" class="cg-x" type="button" aria-label="Close">✕</button>
     </div>
@@ -1435,14 +1437,10 @@
     <div class="cg-body">
       <label class="cg-check" for="cg-c1">
         <input type="checkbox" id="cg-c1">
-        <span>I understand my first month is <b>$1,000</b> and my subscription then automatically renews at <b>$2,000/month</b> until I cancel.</span>
-      </label>
-      <label class="cg-check" for="cg-c2">
-        <input type="checkbox" id="cg-c2">
-        <span>I have read and agree to the <a href="/terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="/refund-policy.html" target="_blank" rel="noopener">Refund Policy</a>.</span>
+        <span>I've read and agree to the <a href="/terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a> &amp; <a href="/refund-policy.html" target="_blank" rel="noopener">Refund Policy</a>, and I understand my first month is <b>$1,000</b>, then <b>$2,000/month</b> automatically until I cancel.</span>
       </label>
       <a id="cg-go" class="btn btn-amber btn-lg cg-go is-off" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top" aria-disabled="true">Continue to secure checkout <span class="arr">→</span></a>
-      <p id="cg-hint" class="cg-hint">Check both boxes above to continue.</p>
+      <p id="cg-hint" class="cg-hint">Check the box above to continue.</p>
       <p class="cg-fine">Secure checkout by Stripe · Backed by our 3-lead first-month guarantee · Cancel anytime by emailing <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a></p>
     </div>
   </div>
@@ -1538,25 +1536,26 @@
   // Pre-checkout consent gate. Intercepts clicks on the checkout buttons
   // (their Stripe hrefs are unchanged and still work if JS is unavailable),
   // shows the consent step, and only enables "Continue to secure checkout"
-  // once BOTH boxes — never pre-checked — are ticked.
+  // once the single box — never pre-checked — is ticked. The renewal terms
+  // ($1,000 first month, then $2,000/month until cancelled) appear in the
+  // checkbox's own label for conspicuous, affirmative consent.
   (function(){
     var ov = document.getElementById('cg-overlay');
     if (!ov) return;
     var c1 = document.getElementById('cg-c1');
-    var c2 = document.getElementById('cg-c2');
     var go = document.getElementById('cg-go');
     var x  = document.getElementById('cg-close');
     var hint = document.getElementById('cg-hint');
     var lastTrigger = null;
 
     function sync(){
-      var ok = c1.checked && c2.checked;
+      var ok = c1.checked;
       go.classList.toggle('is-off', !ok);
       go.setAttribute('aria-disabled', ok ? 'false' : 'true');
-      if (hint) hint.textContent = ok ? 'You’re all set — continue when ready.' : 'Check both boxes above to continue.';
+      if (hint) hint.textContent = ok ? 'You’re all set — continue when ready.' : 'Check the box above to continue.';
     }
     function openGate(){
-      c1.checked = false; c2.checked = false;   // always start unchecked
+      c1.checked = false;   // always starts unchecked
       sync();
       ov.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1569,7 +1568,6 @@
     }
 
     c1.addEventListener('change', sync);
-    c2.addEventListener('change', sync);
     x.addEventListener('click', closeGate);
     ov.addEventListener('click', function(e){ if (e.target === ov) closeGate(); });
     document.addEventListener('keydown', function(e){
