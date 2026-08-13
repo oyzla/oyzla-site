@@ -417,6 +417,41 @@
   .founding p b{color:var(--ink);font-weight:700}
   @media(max-width:560px){.founding{padding:16px 18px}.founding p{font-size:15.5px}}
 
+  /* ============ RISK-REVERSAL CALLOUT ============ */
+  .riskband{display:flex;align-items:center;gap:15px;text-align:left;
+    margin-top:24px;max-width:560px;padding:16px 20px;border-radius:14px;
+    background:linear-gradient(180deg,#fff,var(--amber-soft));
+    border:1.5px solid #e3bc7d;
+    box-shadow:0 1px 2px rgba(10,28,51,.07),0 14px 30px -18px rgba(201,126,34,.55)}
+  .riskband .rb-shield{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    width:46px;height:46px;border-radius:13px;
+    background:linear-gradient(180deg,var(--amber-bright),var(--amber));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 16px -8px rgba(201,126,34,.7)}
+  .riskband .rb-shield svg{width:27px;height:27px;stroke:var(--navy);fill:none;
+    stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .riskband .rb-tag{display:inline-block;font-size:12.5px;font-weight:800;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--amber-deep)}
+  .riskband p{margin-top:3px;font-size:16.5px;line-height:1.5;color:var(--ink);font-weight:600}
+  .riskband p b{color:var(--navy);font-weight:800}
+  .riskband.rb-wide{max-width:860px;margin:0 auto 30px;padding:18px 24px}
+  .riskband.rb-center{margin-left:auto;margin-right:auto;margin-top:28px}
+  /* keep riskband styling intact inside the dark final-CTA panel
+     (higher specificity than the later .final p / .final .micro rules) */
+  .final .riskband{text-align:left}
+  .final .riskband p{color:var(--ink);font-size:16.5px;line-height:1.5;margin:3px 0 0;max-width:none}
+  .final .riskband p b{color:var(--navy)}
+  @media(max-width:560px){
+    .riskband{padding:14px 15px;gap:12px}
+    .riskband p{font-size:15px}
+    .riskband .rb-shield{width:40px;height:40px;border-radius:11px}
+    .riskband .rb-shield svg{width:23px;height:23px}
+  }
+
+  /* ============ MID-PAGE CTA ============ */
+  .mid-cta{margin-top:48px;text-align:center}
+  .mid-cta p{margin-top:14px;color:var(--mut);font-size:16px;font-weight:600}
+  .mid-cta p b{color:var(--ink)}
+
   /* ============ FAQ ============ */
   .faq{max-width:800px}
   details{border-top:1px solid var(--line);padding:0 2px}
@@ -718,16 +753,23 @@
     <div>
       <span class="badge hero-anim d1"><span class="bdot" aria-hidden="true"></span>One area · One agency · Never shared</span>
       <h1 class="hero-anim d1">Insurance leads that are <em>yours alone</em>.</h1>
-      <p class="lede hero-anim d2">We run online ads in your territory and send every lead they generate straight to you. One agency per area — we never sell the same lead twice. That's the whole model.</p>
+      <p class="lede hero-anim d2">Exclusive local insurance leads, delivered to you in real time. One agency per area — never shared, never resold. We run the ads; you quote and close. Guaranteed.</p>
       <div class="cta-row hero-anim d3">
         <a class="btn btn-primary btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory — $1,000 first month <span class="arr">→</span></a>
       </div>
       <p class="cta-note hero-anim d3">$1,000 first month, then $2,000/month · month to month · cancel anytime</p>
+      <div class="riskband hero-anim d4" role="note" aria-label="Money-back guarantee">
+        <span class="rb-shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
+        <div>
+          <span class="rb-tag">Zero-risk guarantee</span>
+          <p>At least <b>3 valid exclusive leads in your first 30 days</b> — or your <b>first month is refunded</b>.</p>
+        </div>
+      </div>
       <div class="micro hero-anim d4">
         <span><span class="tick">✓</span> Month-to-month</span>
         <span><span class="tick">✓</span> No contracts</span>
         <span><span class="tick">✓</span> No sales calls</span>
-        <span><span class="tick">✓</span> 3-lead guarantee</span>
+        <span><span class="tick">✓</span> Real-time delivery</span>
       </div>
     </div>
 
@@ -1053,6 +1095,10 @@
         </ul>
       </div>
     </div>
+    <div class="mid-cta reveal">
+      <a class="btn btn-primary btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory <span class="arr">→</span></a>
+      <p>Zero risk: <b>3 valid exclusive leads in your first 30 days, or your first month is refunded.</b></p>
+    </div>
   </div>
 </section>
 
@@ -1249,7 +1295,14 @@
     </div>
     <div class="founding reveal">
       <span class="fb-tag"><span class="fb-dot" aria-hidden="true"></span>Founding Agencies · Limited</span>
-      <p>We're opening a limited number of <b>founding agency</b> spots per market. Lock in <b>50% off your first month — $1,000</b> (then $2,000/mo, month to month). Risk-free: if we don't deliver at least 3 valid exclusive leads in your first 30 days, your first month is refunded.</p>
+      <p>We're opening a limited number of <b>founding agency</b> spots per market. Lock in <b>50% off your first month — $1,000</b> (then $2,000/mo, month to month).</p>
+    </div>
+    <div class="riskband rb-wide reveal" role="note" aria-label="Money-back guarantee">
+      <span class="rb-shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
+      <div>
+        <span class="rb-tag">Zero-risk guarantee</span>
+        <p>If we don't deliver at least <b>3 valid exclusive leads in your first 30 days</b>, your <b>first month is refunded</b>. You either get exclusive leads, or you get your money back.</p>
+      </div>
     </div>
     <div class="plans reveal stagger">
 
@@ -1275,7 +1328,7 @@
         <div class="guar">
           <span class="shield"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
           <div>
-            <b>Guarantee:</b> If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.
+            <b>Zero-risk guarantee:</b> If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.
           </div>
         </div>
         <div class="p-cta">
@@ -1354,7 +1407,7 @@
       </details>
       <details>
         <summary>How does the guarantee work? <span class="chev">＋</span></summary>
-        <p>If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.</p>
+        <p>It makes trying Oyzla zero-risk. If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded. Either you get exclusive leads, or you get your money back — full details in our <a href="/refund-policy.html" style="color:var(--brand);font-weight:600">Refund Policy</a>.</p>
       </details>
       <details>
         <summary>Do I have to get on a call? <span class="chev">＋</span></summary>
@@ -1376,6 +1429,13 @@
       <h2>Claim your area before it's taken.</h2>
       <p>One agency per territory. $1,000 first month, then $2,000/month — backed by the 3-lead guarantee.</p>
       <a class="btn btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory <span class="arr">→</span></a>
+      <div class="riskband rb-center" role="note" aria-label="Money-back guarantee">
+        <span class="rb-shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
+        <div>
+          <span class="rb-tag">Zero-risk guarantee</span>
+          <p>At least <b>3 valid exclusive leads in your first 30 days</b> — or your <b>first month is refunded</b>.</p>
+        </div>
+      </div>
       <div class="micro">
         <span><span class="tick" style="color:#7fd8ab">✓</span> Self-serve</span>
         <span><span class="tick" style="color:#7fd8ab">✓</span> No calls</span>
