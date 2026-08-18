@@ -1,1817 +1,766 @@
 <!DOCTYPE html>
-<!--
-  OYZLA LEADS — HOMEPAGE (static site, self-contained, no external dependencies)
-  ==============================================================================
-  v5 — premium polish pass: refined editorial type scale, deep-navy + warm
-  amber palette on a warm paper ground, layered shadows, dark featured
-  pricing tier, exclusive-vs-shared visual diagrams, recrafted hero and
-  storefront SVG illustrations with ambient motion (route flow dots, halo
-  rings, breathing window light), and a full motion system (expo-out
-  scroll-reveal with stagger, count-up stats, sticky nav shrink, hover
-  micro-interactions). All motion respects prefers-reduced-motion.
-  Notes:
-    - Primary CTAs (nav, hero, Standard plan, final CTA) go to the live
-      founding Stripe checkout. Growth/Scale CTAs go to #contact.
-    - Footer legal links point to the local /terms-of-service.html and
-      /privacy-policy.html pages in this repo.
-    - The chat bubble bottom-right is a visual placeholder for the site's
-      chat widget.
-    - Visuals: the two <figure class="photo"> blocks contain inline SVG
-      brand illustrations (no external image files required).
--->
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Oyzla Leads — Exclusive Insurance Leads | One Area, One Agency</title>
-<meta name="description" content="Exclusive local insurance leads for independent agencies. We run the online ads; every lead in your territory is yours alone — one agency per area. Backed by our 3-lead guarantee." />
-<link rel="canonical" href="https://oyzlaleads.com/" />
-<!-- Icons (swap in an official logo file here if one exists — same paths) -->
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
-<!-- Open Graph / Twitter -->
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Oyzla Leads" />
-<meta property="og:title" content="Oyzla Leads — Exclusive Insurance Leads. One Area, One Agency." />
-<meta property="og:description" content="We run local online ads and deliver every lead exclusively to one agency per area. Backed by our 3-lead guarantee." />
-<meta property="og:url" content="https://oyzlaleads.com/" />
-<meta property="og:image" content="https://oyzlaleads.com/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Oyzla Leads — Exclusive Insurance Leads. One Area, One Agency." />
-<meta name="twitter:description" content="We run local online ads and deliver every lead exclusively to one agency per area. Backed by our 3-lead guarantee." />
-<meta name="twitter:image" content="https://oyzlaleads.com/og-image.png" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Oyzla Leads",
-  "legalName": "OYZLA LEADS LLC",
-  "url": "https://oyzlaleads.com/",
-  "logo": "https://oyzlaleads.com/apple-touch-icon.png",
-  "email": "info@oyzlaleads.com",
-  "description": "Exclusive local insurance leads for independent agencies — one agency per area, never shared.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "1429 S Hillside Drive",
-    "addressLocality": "Saratoga Springs",
-    "addressRegion": "UT",
-    "postalCode": "84045",
-    "addressCountry": "US"
-  }
-}
-</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oyzla AI — Custom AI tools &amp; automations, built for your business</title>
+<meta name="description" content="Oyzla AI builds custom AI assistants and automations for businesses. You own everything we build, we never hold your passwords, and you're live in days — not months.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect x="14" y="14" width="112" height="112" rx="28" fill="%234F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="white"/><circle cx="93.5" cy="46.5" r="4" fill="%234F46E5"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ============ DESIGN TOKENS ============ */
-  :root{
-    --ink:#131c2c; --ink-2:#2a3547; --mut:#59637a; --mut-2:#8a93a6;
-    --navy:#0a1c33; --navy-2:#0f2747; --navy-3:#16335c;
-    --brand:#1f52c6; --brand-deep:#16409e; --brand-bright:#4b7ef0;
-    --brand-soft:#edf2fc; --brand-line:#ccdaf3;
-    --amber:#e89b3f; --amber-bright:#f2b566; --amber-deep:#c97e22; --amber-soft:#fbf1e1;
-    --good:#0d7a4e; --good-soft:#edf7f1; --good-line:#c7e5d5; --bad:#b8432c;
-    --line:#e7e6e1; --line-2:#dbdad3; --line-cool:#e2e7f0;
-    --bg:#faf9f5; --card:#ffffff;
-    --sh-sm:0 1px 2px rgba(10,28,51,.06);
-    --sh-md:0 1px 2px rgba(10,28,51,.05),0 10px 28px -14px rgba(10,28,51,.16);
-    --sh-lg:0 2px 4px rgba(10,28,51,.06),0 28px 56px -24px rgba(10,28,51,.28);
-    --ease:cubic-bezier(.16,1,.3,1);
-    --ease-io:cubic-bezier(.45,.05,.25,1);
-    --r:16px;
-    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;color:var(--ink);background:var(--bg);
-    font:19px/1.7 var(--font);
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  ::selection{background:rgba(31,82,198,.16)}
-  a{color:inherit;text-decoration:none}
-  :focus-visible{outline:3px solid rgba(31,82,198,.5);outline-offset:3px;border-radius:4px}
-  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-  h1,h2,h3{margin:0}
-  h1,h2{font-family:var(--serif);font-weight:700;letter-spacing:-.014em;line-height:1.1}
-  h3{font-weight:700;letter-spacing:-.015em;line-height:1.25}
-  p{margin:0}
-  .eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:14px;font-weight:700;
-    letter-spacing:.15em;text-transform:uppercase;color:var(--brand)}
-  .head .eyebrow::before{content:"";width:28px;height:2px;border-radius:2px;flex:0 0 auto;
-    background:linear-gradient(90deg,var(--amber),var(--brand))}
-  .sub{color:var(--mut)}
+:root{
+  --ink:#0E1330;
+  --ink-soft:#3C425F;
+  --muted:#646A85;
+  --line:#E6E8F2;
+  --bg:#FFFFFF;
+  --bg-tint:#F6F7FC;
+  --brand:#4F46E5;
+  --brand-deep:#4338CA;
+  --brand-soft:#EEF0FE;
+  --violet:#7C3AED;
+  --navy:#0C1024;
+  --navy-2:#151A38;
+  --ok:#16A34A;
+  --radius:18px;
+  --shadow-sm:0 1px 2px rgba(14,19,48,.05),0 4px 14px rgba(14,19,48,.06);
+  --shadow-lg:0 6px 18px rgba(14,19,48,.07),0 24px 60px rgba(14,19,48,.12);
+  --font-head:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--font-head);letter-spacing:-.02em;line-height:1.15}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
+.section-title{font-size:clamp(28px,4vw,40px);font-weight:700;margin-bottom:14px}
+.section-sub{font-size:17px;color:var(--muted);max-width:620px}
+section{padding:88px 0}
 
-  /* ============ BUTTONS ============ */
-  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
-    font-family:var(--font);font-weight:700;font-size:18px;letter-spacing:-.005em;
-    border:0;border-radius:10px;padding:16px 28px;cursor:pointer;overflow:hidden;
-    transition:background .2s ease,border-color .2s ease,color .2s ease,
-      transform .3s var(--ease),box-shadow .3s ease}
-  .btn .arr{display:inline-block;transition:transform .35s var(--ease)}
-  .btn:hover .arr{transform:translateX(4px)}
-  .btn:active{transform:translateY(1px)}
-  .btn-primary{color:#fff;background:linear-gradient(180deg,#2a5fd6,var(--brand) 55%,#1c49b3);
-    box-shadow:0 1px 2px rgba(10,28,51,.2),0 8px 20px -10px rgba(31,82,198,.55),
-      inset 0 1px 0 rgba(255,255,255,.18)}
-  .btn-primary:hover{background:linear-gradient(180deg,#2f66e0,#204fbd 55%,#1a44a8);
-    box-shadow:0 2px 4px rgba(10,28,51,.2),0 16px 32px -12px rgba(31,82,198,.6),
-      inset 0 1px 0 rgba(255,255,255,.18)}
-  .btn-primary::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:44%;
-    background:linear-gradient(105deg,transparent,rgba(255,255,255,.24),transparent);
-    transform:skewX(-18deg);transition:left .7s var(--ease);pointer-events:none}
-  .btn-primary:hover::after{left:130%}
-  .btn-amber{color:var(--navy);background:linear-gradient(180deg,var(--amber-bright),var(--amber) 60%,var(--amber-deep));
-    box-shadow:0 1px 2px rgba(10,28,51,.3),0 10px 24px -10px rgba(232,155,63,.6),
-      inset 0 1px 0 rgba(255,255,255,.35)}
-  .btn-amber:hover{background:linear-gradient(180deg,#f6c078,#eda449 60%,#cf8526);
-    box-shadow:0 2px 4px rgba(10,28,51,.3),0 16px 34px -12px rgba(232,155,63,.7),
-      inset 0 1px 0 rgba(255,255,255,.35)}
-  .btn-amber::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:44%;
-    background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);
-    transform:skewX(-18deg);transition:left .7s var(--ease);pointer-events:none}
-  .btn-amber:hover::after{left:130%}
-  .btn-ghost{color:var(--ink);background:#fff;border:1px solid var(--line-2);box-shadow:var(--sh-sm)}
-  .btn-ghost:hover{border-color:var(--brand);color:var(--brand);box-shadow:var(--sh-md)}
-  .btn-lg{padding:19px 34px;font-size:19px;border-radius:12px}
-  .btn-lg:hover{transform:translateY(-2px)}
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);font-size:15.5px;font-weight:600;border-radius:12px;padding:13px 24px;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s ease,border-color .15s ease;white-space:nowrap}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 6px 16px rgba(79,70,229,.28)}
+.btn-primary:hover{background:var(--brand-deep);transform:translateY(-1px);box-shadow:0 10px 22px rgba(79,70,229,.34)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:#C9CDE4;transform:translateY(-1px)}
+.btn-light{background:#fff;color:var(--navy)}
+.btn-light:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,.25)}
 
-  /* ============ NAV ============ */
-  header.nav{position:sticky;top:0;z-index:50;
-    background:rgba(255,255,255,.88);
-    -webkit-backdrop-filter:saturate(1.6) blur(12px);backdrop-filter:saturate(1.6) blur(12px);
-    border-bottom:1px solid rgba(10,28,51,.07);
-    transition:box-shadow .35s ease,background .35s ease}
-  header.nav.scrolled{background:rgba(255,255,255,.94);
-    box-shadow:0 1px 0 rgba(10,28,51,.05),0 12px 32px -20px rgba(10,28,51,.35)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:80px;
-    transition:height .4s var(--ease)}
-  header.nav.scrolled .nav-in{height:66px}
-  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.045em;color:var(--navy)}
-  .logo .mark{width:32px;height:32px;flex:0 0 auto;transition:transform .5s var(--ease)}
-  .logo:hover .mark{transform:rotate(-14deg)}
-  .logo span{color:var(--brand)}
-  .nav-links{display:flex;gap:6px;font-weight:600;font-size:17px;color:var(--ink-2)}
-  .nav-links a{position:relative;padding:9px 14px;border-radius:8px;transition:color .2s ease}
-  .nav-links a::after{content:"";position:absolute;left:14px;right:14px;bottom:4px;height:2px;
-    border-radius:2px;background:var(--brand);transform:scaleX(0);transform-origin:left;
-    transition:transform .35s var(--ease)}
-  .nav-links a:hover{color:var(--brand)}
-  .nav-links a:hover::after{transform:scaleX(1)}
-  .nav-cta .btn{padding:12px 20px;font-size:16.5px}
-  @media(max-width:900px){.nav-links{display:none}}
-  @media(max-width:620px){
-    .nav-in{height:64px}
-    header.nav.scrolled .nav-in{height:58px}
-    .logo{font-size:16.5px;gap:9px;letter-spacing:.035em}
-    .logo .mark{width:27px;height:27px}
-    .nav-cta .btn{padding:10px 14px;font-size:15px;white-space:nowrap}
-  }
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;font-size:21px;letter-spacing:-.02em}
+.logo .ai{color:var(--brand)}
+.logo-mark{width:34px;height:34px;flex:none}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--ink-soft);transition:color .15s}
+.nav-links a:hover{color:var(--brand)}
+.nav .btn{padding:10px 18px;font-size:14.5px}
+@media(max-width:820px){.nav-links{display:none}}
 
-  /* ============ HERO ============ */
-  .hero{position:relative;overflow:hidden;background:#fff;border-bottom:1px solid var(--line-cool);
-    background-image:radial-gradient(rgba(16,42,82,.055) 1px,transparent 1.4px);
-    background-size:26px 26px}
-  .hero::before{content:"";position:absolute;z-index:0;top:-32%;right:-14%;
-    width:680px;height:680px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle at 50% 50%,rgba(31,82,198,.10),rgba(31,82,198,0) 62%);
-    animation:floatBlob 18s var(--ease-io) infinite}
-  .hero::after{content:"";position:absolute;z-index:0;bottom:-36%;left:-16%;
-    width:600px;height:600px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle at 50% 50%,rgba(232,155,63,.11),rgba(232,155,63,0) 62%);
-    animation:floatBlob 24s var(--ease-io) infinite reverse}
-  @keyframes floatBlob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,26px) scale(1.05)}}
-  .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;
-    align-items:center;padding:92px 0 96px}
-  .badge{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;
-    letter-spacing:.13em;text-transform:uppercase;color:var(--brand-deep);
-    background:linear-gradient(180deg,#fff,var(--brand-soft));border:1px solid var(--brand-line);
-    border-radius:999px;padding:9px 18px;box-shadow:var(--sh-sm)}
-  .badge .bdot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;
-    background:var(--amber);box-shadow:0 0 0 3px rgba(232,155,63,.22)}
-  .hero h1{font-size:clamp(42px,5.4vw,62px);margin:22px 0 0}
-  .hero h1 em{font-style:normal;color:var(--brand);
-    background:linear-gradient(120deg,var(--brand-deep),var(--brand) 55%,#3a6ada);
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .hero .lede{font-size:21px;line-height:1.65;margin-top:24px;max-width:42ch;color:var(--mut)}
-  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
-  .cta-note{margin-top:14px;color:var(--ink-2);font-weight:600;font-size:16px}
-  .micro{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px;color:var(--mut);font-size:16px;font-weight:600}
-  .micro span{display:inline-flex;align-items:center;gap:7px}
-  .tick{color:var(--good);font-weight:800}
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;padding:104px 0 96px;background:
+  radial-gradient(900px 460px at 82% -10%,rgba(124,58,237,.10),transparent 60%),
+  radial-gradient(900px 520px at 12% -14%,rgba(79,70,229,.12),transparent 60%),
+  linear-gradient(#FBFBFE,#FFFFFF)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.hero h1{font-size:clamp(36px,5vw,56px);font-weight:800;margin-bottom:20px}
+.hero h1 .hl{color:var(--brand)}
+.hero-sub{font-size:18.5px;color:var(--muted);max-width:520px;margin-bottom:32px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.hero-note{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.hero-note svg{flex:none}
 
-  /* visual panels — self-contained, on-brand designed illustrations */
-  .photo{position:relative;margin:0;border:1px solid rgba(10,28,51,.35);border-radius:18px;
-    overflow:hidden;background:var(--navy);min-height:300px;
-    box-shadow:0 2px 6px rgba(10,28,51,.14),0 36px 80px -36px rgba(10,28,51,.6),
-      inset 0 0 0 1px rgba(255,255,255,.06)}
-  .photo::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
-  .photo svg.art{position:absolute;inset:0;display:block;width:100%;height:100%}
-  .photo.tall{min-height:460px}
-  .chip{position:absolute;left:18px;bottom:18px;z-index:2;display:inline-flex;align-items:center;gap:9px;
-    background:rgba(255,255,255,.96);border:1px solid rgba(10,28,51,.1);border-radius:999px;
-    padding:9px 17px 9px 11px;font-weight:700;font-size:15.5px;color:var(--navy);
-    box-shadow:0 10px 26px -10px rgba(10,28,51,.5);
-    animation:chipFloat 6s var(--ease-io) infinite}
-  .chip .cdot{display:flex;align-items:center;justify-content:center;width:24px;height:24px;
-    border-radius:50%;background:var(--good-soft);color:var(--good);font-weight:800;font-size:14px;
-    border:1px solid var(--good-line)}
-  @keyframes chipFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-  @media(max-width:900px){
-    .hero-in{grid-template-columns:1fr;gap:44px;padding:60px 0 66px}
-    .hero .lede{max-width:none}
-    .photo{min-height:300px}
-    .photo.tall{min-height:360px}
-  }
-  @media(max-width:560px){
-    .cta-row{flex-direction:column;align-items:stretch}
-    .cta-row .btn{width:100%}
-  }
+/* hero visual: automation card stack */
+.hero-visual{position:relative;min-height:420px}
+.float-card{position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);padding:18px 20px;width:300px}
+.float-card .fc-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.fc-dot{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none}
+.fc-title{font-size:13.5px;font-weight:600}
+.fc-sub{font-size:12px;color:var(--muted)}
+.fc-body{font-size:13px;color:var(--ink-soft);background:var(--bg-tint);border-radius:10px;padding:10px 12px}
+.fc-badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--ok);background:#EAF7EF;border-radius:99px;padding:4px 10px;margin-top:10px}
+.card-a{top:0;left:6%;animation:bob 7s ease-in-out infinite}
+.card-b{top:150px;right:0;animation:bob 8s .8s ease-in-out infinite}
+.card-c{top:296px;left:0;animation:bob 7.5s .4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero-visual{min-height:0;display:grid;gap:16px}
+  .float-card{position:static;width:100%;animation:none}
+}
 
-  /* ============ STAT STRIP ============ */
-  .stats{position:relative;color:#fff;overflow:hidden;
-    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 60%,#122c50 100%)}
-  .stats::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(520px 220px at 82% 0%,rgba(232,155,63,.14),transparent 70%),
-      radial-gradient(420px 200px at 12% 100%,rgba(75,126,240,.16),transparent 70%)}
-  .stats::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,transparent,var(--amber) 30%,var(--brand-bright) 70%,transparent)}
-  .stats-in{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:52px 24px}
-  .stat{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-    text-align:center;padding:6px 14px}
-  .stat .n{display:block;font-family:var(--serif);font-size:38px;font-weight:700;
-    letter-spacing:-.01em;line-height:1.15}
-  /* count-up entrance pop — scoped class name so it never collides with the
-     pricing ".pop" badge (which is an absolutely-positioned amber pill) */
-  .stat .n.npop{animation:statPop .7s var(--ease)}
-  @keyframes statPop{0%{transform:scale(.92)}55%{transform:scale(1.06)}100%{transform:scale(1)}}
-  .stat .l{color:#9fb0c7;font-size:16px;font-weight:600;line-height:1.35;margin-top:8px}
-  .stat + .stat{border-left:1px solid rgba(255,255,255,.12)}
-  @media(max-width:720px){
-    .stats-in{grid-template-columns:repeat(2,1fr);gap:26px 8px;padding:40px 20px}
-    .stat:nth-child(3){border-left:0}
-  }
-  @media(max-width:420px){
-    .stats-in{grid-template-columns:1fr;gap:22px}
-    .stat + .stat{border-left:0}
-  }
+/* ---------- Trust strip ---------- */
+.trust-strip{background:var(--navy);color:#fff;padding:26px 0}
+.trust-items{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600}
+.trust-item svg{flex:none}
+.trust-item span b{color:#B9B4FF;font-weight:700}
+@media(max-width:820px){.trust-items{flex-direction:column;align-items:flex-start;gap:16px}}
 
-  /* ============ SECTION SHELL ============ */
-  section.band{padding:104px 0}
-  .head{max-width:700px;margin:0 0 52px}
-  .head .eyebrow{margin-bottom:16px}
-  .head h2{font-size:clamp(32px,3.8vw,44px)}
-  .head p{margin-top:18px;font-size:19.5px;line-height:1.65;color:var(--mut)}
-  @media(max-width:720px){section.band{padding:72px 0}.head{margin-bottom:38px}}
+/* ---------- How it works ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;box-shadow:var(--shadow-sm);position:relative}
+.step-num{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--brand);background:var(--brand-soft);border-radius:99px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.step h3{font-size:19px;margin-bottom:10px}
+.step p{font-size:14.5px;color:var(--muted)}
+@media(max-width:900px){.steps{grid-template-columns:1fr}}
 
-  /* ============ HOW IT WORKS ============ */
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-2)}
-  .step{padding:34px 30px 10px 0;transition:transform .35s var(--ease)}
-  .step + .step{border-left:1px solid var(--line);padding-left:30px}
-  .step:hover{transform:translateY(-5px)}
-  .step .num{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;
-    border-radius:50%;font-family:var(--serif);font-size:21px;font-weight:700;color:var(--brand);
-    background:linear-gradient(180deg,#fff,var(--brand-soft));border:1px solid var(--brand-line);
-    box-shadow:var(--sh-sm);margin-bottom:16px;transition:background .3s ease,color .3s ease,
-      border-color .3s ease,box-shadow .3s ease}
-  .step:hover .num{color:#fff;background:linear-gradient(180deg,#2a5fd6,var(--brand));
-    border-color:var(--brand);box-shadow:0 8px 18px -8px rgba(31,82,198,.55)}
-  .step h3{font-size:21px;transition:color .25s ease}
-  .step:hover h3{color:var(--brand)}
-  .step p{margin-top:10px;color:var(--mut);font-size:17px;line-height:1.65}
-  @media(max-width:900px){
-    .steps{grid-template-columns:1fr;border-top:0}
-    .step{border-top:1px solid var(--line);padding:26px 0 10px}
-    .step + .step{border-left:0;padding-left:0}
-  }
+/* ---------- Services ---------- */
+#services{background:var(--bg-tint)}
+.svc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;margin-top:52px}
+.svc{grid-column:span 2;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+.svc:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.svc-icon{width:46px;height:46px;border-radius:12px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.svc h3{font-size:19px;margin-bottom:8px}
+.svc p{font-size:14.5px;color:var(--muted);flex:1}
+.svc-price{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.svc-price .setup{font-family:var(--font-head);font-size:21px;font-weight:700}
+.svc-price .per{font-size:14px;color:var(--muted);font-weight:500}
+.svc-dark{background:linear-gradient(140deg,var(--navy),#242A55);border-color:transparent;color:#fff}
+.svc-dark p{color:#B6BAD6}
+.svc-dark .svc-icon{background:rgba(255,255,255,.12)}
+.svc-dark .svc-price{border-top-color:rgba(255,255,255,.14)}
+.svc-dark .svc-price .setup{font-size:18px}
+.svc:nth-child(4),.svc:nth-child(5){grid-column:span 3}
+.bundle{margin-top:32px;display:flex;align-items:center;gap:10px;justify-content:center;font-size:15px;font-weight:600;color:var(--ink-soft)}
+.bundle .tag{background:var(--brand-soft);color:var(--brand);border-radius:99px;padding:6px 14px;font-size:13.5px;font-weight:700}
+@media(max-width:960px){.svc-grid{grid-template-columns:1fr 1fr}.svc,.svc:nth-child(4),.svc:nth-child(5){grid-column:span 1}.svc:nth-child(5){grid-column:span 2}}
+@media(max-width:640px){.svc-grid{grid-template-columns:1fr}.svc,.svc:nth-child(4),.svc:nth-child(5){grid-column:span 1}}
 
-  /* ============ BENEFIT LIST ============ */
-  .benefits{display:grid;grid-template-columns:1fr 1fr;gap:0 60px}
-  .benefit{position:relative;border-top:1px solid var(--line);padding:24px 0 22px 0;
-    transition:transform .3s var(--ease)}
-  .benefit::before{content:"";position:absolute;top:-1px;left:0;height:1px;width:0;
-    background:linear-gradient(90deg,var(--amber),var(--brand));transition:width .5s var(--ease)}
-  .benefit:hover{transform:translateX(6px)}
-  .benefit:hover::before{width:56px}
-  .benefit h3{font-size:19.5px;transition:color .25s ease}
-  .benefit:hover h3{color:var(--brand)}
-  .benefit p{margin-top:6px;color:var(--mut);font-size:17px;line-height:1.6}
-  @media(max-width:820px){.benefits{grid-template-columns:1fr;gap:0}}
+/* ---------- Demo ---------- */
+#demo{background:var(--navy);color:#fff}
+#demo .section-sub{color:#A7ABC9}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:8px}
+.demo-points{list-style:none;margin-top:30px;display:grid;gap:16px}
+.demo-points li{display:flex;gap:12px;font-size:15px;color:#C9CCE3}
+.demo-points svg{flex:none;margin-top:3px}
+.demo-note{margin-top:28px;font-size:13px;color:#8A8FB0;border-left:3px solid var(--brand);padding-left:14px;line-height:1.55}
+@media(max-width:960px){.demo-grid{grid-template-columns:1fr;gap:44px}}
 
-  /* ============ COMPARISONS ============ */
-  .compare{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:960px}
-  .cmp{border-radius:var(--r);padding:30px;border:1px solid var(--line);background:var(--card);
-    box-shadow:var(--sh-sm);
-    transition:transform .35s var(--ease),box-shadow .35s ease,border-color .3s ease}
-  .cmp:hover{transform:translateY(-6px);box-shadow:var(--sh-lg)}
-  .cmp.bad{background:linear-gradient(180deg,#fdfbf9,#faf5f1)}
-  .cmp.bad:hover{border-color:#e5cabe}
-  .cmp.good{background:linear-gradient(180deg,#f4faf6,var(--good-soft));border-color:var(--good-line)}
-  .cmp.good:hover{border-color:#9ed4b8}
-  .cmp h3{font-size:20px;display:flex;align-items:center;gap:10px}
-  .cmp ul{margin:14px 0 0;padding:0;list-style:none}
-  .cmp li{display:flex;gap:11px;margin:13px 0;color:var(--ink-2);font-size:17px;line-height:1.6}
-  .cmp li b{font-weight:700}
-  .mk{flex:0 0 auto;font-weight:800}
-  .cmp.bad .mk{color:var(--bad)}
-  .cmp.good .mk{color:var(--good)}
-  .vs{position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);
-    display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;
-    background:var(--navy);color:#fff;font-weight:800;font-size:15px;letter-spacing:.06em;
-    border:3px solid var(--bg);box-shadow:0 10px 24px -8px rgba(10,28,51,.5)}
-  section[style*="background:#fff"] .vs{border-color:#fff}
-  /* mini diagrams inside the comparison cards */
-  .cmp-diagram{display:block;width:100%;height:auto;margin:16px 0 4px;border-radius:10px}
-  .cmp.bad .cmp-diagram{background:rgba(184,67,44,.05)}
-  .cmp.good .cmp-diagram{background:rgba(13,122,78,.06)}
-  .drawline{stroke-dasharray:230;stroke-dashoffset:230;
-    transition:stroke-dashoffset 1.1s var(--ease) .45s}
-  .stagger.in .drawline{stroke-dashoffset:0}
-  .fanline{stroke-dasharray:4 6}
-  @media(max-width:720px){.compare{grid-template-columns:1fr;gap:14px}.vs{display:none}}
+/* chat widget */
+.chat{background:#fff;color:var(--ink);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:hidden;max-width:440px;margin:0 auto;width:100%}
+.chat-head{background:linear-gradient(120deg,var(--brand),var(--violet));color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px}
+.chat-avatar{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex:none}
+.chat-head-name{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.2}
+.chat-head-sub{font-size:12px;opacity:.85;display:flex;align-items:center;gap:6px}
+.chat-head-sub .live-dot{width:7px;height:7px;border-radius:50%;background:#6EF3A5;display:inline-block}
+.demo-chip{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:4px 10px}
+.chat-body{height:398px;overflow-y:auto;padding:18px 16px;background:#F7F8FC;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:82%;padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.5;white-space:pre-line}
+.msg-bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px;align-self:flex-start;box-shadow:0 1px 2px rgba(14,19,48,.05)}
+.msg-user{background:var(--brand);color:#fff;border-bottom-right-radius:6px;align-self:flex-end}
+.typing{display:inline-flex;gap:5px;padding:14px 16px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#A7ABC9;animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}
+.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-self:flex-start;max-width:95%}
+.chip{background:#fff;border:1.5px solid var(--brand);color:var(--brand);font-family:var(--font-body);font-size:13px;font-weight:600;border-radius:99px;padding:8px 14px;cursor:pointer;transition:background .15s,color .15s}
+.chip:hover{background:var(--brand);color:#fff}
+.chat-input{display:flex;gap:10px;padding:13px 14px;border-top:1px solid var(--line);background:#fff}
+.chat-input input{flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .15s;color:var(--ink)}
+.chat-input input:focus{border-color:var(--brand)}
+.chat-send{background:var(--brand);border:none;color:#fff;border-radius:11px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;transition:background .15s}
+.chat-send:hover{background:var(--brand-deep)}
+.chat-foot{font-size:11px;color:var(--muted);text-align:center;padding:0 14px 12px;background:#fff}
 
-  /* online-ads section: text + photo, comparison below */
-  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;margin-bottom:56px}
-  @media(max-width:900px){.split{grid-template-columns:1fr;gap:34px;margin-bottom:42px}}
+/* ---------- Commitments ---------- */
+.commit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.commit{border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;background:#fff;box-shadow:var(--shadow-sm)}
+.commit-icon{width:46px;height:46px;border-radius:12px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.commit h3{font-size:18px;margin-bottom:10px}
+.commit p{font-size:14.5px;color:var(--muted)}
+.honesty{margin-top:36px;background:var(--bg-tint);border:1px dashed #C9CDE4;border-radius:var(--radius);padding:26px 30px;display:flex;gap:16px;align-items:flex-start}
+.honesty svg{flex:none;margin-top:2px}
+.honesty p{font-size:14.5px;color:var(--ink-soft)}
+.honesty p b{color:var(--ink)}
+@media(max-width:900px){.commit-grid{grid-template-columns:1fr}}
 
-  /* ============ PRICING ============ */
-  .offer .head{max-width:720px}
-  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
-  .plan{position:relative;background:var(--card);border:1px solid var(--line-2);
-    border-radius:var(--r);padding:34px 30px;display:flex;flex-direction:column;
-    box-shadow:var(--sh-sm);
-    transition:transform .4s var(--ease),box-shadow .4s ease,border-color .3s ease}
-  .plan:hover{transform:translateY(-8px);box-shadow:var(--sh-lg);border-color:var(--brand-line)}
-  .plan h3{font-size:23px}
-  .p-offer{margin-top:8px;font-size:14.5px;font-weight:700;letter-spacing:.07em;
-    text-transform:uppercase;color:#9a5b00}
-  .p-price{display:flex;align-items:flex-end;gap:9px;margin-top:18px}
-  .p-price .big{font-family:var(--serif);font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1}
-  .p-price .per{color:var(--mut);font-weight:600;padding-bottom:5px}
-  .p-then{margin-top:8px;color:var(--ink-2);font-weight:600;font-size:16.5px}
-  .p-sub{margin-top:8px;color:var(--good);font-weight:700;font-size:16px}
-  .p-tax{color:var(--mut);font-size:15px;margin-top:4px}
-  .p-desc{color:var(--ink-2);font-size:16.5px;line-height:1.6;margin-top:14px}
-  .plist{margin:18px 0 0;padding:0;list-style:none}
-  .plist li{display:flex;gap:10px;margin:11px 0;font-size:16.5px;color:var(--ink-2);line-height:1.55}
-  .plist .tick{color:var(--brand)}
-  .guar{display:flex;gap:12px;margin-top:20px;padding:16px;border-radius:12px;
-    background:var(--good-soft);border:1px solid var(--good-line);font-size:16px;line-height:1.6}
-  .guar .shield{flex:0 0 auto;width:30px;height:30px}
-  .guar .shield svg{width:30px;height:30px;stroke:var(--good);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .guar b{color:var(--good)}
-  .p-cta{margin-top:auto;padding-top:24px}
-  .p-cta .btn{width:100%}
-  .p-fine{color:var(--mut);font-size:14.5px;margin-top:12px;text-align:center;line-height:1.6}
-  .plans-foot{margin-top:30px;text-align:center;color:var(--mut);font-size:16px}
-  /* featured tier — deep navy, tastefully elevated */
-  .plan.featured{color:#e9eef7;border:1px solid #2c4a78;
-    background:linear-gradient(165deg,#12294b 0%,var(--navy) 74%);
-    box-shadow:0 2px 6px rgba(10,28,51,.2),0 34px 70px -30px rgba(10,28,51,.6)}
-  .plan.featured::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-    background:radial-gradient(340px 200px at 85% -5%,rgba(232,155,63,.16),transparent 70%);
-    }
-  .plan.featured:hover{border-color:#3c5d90;
-    box-shadow:0 4px 10px rgba(10,28,51,.25),0 42px 84px -32px rgba(10,28,51,.7)}
-  .plan.featured h3{color:#fff}
-  .plan.featured .p-offer{color:var(--amber-bright)}
-  .plan.featured .p-price .big{color:#fff}
-  .plan.featured .p-price .per{color:#9fb0c9}
-  .plan.featured .p-then{color:#c8d4e6}
-  .plan.featured .p-then b{color:#fff}
-  .plan.featured .p-tax{color:#8fa1bb}
-  .plan.featured .p-desc{color:#c8d4e6}
-  .plan.featured .plist li{color:#dbe4f0}
-  .plan.featured .plist .tick{color:var(--amber-bright)}
-  .plan.featured .guar{background:rgba(28,128,84,.18);border-color:rgba(127,216,171,.32);color:#cfe4d8}
-  .plan.featured .guar b{color:#7fd8ab}
-  .plan.featured .guar .shield svg{stroke:#7fd8ab}
-  .plan.featured .p-fine{color:#9fb0c9}
-  .plan.featured .p-fine b{color:#fff}
-  .pop{position:absolute;top:-15px;left:50%;transform:translateX(-50%);z-index:2;
-    font-size:13px;font-weight:800;letter-spacing:.09em;white-space:nowrap;
-    text-transform:uppercase;color:var(--navy);padding:6px 16px;border-radius:999px;
-    background:linear-gradient(180deg,var(--amber-bright),var(--amber));
-    box-shadow:0 6px 16px -6px rgba(201,126,34,.7),inset 0 1px 0 rgba(255,255,255,.4)}
-  @media(min-width:981px){.plan.featured{margin-top:-14px;margin-bottom:-14px;padding-top:44px}}
-  @media(max-width:980px){.plans{grid-template-columns:1fr;max-width:560px;margin:0 auto}
-    .plan.featured{order:-1}
-    .offer .head{margin-left:auto;margin-right:auto;text-align:center}
-    .offer .head .eyebrow::before{display:none}}
-  @media(max-width:560px){.plan{padding:28px 22px}.p-price .big{font-size:42px}}
+/* ---------- Contact ---------- */
+#contact{background:var(--bg-tint)}
+.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start;margin-top:52px}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px;box-shadow:var(--shadow-sm)}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:7px}
+.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:var(--font-body);font-size:14.5px;color:var(--ink);outline:none;background:#FDFDFF;transition:border-color .15s,box-shadow .15s}
+.field input:focus,.field textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.field textarea{resize:vertical;min-height:110px}
+.form-success{display:none;text-align:center;padding:36px 10px}
+.form-success .big{font-family:var(--font-head);font-size:22px;font-weight:700;margin:16px 0 8px}
+.form-success p{color:var(--muted);font-size:15px}
+.start-card{background:linear-gradient(140deg,var(--navy),#242A55);color:#fff;border-radius:var(--radius);padding:34px;box-shadow:var(--shadow-lg)}
+.start-card h3{font-size:21px;margin-bottom:12px}
+.start-card p{font-size:14.5px;color:#B6BAD6;margin-bottom:22px}
+.start-card .or{display:flex;align-items:center;gap:12px;color:#6C7194;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin:22px 0}
+.start-card .or::before,.start-card .or::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.14)}
+.start-card .mail{display:flex;align-items:center;gap:10px;font-size:14.5px;color:#C9CCE3}
+.start-card .mail a{color:#B9B4FF;font-weight:600}
+.start-card .mail a:hover{text-decoration:underline}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:28px}}
 
-  /* ============ FOUNDING AGENCY BANNER ============ */
-  .founding{display:flex;align-items:center;gap:18px 22px;flex-wrap:wrap;
-    margin:0 auto 34px;max-width:860px;padding:18px 24px;border-radius:14px;
-    background:linear-gradient(180deg,#fff,var(--amber-soft));
-    border:1px solid #ecd3ad;box-shadow:var(--sh-sm)}
-  .founding .fb-tag{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
-    font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);
-    padding:7px 15px;border-radius:999px;white-space:nowrap;
-    background:linear-gradient(180deg,var(--amber-bright),var(--amber));
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
-  .founding .fb-tag .fb-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;
-    background:var(--navy);box-shadow:0 0 0 3px rgba(10,28,51,.14)}
-  .founding p{flex:1 1 340px;min-width:260px;font-size:16.5px;line-height:1.55;color:var(--ink-2)}
-  .founding p b{color:var(--ink);font-weight:700}
-  @media(max-width:560px){.founding{padding:16px 18px}.founding p{font-size:15.5px}}
+/* ---------- Footer ---------- */
+footer{background:var(--navy);color:#fff;padding:44px 0}
+.foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.foot-links{display:flex;gap:26px;font-size:13.5px;color:#A7ABC9}
+.foot-links a:hover{color:#fff}
+.foot-copy{font-size:13px;color:#6C7194}
+@media(max-width:700px){.foot-inner{flex-direction:column;align-items:flex-start}}
 
-  /* ============ RISK-REVERSAL CALLOUT ============ */
-  .riskband{display:flex;align-items:center;gap:15px;text-align:left;
-    margin-top:24px;max-width:560px;padding:16px 20px;border-radius:14px;
-    background:linear-gradient(180deg,#fff,var(--amber-soft));
-    border:1.5px solid #e3bc7d;
-    box-shadow:0 1px 2px rgba(10,28,51,.07),0 14px 30px -18px rgba(201,126,34,.55)}
-  .riskband .rb-shield{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
-    width:46px;height:46px;border-radius:13px;
-    background:linear-gradient(180deg,var(--amber-bright),var(--amber));
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 16px -8px rgba(201,126,34,.7)}
-  .riskband .rb-shield svg{width:27px;height:27px;stroke:var(--navy);fill:none;
-    stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-  .riskband .rb-tag{display:inline-block;font-size:12.5px;font-weight:800;
-    letter-spacing:.12em;text-transform:uppercase;color:var(--amber-deep)}
-  .riskband p{margin-top:3px;font-size:16.5px;line-height:1.5;color:var(--ink);font-weight:600}
-  .riskband p b{color:var(--navy);font-weight:800}
-  .riskband.rb-wide{max-width:860px;margin:0 auto 30px;padding:18px 24px}
-  .riskband.rb-center{margin-left:auto;margin-right:auto;margin-top:28px}
-  /* keep riskband styling intact inside the dark final-CTA panel
-     (higher specificity than the later .final p / .final .micro rules) */
-  .final .riskband{text-align:left}
-  .final .riskband p{color:var(--ink);font-size:16.5px;line-height:1.5;margin:3px 0 0;max-width:none}
-  .final .riskband p b{color:var(--navy)}
-  @media(max-width:560px){
-    .riskband{padding:14px 15px;gap:12px}
-    .riskband p{font-size:15px}
-    .riskband .rb-shield{width:40px;height:40px;border-radius:11px}
-    .riskband .rb-shield svg{width:23px;height:23px}
-  }
-
-  /* ============ MID-PAGE CTA ============ */
-  .mid-cta{margin-top:48px;text-align:center}
-  .mid-cta p{margin-top:14px;color:var(--mut);font-size:16px;font-weight:600}
-  .mid-cta p b{color:var(--ink)}
-
-  /* ============ FAQ ============ */
-  .faq{max-width:800px}
-  details{border-top:1px solid var(--line);padding:0 2px}
-  details:last-of-type{border-bottom:1px solid var(--line)}
-  summary{list-style:none;cursor:pointer;font-weight:700;font-size:18.5px;letter-spacing:-.01em;padding:23px 0;
-    display:flex;align-items:center;justify-content:space-between;gap:16px;
-    transition:color .2s ease}
-  summary:hover{color:var(--brand)}
-  summary::-webkit-details-marker{display:none}
-  summary .chev{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
-    width:30px;height:30px;border-radius:50%;color:var(--brand);font-weight:700;font-size:19px;line-height:1;
-    background:var(--brand-soft);border:1px solid var(--brand-line);
-    transition:transform .4s var(--ease),background .25s ease,color .25s ease}
-  details[open] summary .chev{transform:rotate(45deg);background:var(--brand);color:#fff}
-  details p{color:var(--mut);padding:0 0 25px;font-size:17px;line-height:1.7;max-width:62ch}
-  details[open] p{animation:faqIn .45s var(--ease)}
-  @keyframes faqIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-
-  /* ============ FINAL CTA ============ */
-  .final{position:relative;overflow:hidden;color:#fff;border-radius:20px;
-    background:linear-gradient(150deg,#12294b 0%,var(--navy) 55%,#0c2038 100%);
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 2px 6px rgba(10,28,51,.2),0 40px 90px -40px rgba(10,28,51,.65);
-    padding:76px 44px;text-align:center}
-  .final::before{content:"";position:absolute;top:-46%;left:50%;margin-left:-330px;width:660px;height:660px;
-    border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle,rgba(232,155,63,.16),transparent 62%);
-    animation:floatBlob 20s var(--ease-io) infinite}
-  .final::after{content:"";position:absolute;bottom:-52%;right:-14%;width:560px;height:560px;
-    border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle,rgba(75,126,240,.16),transparent 62%);
-    animation:floatBlob 26s var(--ease-io) infinite reverse}
-  .final > *{position:relative;z-index:1}
-  .final .eyebrow{color:var(--amber-bright)}
-  .final h2{font-size:clamp(30px,3.6vw,42px);margin-top:18px}
-  .final p{color:#c3cede;margin-top:18px;font-size:19.5px;line-height:1.65;max-width:56ch;margin-left:auto;margin-right:auto}
-  .final .btn{margin-top:32px;color:var(--navy);
-    background:linear-gradient(100deg,#fff 0%,#fff 34%,#fff4e2 48%,#eaf1ff 60%,#fff 74%,#fff 100%);
-    background-size:230% 100%;background-position:0% 0;
-    animation:ctaShift 6.5s ease-in-out infinite;
-    box-shadow:0 1px 2px rgba(0,0,0,.25),0 14px 30px -12px rgba(0,0,0,.5),
-      inset 0 1px 0 rgba(255,255,255,.8)}
-  .final .btn::before{content:"";position:absolute;top:0;bottom:0;left:-65%;width:42%;
-    background:linear-gradient(105deg,transparent,rgba(31,82,198,.16),rgba(232,155,63,.22),transparent);
-    transform:skewX(-18deg);pointer-events:none;
-    animation:ctaSheen 6.5s var(--ease) infinite}
-  .final .btn:hover{background-image:linear-gradient(100deg,#f7efe1 0%,#f7efe1 34%,#fbe6cf 48%,#e6eefc 60%,#f7efe1 74%,#f7efe1 100%);
-    box-shadow:0 2px 4px rgba(0,0,0,.25),0 20px 42px -14px rgba(0,0,0,.55)}
-  @keyframes ctaShift{0%{background-position:0% 0}50%{background-position:100% 0}100%{background-position:0% 0}}
-  @keyframes ctaSheen{0%{left:-65%}42%{left:145%}100%{left:145%}}
-  .final .micro{justify-content:center;color:#8fa1b8;margin-top:24px}
-  @media(max-width:560px){
-    .final{padding:54px 22px;border-radius:16px}
-    .final .btn{width:100%}
-  }
-
-  /* ============ FOOTER ============ */
-  footer{padding:64px 0 40px;border-top:1px solid var(--line);margin-top:84px;color:var(--mut);background:#fff}
-  .foot-in{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start}
-  .foot-links{display:flex;gap:8px 22px;flex-wrap:wrap;font-weight:600;font-size:16.5px;color:var(--ink-2)}
-  .foot-links a{transition:color .2s ease}
-  .foot-links a:hover{color:var(--brand)}
-  .foot-meta{font-size:16px;line-height:1.9}
-  .foot-meta a:hover{color:var(--brand)}
-  .foot-bottom{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);
-    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
-
-  /* ============ AI CHAT WIDGET ============ */
-  .oyc{position:fixed;right:22px;bottom:22px;z-index:60;font-family:var(--font)}
-  .oyc-bubble{position:relative;display:inline-flex;align-items:center;gap:10px;cursor:pointer;
-    background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:9px 17px 9px 10px;
-    box-shadow:0 10px 30px -10px rgba(10,28,51,.35);font-weight:700;font-size:15.5px;color:var(--ink);
-    font-family:var(--font);transition:transform .3s var(--ease),box-shadow .3s ease}
-  .oyc-bubble:hover{transform:translateY(-3px);box-shadow:0 16px 38px -12px rgba(10,28,51,.4)}
-  .oyc-dot{position:relative;width:34px;height:34px;border-radius:50%;flex:0 0 auto;
-    background:linear-gradient(180deg,#2a5fd6,var(--brand));color:#fff;
-    display:flex;align-items:center;justify-content:center;font-size:16px}
-  .oyc-dot::after{content:"";position:absolute;inset:0;border-radius:50%;
-    border:2px solid rgba(31,82,198,.5);animation:ping 2.8s var(--ease) infinite}
-  @keyframes ping{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(1.55);opacity:0}}
-  .oyc.open .oyc-bubble{display:none}
-
-  .oyc-panel{position:fixed;right:22px;bottom:22px;width:384px;max-width:calc(100vw - 32px);
-    height:564px;max-height:calc(100vh - 40px);display:flex;flex-direction:column;overflow:hidden;
-    background:#fff;border:1px solid var(--line-2);border-radius:18px;
-    box-shadow:0 24px 64px -22px rgba(10,28,51,.55),0 4px 12px rgba(10,28,51,.12);
-    transform:translateY(14px) scale(.98);opacity:0;transform-origin:bottom right;
-    transition:opacity .28s var(--ease),transform .28s var(--ease)}
-  .oyc.open .oyc-panel{opacity:1;transform:none}
-  /* When closed, the (invisible) panel must not swallow clicks meant for the bubble */
-  .oyc:not(.open) .oyc-panel{pointer-events:none}
-
-  .oyc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;
-    color:#fff;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 70%,#122c50 100%);
-    border-bottom:1px solid rgba(255,255,255,.08)}
-  .oyc-head-id{display:flex;align-items:center;gap:11px}
-  .oyc-avatar{width:38px;height:38px;flex:0 0 auto;border-radius:50%;display:flex;align-items:center;
-    justify-content:center;font-family:var(--serif);font-weight:700;font-size:19px;color:var(--navy);
-    background:linear-gradient(180deg,var(--amber-bright),var(--amber))}
-  .oyc-title{font-weight:800;font-size:16px;letter-spacing:.02em}
-  .oyc-sub{display:flex;align-items:center;gap:7px;font-size:13px;color:#9fb0c7;margin-top:1px}
-  .oyc-online{width:8px;height:8px;border-radius:50%;flex:0 0 auto;background:#4ad991;
-    box-shadow:0 0 0 3px rgba(74,217,145,.22)}
-  .oyc-close{border:0;background:rgba(255,255,255,.12);color:#fff;width:30px;height:30px;border-radius:50%;
-    cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;
-    flex:0 0 auto;transition:background .2s ease}
-  .oyc-close:hover{background:rgba(255,255,255,.26)}
-
-  .oyc-msgs{flex:1 1 auto;overflow-y:auto;padding:18px 16px;background:var(--bg);
-    display:flex;flex-direction:column;gap:12px}
-  .oyc-row{display:flex;max-width:86%}
-  .oyc-row.user{align-self:flex-end;justify-content:flex-end}
-  .oyc-row.bot{align-self:flex-start}
-  .oyc-bub{padding:11px 14px;border-radius:15px;font-size:15px;line-height:1.5;
-    box-shadow:var(--sh-sm);word-wrap:break-word;overflow-wrap:anywhere}
-  .oyc-row.bot .oyc-bub{background:#fff;color:var(--ink);border:1px solid var(--line);border-bottom-left-radius:5px}
-  .oyc-row.user .oyc-bub{background:linear-gradient(180deg,#2a5fd6,var(--brand));color:#fff;border-bottom-right-radius:5px}
-  .oyc-bub strong{font-weight:700}
-  .oyc-bub a{color:inherit;text-decoration:underline}
-  .oyc-row.bot .oyc-bub a{color:var(--brand)}
-
-  .oyc-typing{display:inline-flex;gap:4px;padding:13px 15px}
-  .oyc-typing span{width:7px;height:7px;border-radius:50%;background:var(--mut-2);
-    animation:oycBlink 1.3s infinite ease-in-out both}
-  .oyc-typing span:nth-child(2){animation-delay:.18s}
-  .oyc-typing span:nth-child(3){animation-delay:.36s}
-  @keyframes oycBlink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
-
-  .oyc-form{display:flex;align-items:center;gap:8px;padding:12px;background:#fff;border-top:1px solid var(--line)}
-  .oyc-input{flex:1 1 auto;min-width:0;border:1px solid var(--line-2);border-radius:999px;padding:12px 16px;
-    font:15px/1.4 var(--font);color:var(--ink);outline:none;transition:border-color .2s ease,box-shadow .2s ease}
-  .oyc-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(31,82,198,.14)}
-  .oyc-send{flex:0 0 auto;width:42px;height:42px;border:0;border-radius:50%;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;color:#fff;
-    background:linear-gradient(180deg,#2a5fd6,var(--brand));box-shadow:0 6px 16px -8px rgba(31,82,198,.7);
-    transition:transform .2s ease,box-shadow .2s ease}
-  .oyc-send:hover{transform:translateY(-1px);box-shadow:0 10px 22px -8px rgba(31,82,198,.8)}
-  .oyc-send:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
-  .oyc-foot{text-align:center;font-size:11.5px;color:var(--mut-2);padding:0 12px 11px;background:#fff}
-
-  @media(max-width:520px){
-    .oyc-bubble .oyc-t{display:none}
-    .oyc-panel{right:0;bottom:0;width:100vw;max-width:100vw;height:100vh;max-height:100vh;border-radius:0;border:0}
-  }
-  @media(prefers-reduced-motion:reduce){
-    .oyc-panel{transition:none}
-    .oyc-dot::after{animation:none;opacity:0}
-    .oyc-bubble:hover{transform:none}
-    .oyc-typing span{animation:none;opacity:.45}
-  }
-
-  /* ============ CHECKOUT CONSENT STEP (pre-Stripe) ============ */
-  .cg-overlay{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
-    padding:20px;background:rgba(7,17,33,.6);
-    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .cg-overlay.open{display:flex}
-  .cg-modal{width:100%;max-width:580px;max-height:calc(100vh - 40px);overflow-y:auto;
-    background:#fff;border:1px solid var(--line-2);border-radius:18px;
-    box-shadow:0 30px 80px -24px rgba(10,28,51,.6),0 4px 14px rgba(10,28,51,.18)}
-  .cg-overlay.open .cg-modal{animation:cgIn .4s var(--ease)}
-  @keyframes cgIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
-  .cg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:26px 28px 0}
-  .cg-head h3{font-family:var(--serif);font-size:25px;letter-spacing:-.014em}
-  .cg-head .cg-sub{margin-top:6px;color:var(--mut);font-size:16px;line-height:1.55}
-  .cg-x{flex:0 0 auto;border:1px solid var(--line-2);background:#fff;color:var(--mut);
-    width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;
-    display:flex;align-items:center;justify-content:center;transition:color .2s ease,border-color .2s ease}
-  .cg-x:hover{color:var(--ink);border-color:var(--mut-2)}
-  .cg-price{margin:20px 28px 0;padding:22px 24px;border-radius:14px;text-align:center;color:#fff;
-    background:linear-gradient(160deg,#12294b 0%,var(--navy) 80%);border:1px solid #2c4a78;
-    box-shadow:0 14px 34px -18px rgba(10,28,51,.55)}
-  .cg-price .cg-big{display:block;font-family:var(--serif);font-weight:700;font-size:27px;
-    letter-spacing:-.015em;line-height:1.3}
-  .cg-price .cg-big b{color:var(--amber-bright);font-weight:700}
-  .cg-price .cg-cancel{display:block;margin-top:6px;color:#c8d4e6;font-size:15.5px;font-weight:600}
-  .cg-body{padding:20px 28px 26px}
-  .cg-check{display:flex;gap:13px;align-items:flex-start;cursor:pointer;
-    border:1px solid var(--line-2);border-radius:12px;padding:15px 17px;margin-top:12px;
-    transition:border-color .2s ease,background .2s ease}
-  .cg-check:first-child{margin-top:0}
-  .cg-check:hover{border-color:var(--brand-line);background:var(--brand-soft)}
-  .cg-check input{flex:0 0 auto;width:21px;height:21px;margin:3px 0 0;accent-color:var(--brand);cursor:pointer}
-  .cg-check span{font-size:16px;line-height:1.55;color:var(--ink-2)}
-  .cg-check span b{color:var(--ink)}
-  .cg-check a{color:var(--brand);font-weight:700;text-decoration:underline;text-underline-offset:2px}
-  .cg-check a:hover{color:var(--brand-deep)}
-  .cg-go{width:100%;margin-top:18px}
-  .cg-go.is-off{pointer-events:none;opacity:.45;filter:saturate(.55);box-shadow:none}
-  .cg-hint{margin-top:10px;text-align:center;color:var(--mut);font-size:14.5px;min-height:1.4em}
-  .cg-fine{margin-top:12px;text-align:center;color:var(--mut);font-size:14.5px;line-height:1.6}
-  @media(max-width:560px){
-    .cg-overlay{padding:0;align-items:flex-end}
-    .cg-modal{max-width:none;max-height:calc(100vh - 24px);border-radius:18px 18px 0 0}
-    .cg-head{padding:22px 20px 0}
-    .cg-price{margin:16px 20px 0;padding:18px 16px}
-    .cg-price .cg-big{font-size:22px}
-    .cg-body{padding:16px 20px 22px}
-  }
-  @media(prefers-reduced-motion:reduce){
-    .cg-overlay.open .cg-modal{animation:none}
-  }
-
-  /* ============ MOTION & ANIMATION ============ */
-  /* scroll-reveal base state */
-  .reveal{opacity:0;transform:translateY(28px);
-    transition:opacity .75s var(--ease),transform .75s var(--ease)}
-  .reveal.in{opacity:1;transform:none}
-  /* staggered children (cards, steps, benefits) */
-  .stagger > *{opacity:0;transform:translateY(24px);
-    transition:opacity .65s var(--ease),transform .65s var(--ease)}
-  .stagger.in > *{opacity:1;transform:none}
-  .stagger.in > *:nth-child(2){transition-delay:.09s}
-  .stagger.in > *:nth-child(3){transition-delay:.18s}
-  .stagger.in > *:nth-child(4){transition-delay:.27s}
-  .stagger.in > *:nth-child(5){transition-delay:.36s}
-  .stagger.in > *:nth-child(6){transition-delay:.45s}
-
-  /* hero entrance */
-  .hero-anim{opacity:0;transform:translateY(22px);animation:heroIn .95s var(--ease) forwards}
-  .hero-anim.d1{animation-delay:.05s}
-  .hero-anim.d2{animation-delay:.17s}
-  .hero-anim.d3{animation-delay:.29s}
-  .hero-anim.d4{animation-delay:.41s}
-  .hero .photo.tall{opacity:0;transform:translateY(24px) scale(.98);
-    animation:heroArt 1.1s var(--ease) .25s forwards}
-  @keyframes heroIn{to{opacity:1;transform:none}}
-  @keyframes heroArt{to{opacity:1;transform:none}}
-
-  /* ---- SVG art motion ---- */
-  .twinkle{animation:twk 3.8s ease-in-out infinite}
-  .twinkle.t2{animation-duration:4.6s;animation-delay:.6s}
-  .twinkle.t3{animation-duration:5.4s;animation-delay:1.1s}
-  @keyframes twk{0%,100%{opacity:.25}50%{opacity:.9}}
-  .lit{animation:litpulse 5.5s ease-in-out infinite}
-  .lit.l2{animation-delay:1.6s}
-  @keyframes litpulse{0%,100%{opacity:.82}50%{opacity:1}}
-  .glowsoft{animation:glowb 7s ease-in-out infinite}
-  @keyframes glowb{0%,100%{opacity:.4}50%{opacity:.62}}
-  .lamp{animation:lampb 5s ease-in-out infinite}
-  @keyframes lampb{0%,100%{opacity:.5}50%{opacity:.85}}
-  .ring{transform-box:fill-box;transform-origin:center;
-    animation:ringPulse 5s cubic-bezier(.22,.61,.36,1) infinite}
-  .ring.r2{animation-delay:2.5s}
-  @keyframes ringPulse{0%{transform:scale(.55);opacity:.75}70%{opacity:.06}100%{transform:scale(1.3);opacity:0}}
-  .pinring{transform-box:fill-box;transform-origin:center;
-    animation:ringPulse 4s cubic-bezier(.22,.61,.36,1) infinite}
-  .pinring.p2{animation-delay:1s}
-  .pinring.p3{animation-delay:2s}
-  .pinring.p4{animation-delay:3s}
-  .mainpin{transform-box:fill-box;transform-origin:center bottom;
-    animation:pinBob 3.4s ease-in-out infinite}
-  @keyframes pinBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  .route{stroke-dasharray:5 11;animation:dash 9s linear infinite}
-  .route.r2{animation-duration:11s}
-  .route.r3{animation-duration:8s}
-  .route.r4{animation-duration:12s}
-  @keyframes dash{to{stroke-dashoffset:-320}}
-
-  /* Respect reduced motion — disable all of the above */
-  @media(prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important}
-    .reveal,.stagger > *{opacity:1 !important;transform:none !important;transition:none !important}
-    .hero-anim,.hero .photo.tall{opacity:1 !important;transform:none !important;animation:none !important}
-    .hero::before,.hero::after,.final::before,.final::after{animation:none !important}
-    .twinkle,.lit,.glowsoft,.lamp,.mainpin,.route{animation:none !important}
-    .ring,.pinring{animation:none !important;opacity:.35}
-    .chip{animation:none !important}
-    .drawline{stroke-dashoffset:0 !important;transition:none !important}
-    .plan:hover,.step:hover,.cmp:hover,.benefit:hover,.btn-lg:hover,.oyc-bubble:hover{transform:none !important}
-    .btn-primary::after,.btn-amber::after{display:none !important}
-    .final .btn{animation:none !important;background:#fff !important}
-    .final .btn::before{display:none !important}
-    .stat .n.npop{animation:none !important}
-  }
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .card-a,.card-b,.card-c{animation:none}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
 
-<!-- ===================== NAV ===================== -->
+<!-- ============ NAV ============ -->
 <header class="nav">
-  <div class="wrap nav-in">
-    <a class="logo" href="/"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="#2456d6" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></a>
-    <nav class="nav-links">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top" aria-label="Oyzla AI home">
+      <svg class="logo-mark" viewBox="0 0 140 140" aria-hidden="true">
+        <rect x="14" y="14" width="112" height="112" rx="28" fill="url(#lg1)"/>
+        <defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+        <circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/>
+        <circle cx="93.5" cy="46.5" r="9.5" fill="#fff"/><circle cx="93.5" cy="46.5" r="4" fill="#4F46E5"/>
+      </svg>
+      <span>Oyzla&nbsp;<span class="ai">AI</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
       <a href="#how">How it works</a>
-      <a href="#online">Why online ads</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
+      <a href="#services">Services</a>
+      <a href="#demo">Live demo</a>
+      <a href="#commitments">Our promise</a>
     </nav>
-    <div class="nav-cta">
-      <a class="btn btn-primary" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory</a>
-    </div>
+    <a class="btn btn-primary" href="#contact">Get started</a>
   </div>
 </header>
 
-<!-- ===================== HERO ===================== -->
-<section class="hero">
-  <div class="wrap hero-in">
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="wrap hero-grid">
     <div>
-      <span class="badge hero-anim d1"><span class="bdot" aria-hidden="true"></span>One area · One agency · Never shared</span>
-      <h1 class="hero-anim d1">Insurance leads that are <em>yours alone</em>.</h1>
-      <p class="lede hero-anim d2">Exclusive local insurance leads, delivered to you in real time. One agency per area — never shared, never resold. We run the ads; you quote and close. Guaranteed.</p>
-      <div class="cta-row hero-anim d3">
-        <a class="btn btn-primary btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory — $1,000 first month <span class="arr">→</span></a>
+      <span class="eyebrow">Done-for-you AI, built around your business</span>
+      <h1>Your busywork, <span class="hl">automated.</span><br>Your AI, <span class="hl">owned.</span></h1>
+      <p class="hero-sub">Oyzla AI designs and builds custom AI assistants and automations that answer, respond, follow up, and file — so you and your team can get back to real work.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Tell us what to automate</a>
+        <a class="btn btn-ghost" href="#services">See services &amp; pricing</a>
       </div>
-      <p class="cta-note hero-anim d3">$1,000 first month, then $2,000/month · month to month · cancel anytime</p>
-      <div class="riskband hero-anim d4" role="note" aria-label="Money-back guarantee">
-        <span class="rb-shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
-        <div>
-          <span class="rb-tag">Zero-risk guarantee</span>
-          <p>At least <b>3 valid exclusive leads in your first 30 days</b> — or your <b>first month is refunded</b>.</p>
+      <p class="hero-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="2"/></svg>
+        You own it. We never hold your passwords. Live in days.
+      </p>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="float-card card-a">
+        <div class="fc-head">
+          <div class="fc-dot" style="background:#EEF0FE"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="fc-title">Website assistant</div><div class="fc-sub">Visitor · 11:42 PM</div></div>
         </div>
+        <div class="fc-body">"Do you handle emergency call-outs on weekends?" — answered, booked, and logged while the office slept.</div>
+        <span class="fc-badge">● Lead captured</span>
       </div>
-      <div class="micro hero-anim d4">
-        <span><span class="tick">✓</span> Month-to-month</span>
-        <span><span class="tick">✓</span> No contracts</span>
-        <span><span class="tick">✓</span> No sales calls</span>
-        <span><span class="tick">✓</span> Real-time delivery</span>
+      <div class="float-card card-b">
+        <div class="fc-head">
+          <div class="fc-dot" style="background:#FDF2E7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <div><div class="fc-title">Instant lead responder</div><div class="fc-sub">New inquiry · just now</div></div>
+        </div>
+        <div class="fc-body">New form fill → personal reply drafted and sent in 8 seconds, with your calendar link attached.</div>
+        <span class="fc-badge">● Replied in seconds</span>
+      </div>
+      <div class="float-card card-c">
+        <div class="fc-head">
+          <div class="fc-dot" style="background:#EAF7EF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9L12 3z" stroke="#16A34A" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+          <div><div class="fc-title">Reputation autopilot</div><div class="fc-sub">After job completed</div></div>
+        </div>
+        <div class="fc-body">Review request sent to today's happy customers; a thoughtful response drafted for yesterday's review.</div>
+        <span class="fc-badge">● On autopilot</span>
       </div>
     </div>
-
-    <!-- Designed brand visual: a single highlighted home in a local
-         neighborhood at dusk, with nearby leads routing to one agency. -->
-    <figure class="photo tall" aria-label="Illustration: local leads in one territory routing exclusively to a single agency">
-      <svg class="art" viewBox="0 0 640 720" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#071427"/>
-            <stop offset="0.45" stop-color="#102a52"/>
-            <stop offset="1" stop-color="#1b3f7c"/>
-          </linearGradient>
-          <radialGradient id="hDawn" cx="0.5" cy="0.66" r="0.75">
-            <stop offset="0" stop-color="#f2b566" stop-opacity="0.5"/>
-            <stop offset="0.45" stop-color="#e89b3f" stop-opacity="0.14"/>
-            <stop offset="1" stop-color="#e89b3f" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="hHouse" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#4b7ef0"/>
-            <stop offset="1" stop-color="#1f52c6"/>
-          </linearGradient>
-          <linearGradient id="hRoof" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#1c47ad"/>
-            <stop offset="1" stop-color="#16409e"/>
-          </linearGradient>
-          <linearGradient id="hGround" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#0d2547"/>
-            <stop offset="1" stop-color="#081a33"/>
-          </linearGradient>
-          <linearGradient id="hPin" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#f6c078"/>
-            <stop offset="1" stop-color="#e89b3f"/>
-          </linearGradient>
-          <filter id="hSoft" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="10"/>
-          </filter>
-          <filter id="hSoft2" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="5"/>
-          </filter>
-        </defs>
-
-        <!-- sky + warm dawn glow at the horizon -->
-        <rect width="640" height="720" fill="url(#hSky)"/>
-        <rect width="640" height="720" fill="url(#hDawn)"/>
-
-        <!-- soft moon -->
-        <circle cx="98" cy="96" r="42" fill="#dbe6ff" opacity="0.1" filter="url(#hSoft)"/>
-        <circle cx="98" cy="96" r="17" fill="#eef3ff" opacity="0.85"/>
-        <circle cx="104" cy="90" r="15" fill="#0b1c38" opacity="0.9"/>
-
-        <!-- stars -->
-        <g fill="#ffffff" opacity="0.55">
-          <circle class="twinkle" cx="196" cy="62" r="1.7"/>
-          <circle class="twinkle t2" cx="286" cy="112" r="1.8"/>
-          <circle class="twinkle t3" cx="388" cy="52" r="1.5"/>
-          <circle class="twinkle t2" cx="520" cy="140" r="1.7"/>
-          <circle class="twinkle" cx="452" cy="86" r="1.5"/>
-          <circle class="twinkle t3" cx="576" cy="72" r="1.4"/>
-          <circle class="twinkle" cx="60" cy="196" r="1.4"/>
-        </g>
-
-        <!-- distant skyline, two depth layers with a few lit windows -->
-        <g fill="#0f2a52" opacity="0.55">
-          <rect x="0" y="296" width="66" height="180"/>
-          <rect x="66" y="330" width="50" height="146"/>
-          <rect x="560" y="308" width="80" height="168"/>
-          <rect x="514" y="346" width="46" height="130"/>
-        </g>
-        <g fill="#123159" opacity="0.8">
-          <rect x="24" y="368" width="54" height="130"/>
-          <rect x="548" y="378" width="60" height="120"/>
-        </g>
-        <g fill="#ffd79b">
-          <rect class="lit" x="38" y="386" width="5" height="7" opacity="0.7"/>
-          <rect class="lit l2" x="58" y="410" width="5" height="7" opacity="0.6"/>
-          <rect class="lit l2" x="566" y="396" width="5" height="7" opacity="0.7"/>
-          <rect class="lit" x="586" y="422" width="5" height="7" opacity="0.6"/>
-        </g>
-
-        <!-- connecting routes from neighbor leads to the one agency -->
-        <g fill="none" stroke="#7fa6f2" stroke-width="2.4" stroke-linecap="round" opacity="0.8">
-          <path class="route" d="M132 262 C 205 310, 255 365, 318 428"/>
-          <path class="route r2" d="M532 250 C 466 308, 408 362, 338 428"/>
-          <path class="route r3" d="M104 462 C 185 466, 252 458, 314 450"/>
-          <path class="route r4" d="M548 478 C 468 474, 402 460, 350 450"/>
-        </g>
-        <!-- flow dots travelling along the routes (removed by JS under reduced motion) -->
-        <g fill="#f2b566">
-          <circle class="flowdot" r="4" opacity="0.95">
-            <animateMotion dur="6s" repeatCount="indefinite" path="M132 262 C 205 310, 255 365, 318 428"/>
-          </circle>
-          <circle class="flowdot" r="4" opacity="0.95">
-            <animateMotion dur="7.5s" begin="-3s" repeatCount="indefinite" path="M532 250 C 466 308, 408 362, 338 428"/>
-          </circle>
-          <circle class="flowdot" r="3.4" opacity="0.9">
-            <animateMotion dur="6.6s" begin="-1.5s" repeatCount="indefinite" path="M104 462 C 185 466, 252 458, 314 450"/>
-          </circle>
-          <circle class="flowdot" r="3.4" opacity="0.9">
-            <animateMotion dur="8s" begin="-5s" repeatCount="indefinite" path="M548 478 C 468 474, 402 460, 350 450"/>
-          </circle>
-        </g>
-
-        <!-- neighbor homes (the leads) with gentle pinging markers -->
-        <g>
-          <g transform="translate(132 262)">
-            <path d="M-20 4 L0 -12 L20 4 Z" fill="#16335c"/><rect x="-16" y="4" width="32" height="22" fill="#16335c"/>
-            <rect class="lit" x="-5" y="10" width="9" height="9" fill="#ffd79b" opacity="0.85"/>
-            <circle class="pinring" cy="-24" r="12" fill="none" stroke="#8fb0f4" stroke-width="2"/>
-            <circle cy="-24" r="5.5" fill="#8fb0f4"/>
-          </g>
-          <g transform="translate(532 250)">
-            <path d="M-20 4 L0 -12 L20 4 Z" fill="#16335c"/><rect x="-16" y="4" width="32" height="22" fill="#16335c"/>
-            <rect class="lit l2" x="-5" y="10" width="9" height="9" fill="#ffd79b" opacity="0.85"/>
-            <circle class="pinring p2" cy="-24" r="12" fill="none" stroke="#8fb0f4" stroke-width="2"/>
-            <circle cy="-24" r="5.5" fill="#8fb0f4"/>
-          </g>
-          <g transform="translate(104 462)">
-            <path d="M-18 4 L0 -10 L18 4 Z" fill="#16335c"/><rect x="-14" y="4" width="28" height="20" fill="#16335c"/>
-            <rect class="lit" x="-4" y="9" width="8" height="8" fill="#ffd79b" opacity="0.85"/>
-            <circle class="pinring p3" cy="-21" r="11" fill="none" stroke="#8fb0f4" stroke-width="2"/>
-            <circle cy="-21" r="5" fill="#8fb0f4"/>
-          </g>
-          <g transform="translate(548 478)">
-            <path d="M-18 4 L0 -10 L18 4 Z" fill="#16335c"/><rect x="-14" y="4" width="28" height="20" fill="#16335c"/>
-            <rect class="lit l2" x="-4" y="9" width="8" height="8" fill="#ffd79b" opacity="0.85"/>
-            <circle class="pinring p4" cy="-21" r="11" fill="none" stroke="#8fb0f4" stroke-width="2"/>
-            <circle cy="-21" r="5" fill="#8fb0f4"/>
-          </g>
-        </g>
-
-        <!-- rolling ground -->
-        <path d="M0 508 Q 320 456 640 508 L640 720 L0 720 Z" fill="url(#hGround)"/>
-        <path d="M0 508 Q 320 456 640 508" fill="none" stroke="#2a4d85" stroke-width="1.6" opacity="0.5"/>
-
-        <!-- protective halo behind the one agency -->
-        <circle cx="320" cy="472" r="152" fill="#5b8bff" opacity="0.14" filter="url(#hSoft)"/>
-        <circle class="ring" cx="320" cy="472" r="120" fill="none" stroke="#8fb0f4" stroke-width="2"/>
-        <circle class="ring r2" cx="320" cy="472" r="120" fill="none" stroke="#f2b566" stroke-width="1.6"/>
-
-        <!-- warm light pool on the ground -->
-        <ellipse class="glowsoft" cx="320" cy="590" rx="150" ry="26" fill="#f2b566" opacity="0.12" filter="url(#hSoft)"/>
-
-        <!-- the ONE agency: highlighted home -->
-        <g transform="translate(320 470)">
-          <!-- shadow -->
-          <ellipse cx="0" cy="122" rx="122" ry="18" fill="#050f22" opacity="0.6"/>
-          <!-- front path -->
-          <path d="M-14 116 L14 116 L34 152 L-34 152 Z" fill="#132c54"/>
-          <!-- body -->
-          <rect x="-78" y="2" width="156" height="114" rx="10" fill="url(#hHouse)"/>
-          <rect x="-78" y="2" width="156" height="114" rx="10" fill="#ffffff" opacity="0.045"/>
-          <!-- chimney -->
-          <rect x="38" y="-58" width="17" height="34" rx="3" fill="#16335c"/>
-          <!-- roof -->
-          <path d="M-96 6 L0 -70 L96 6 Z" fill="url(#hRoof)"/>
-          <path d="M-96 6 L0 -70 L96 6 L88 6 L0 -62 L-88 6 Z" fill="#ffffff" opacity="0.1"/>
-          <!-- door with warm porch light -->
-          <rect x="-17" y="58" width="34" height="58" rx="5" fill="#0a1c33"/>
-          <rect x="-13" y="64" width="26" height="30" rx="3" fill="#123159"/>
-          <circle cx="10" cy="92" r="2.4" fill="#f6b567"/>
-          <circle cx="0" cy="46" r="8" fill="#ffd79b" opacity="0.45" filter="url(#hSoft2)"/>
-          <circle cx="0" cy="46" r="3.4" fill="#ffd79b"/>
-          <!-- windows, warmly lit with soft glow -->
-          <rect x="-62" y="28" width="32" height="28" rx="4" fill="#ffd79b" opacity="0.45" filter="url(#hSoft2)"/>
-          <rect class="lit" x="-62" y="28" width="32" height="28" rx="4" fill="#ffd79b"/>
-          <path d="M-46 28 V56 M-62 42 H-30" stroke="#d9a856" stroke-width="1.6"/>
-          <rect x="30" y="28" width="32" height="28" rx="4" fill="#ffd79b" opacity="0.45" filter="url(#hSoft2)"/>
-          <rect class="lit l2" x="30" y="28" width="32" height="28" rx="4" fill="#ffd79b"/>
-          <path d="M46 28 V56 M30 42 H62" stroke="#d9a856" stroke-width="1.6"/>
-          <!-- bushes -->
-          <circle cx="-92" cy="108" r="14" fill="#14503f"/>
-          <circle cx="-108" cy="112" r="10" fill="#186049"/>
-          <circle cx="92" cy="108" r="14" fill="#14503f"/>
-          <circle cx="108" cy="112" r="10" fill="#186049"/>
-        </g>
-
-        <!-- exclusive marker pin above the home -->
-        <g class="mainpin">
-          <g transform="translate(320 292)">
-            <ellipse cx="0" cy="56" rx="16" ry="4" fill="#050f22" opacity="0.4"/>
-            <path d="M0 48 C -27 13, -27 -9, 0 -9 C 27 -9, 27 13, 0 48 Z" fill="url(#hPin)"/>
-            <path d="M0 48 C -27 13, -27 -9, 0 -9 C 27 -9, 27 13, 0 48 Z" fill="#ffffff" opacity="0.1"/>
-            <circle cx="0" cy="12" r="10.5" fill="#0a1c33"/>
-            <path d="M-5 12 l3.4 3.6 L6.5 7.4" fill="none" stroke="#f2b566" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-        </g>
-      </svg>
-      <figcaption class="chip"><span class="cdot" aria-hidden="true">✓</span>Every lead: yours alone</figcaption>
-    </figure>
   </div>
 </section>
 
-<!-- ===================== STAT STRIP (honest, provable framings) ===================== -->
-<section class="stats">
-  <div class="wrap stats-in reveal stagger">
-    <div class="stat"><div class="n" data-count="1">1</div><div class="l">Agency per area</div></div>
-    <div class="stat"><div class="n" data-count="0">0</div><div class="l">Shared or resold leads</div></div>
-    <div class="stat"><div class="n" data-count="100" data-suffix="%">100%</div><div class="l">Self-serve — no calls</div></div>
-    <div class="stat"><div class="n">3-lead</div><div class="l">First-month guarantee</div></div>
+<!-- ============ TRUST STRIP ============ -->
+<div class="trust-strip">
+  <div class="wrap trust-items">
+    <div class="trust-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-2.9 8.2-7 9.5C7.9 19.2 5 15.4 5 11V6l7-3z" stroke="#B9B4FF" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 11.5l2 2 4-4.5" stroke="#B9B4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>You own</b>&nbsp;everything we build</span>
+    </div>
+    <div class="trust-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2.5" stroke="#B9B4FF" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#B9B4FF" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="15" r="1.6" fill="#B9B4FF"/></svg>
+      <span>We&nbsp;<b>never hold</b>&nbsp;your passwords</span>
+    </div>
+    <div class="trust-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#B9B4FF" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#B9B4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Live in&nbsp;<b>days, not months</b></span>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- ===================== HOW IT WORKS ===================== -->
-<section class="band" id="how">
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
   <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">How it works</span>
-      <h2>Pay. Set up. Get leads.</h2>
-      <p>The whole thing happens online. Here's what to expect.</p>
-    </div>
-    <div class="steps reveal stagger">
-      <div class="step">
-        <div class="num">1</div>
-        <h3>Claim your territory</h3>
-        <p>Secure checkout. One agency per area — once you're in, yours is locked.</p>
+    <span class="eyebrow">How it works</span>
+    <h2 class="section-title">From "we should automate that"<br>to done — in three steps.</h2>
+    <p class="section-sub">No jargon, no six-month roadmap. We find the repetitive work, build the tool, and keep it running.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>Map the busywork</h3>
+        <p>A short call to walk through your day. We find the repetitive stuff — missed calls, slow replies, chasing reviews, re-typing data — and pick what to automate first.</p>
       </div>
-      <div class="step">
-        <div class="num">2</div>
-        <h3>Complete a 2-minute setup</h3>
-        <p>Right after payment, a short form captures your territory, lines, and where leads should go.</p>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3>We build it. You own it.</h3>
+        <p>We design and build your custom AI tool, tuned to your business and your voice. Everything we create is yours — the code, the content, the accounts. No lock-in, ever.</p>
       </div>
-      <div class="step">
-        <div class="num">3</div>
-        <h3>We launch. Leads arrive.</h3>
-        <p>We build and run your local ads. Every lead routes to you in real time — yours alone.</p>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3>We host, monitor, maintain</h3>
+        <p>We keep it live, watch it daily, and keep improving it as your business changes. You get the results; we handle the machinery.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== BENEFIT LIST ===================== -->
-<section class="band" id="benefits" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<!-- ============ SERVICES ============ -->
+<section id="services">
   <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">Why agencies choose Oyzla</span>
-      <h2>The deal, in plain terms</h2>
+    <span class="eyebrow">Services &amp; pricing</span>
+    <h2 class="section-title">Pick a tool, or dream one up.</h2>
+    <p class="section-sub">Straightforward setup + monthly care. Setup covers design, build, and launch; the monthly covers hosting, monitoring, and ongoing tuning.</p>
+
+    <div class="svc-grid">
+      <div class="svc reveal">
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>AI Website Assistant</h3>
+        <p>A chatbot on your site that answers FAQs in your voice, qualifies visitors, and captures leads around the clock — so browsers become bookings.</p>
+        <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v11H8l-4 4V5z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9h8M8 12.5h5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>AI Front Desk</h3>
+        <p>An after-hours and overflow responder across web and email. Every message gets a helpful answer, urgent ones get flagged, and nothing slips through.</p>
+        <div class="svc-price"><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;$500/mo</span></div>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Instant Lead Responder</h3>
+        <p>Speed wins deals. Every inbound inquiry — forms, email, listings — gets a smart, personal reply in seconds, before your competitors even see it.</p>
+        <div class="svc-price"><span class="setup">$2,000</span><span class="per">setup&nbsp;·&nbsp;$400/mo</span></div>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9L12 3z" stroke="#4F46E5" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+        <h3>Reputation Autopilot</h3>
+        <p>Automated review requests at the perfect moment, plus drafted responses to every new review — your reputation grows while you work.</p>
+        <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div>
+      </div>
+
+      <div class="svc svc-dark reveal">
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 4.5l5 5L8 21H3v-5L14.5 4.5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M12.5 6.5l5 5" stroke="#fff" stroke-width="1.8"/></svg></div>
+        <h3>Custom AI Build</h3>
+        <p>Anything AI your business needs — document &amp; data automations, quoting engines, scheduling brains, internal copilots, one-off ideas. If it's repetitive, we can probably automate it.</p>
+        <div class="svc-price"><span class="setup">Let's talk scope</span></div>
+      </div>
     </div>
-    <div class="benefits reveal stagger">
-      <div class="benefit">
-        <h3>Exclusive leads only</h3>
-        <p>Every lead is yours alone. Never resold.</p>
-      </div>
-      <div class="benefit">
-        <h3>One agency per area</h3>
-        <p>Claim your ZIP or city. Competitors are locked out.</p>
-      </div>
-      <div class="benefit">
-        <h3>No-call, self-serve</h3>
-        <p>Sign up online in minutes. No demos, no sales calls.</p>
-      </div>
-      <div class="benefit">
-        <h3>3-lead guarantee</h3>
-        <p>3 valid exclusive leads in your first 30 days, or your first month is refunded.</p>
-      </div>
-      <div class="benefit">
-        <h3>Done-for-you ads</h3>
-        <p>We build, run, and optimize the campaigns. You quote and close.</p>
-      </div>
-      <div class="benefit">
-        <h3>Flat monthly fee</h3>
-        <p>One price. No per-lead charges, no contracts.</p>
-      </div>
-    </div>
+
+    <p class="bundle"><span class="tag">Bundle 2+ and save</span> The tools work even better together — pair the Front Desk with the Lead Responder and cover every hour of the day.</p>
   </div>
 </section>
 
-<!-- ===================== WHY EXCLUSIVE BEATS SHARED ===================== -->
-<section class="band" id="why">
+<!-- ============ DEMO ============ -->
+<section id="demo">
   <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">The model</span>
-      <h2>Why exclusive beats shared</h2>
-      <p>Most vendors sell the same lead to several agents. We never do.</p>
-    </div>
-    <div class="compare reveal stagger">
-      <div class="cmp bad">
-        <h3><span class="mk">✕</span> Shared lead vendors</h3>
-        <!-- diagram: one lead fanned out to many competing agents -->
-        <svg class="cmp-diagram" viewBox="0 0 280 92" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <g stroke="#c98a76" stroke-width="1.8" fill="none" opacity="0.85">
-            <path class="fanline" d="M42 46 C 110 46, 150 14, 232 14"/>
-            <path class="fanline" d="M42 46 C 110 46, 150 30, 232 30"/>
-            <path class="fanline" d="M42 46 C 120 46, 160 46, 232 46"/>
-            <path class="fanline" d="M42 46 C 110 46, 150 62, 232 62"/>
-            <path class="fanline" d="M42 46 C 110 46, 150 78, 232 78"/>
-          </g>
-          <circle cx="34" cy="46" r="9" fill="#8a93a6"/>
-          <circle cx="34" cy="46" r="14" fill="none" stroke="#8a93a6" stroke-width="1.4" opacity="0.4"/>
-          <g fill="#c1705a">
-            <circle cx="240" cy="14" r="6"/>
-            <circle cx="240" cy="30" r="6"/>
-            <circle cx="240" cy="46" r="6"/>
-            <circle cx="240" cy="62" r="6"/>
-            <circle cx="240" cy="78" r="6"/>
-          </g>
-        </svg>
-        <ul>
-          <li><span class="mk">✕</span> One prospect, sold to <b>several agents</b> at once.</li>
-          <li><span class="mk">✕</span> Race to dial first. Compete on price.</li>
-          <li><span class="mk">✕</span> Per-lead pricing that climbs as you grow.</li>
-        </ul>
-      </div>
-      <div class="vs" aria-hidden="true">VS</div>
-      <div class="cmp good">
-        <h3><span class="mk">✓</span> Oyzla Leads</h3>
-        <!-- diagram: one lead, one strong line, one agency -->
-        <svg class="cmp-diagram" viewBox="0 0 280 92" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <path class="drawline" d="M42 46 H 214" stroke="#0d7a4e" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <circle cx="34" cy="46" r="9" fill="#0d7a4e"/>
-          <circle cx="34" cy="46" r="14" fill="none" stroke="#0d7a4e" stroke-width="1.4" opacity="0.4"/>
-          <g transform="translate(238 46)">
-            <path d="M-16 0 L0 -14 L16 0 Z" fill="#0f2747"/>
-            <rect x="-13" y="0" width="26" height="18" rx="2" fill="#0f2747"/>
-            <rect x="-4" y="5" width="8" height="8" rx="1.5" fill="#f2b566"/>
-          </g>
-          <path d="M203 39 l6 7 -6 7" stroke="#0d7a4e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <ul>
-          <li><span class="mk">✓</span> Every lead in your area is <b>yours alone</b>.</li>
-          <li><span class="mk">✓</span> No racing, no bidding wars.</li>
-          <li><span class="mk">✓</span> One flat fee. We run the ads.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="mid-cta reveal">
-      <a class="btn btn-primary btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory <span class="arr">→</span></a>
-      <p>Zero risk: <b>3 valid exclusive leads in your first 30 days, or your first month is refunded.</b></p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WHY ONLINE ADS BEAT THE OLD WAY ===================== -->
-<section class="band" id="online" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="split reveal">
-      <div class="head" style="margin-bottom:0">
-        <span class="eyebrow">A smarter way to prospect</span>
-        <h2>Why online ads beat the old way</h2>
-        <p>Door-knocking interrupts strangers. Online ads reach people who are already shopping for coverage — and every one of them in your area comes to you.</p>
-      </div>
-      <!-- Designed brand visual: a warm local insurance storefront at dusk. -->
-      <figure class="photo" aria-label="Illustration: a welcoming local insurance office storefront in the evening">
-        <svg class="art" viewBox="0 0 640 460" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="oSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#0d2244"/>
-              <stop offset="0.7" stop-color="#1e4074"/>
-              <stop offset="1" stop-color="#35578e"/>
-            </linearGradient>
-            <linearGradient id="oGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#ffe0ac"/>
-              <stop offset="1" stop-color="#f2b566"/>
-            </linearGradient>
-            <linearGradient id="oWall" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#f7f3ea"/>
-              <stop offset="1" stop-color="#e7e0d0"/>
-            </linearGradient>
-            <radialGradient id="oWarm" cx="0.5" cy="0.5" r="0.6">
-              <stop offset="0" stop-color="#ffd79b" stop-opacity="0.8"/>
-              <stop offset="1" stop-color="#ffcf8a" stop-opacity="0"/>
-            </radialGradient>
-            <filter id="oSoft" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="8"/>
-            </filter>
-          </defs>
-
-          <!-- dusk sky with a low warm glow -->
-          <rect width="640" height="460" fill="url(#oSky)"/>
-          <circle cx="512" cy="330" r="190" fill="url(#oWarm)" opacity="0.4"/>
-          <g fill="#ffffff" opacity="0.5">
-            <circle class="twinkle" cx="120" cy="64" r="1.6"/>
-            <circle class="twinkle t3" cx="222" cy="42" r="1.4"/>
-            <circle class="twinkle t2" cx="360" cy="70" r="1.5"/>
-            <circle class="twinkle t3" cx="560" cy="52" r="1.4"/>
-            <circle class="twinkle t2" cx="46" cy="120" r="1.4"/>
-          </g>
-
-          <!-- neighboring buildings for street depth -->
-          <g fill="#12294e">
-            <rect x="0" y="196" width="90" height="196"/>
-            <rect x="552" y="182" width="88" height="210"/>
-          </g>
-          <g fill="#ffd79b">
-            <rect class="lit l2" x="18" y="216" width="8" height="11" opacity="0.55"/>
-            <rect class="lit" x="40" y="248" width="8" height="11" opacity="0.5"/>
-            <rect class="lit" x="572" y="206" width="8" height="11" opacity="0.55"/>
-            <rect class="lit l2" x="596" y="240" width="8" height="11" opacity="0.5"/>
-          </g>
-
-          <!-- sidewalk with paving joints and curb light -->
-          <rect x="0" y="392" width="640" height="68" fill="#0d2244"/>
-          <rect x="0" y="388" width="640" height="7" fill="#2b5aa8" opacity="0.55"/>
-          <g stroke="#16335c" stroke-width="2" opacity="0.8">
-            <line x1="90" y1="400" x2="72" y2="460"/>
-            <line x1="230" y1="400" x2="220" y2="460"/>
-            <line x1="380" y1="400" x2="382" y2="460"/>
-            <line x1="520" y1="400" x2="536" y2="460"/>
-          </g>
-
-          <!-- warm light pooling from the windows onto the sidewalk -->
-          <ellipse class="glowsoft" cx="195" cy="404" rx="110" ry="18" fill="#f2b566" opacity="0.14" filter="url(#oSoft)"/>
-          <ellipse class="glowsoft" cx="474" cy="404" rx="90" ry="16" fill="#f2b566" opacity="0.12" filter="url(#oSoft)"/>
-
-          <!-- storefront building -->
-          <rect x="86" y="150" width="468" height="242" fill="url(#oWall)"/>
-          <rect x="86" y="150" width="468" height="242" fill="none" stroke="#cdc4b0" stroke-width="2"/>
-          <!-- cornice -->
-          <rect x="78" y="138" width="484" height="14" rx="3" fill="#0f2747"/>
-
-          <!-- blank sign band with the open-O ring (no text) -->
-          <rect x="250" y="104" width="140" height="32" rx="8" fill="#0a1c33"/>
-          <rect x="250" y="104" width="140" height="32" rx="8" fill="none" stroke="#f2b566" stroke-width="1.2" opacity="0.4"/>
-          <path d="M325.5 111.5 a8.5 8.5 0 1 1 -11 0" fill="none" stroke="#f2b566" stroke-width="3.4" stroke-linecap="round"/>
-
-          <!-- awning: navy with scalloped edge and warm trim -->
-          <path d="M70 152 L570 152 L556 198 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 Z" fill="#16409e"/>
-          <path d="M70 152 L570 152 L566 166 L74 166 Z" fill="#1c47ad"/>
-          <path d="M556 198 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0 a29.5 15 0 0 1 -59 0" fill="none" stroke="#f2b566" stroke-width="2" opacity="0.55"/>
-
-          <!-- warm lit display window (left) with interior silhouettes -->
-          <g>
-            <rect x="120" y="228" width="150" height="128" rx="6" fill="#ffd79b" opacity="0.4" filter="url(#oSoft)"/>
-            <rect class="lit" x="120" y="228" width="150" height="128" rx="6" fill="url(#oGlow)"/>
-            <!-- interior: desk with lamp, silhouetted in the warm light -->
-            <g fill="#8a5a1d" opacity="0.5">
-              <rect x="136" y="322" width="80" height="8" rx="2"/>
-              <rect x="142" y="330" width="6" height="22"/>
-              <rect x="204" y="330" width="6" height="22"/>
-              <rect x="196" y="300" width="4" height="22"/>
-              <path d="M188 300 h20 l-4 -12 h-12 Z"/>
-              <circle cx="238" cy="316" r="12"/>
-              <path d="M232 328 h12 v24 h-12 Z"/>
-            </g>
-            <!-- glass sheen -->
-            <path d="M140 228 L196 228 L148 356 L120 356 L120 300 Z" fill="#ffffff" opacity="0.12"/>
-            <rect x="120" y="228" width="150" height="128" rx="6" fill="none" stroke="#123159" stroke-width="3.4"/>
-            <line x1="195" y1="228" x2="195" y2="356" stroke="#123159" stroke-width="2.4" opacity="0.7"/>
-            <line x1="120" y1="292" x2="270" y2="292" stroke="#123159" stroke-width="2.4" opacity="0.7"/>
-          </g>
-
-          <!-- door with lit transom -->
-          <rect class="lit l2" x="302" y="216" width="82" height="16" rx="3" fill="url(#oGlow)"/>
-          <rect x="302" y="216" width="82" height="16" rx="3" fill="none" stroke="#123159" stroke-width="2.4"/>
-          <rect x="300" y="238" width="86" height="154" rx="4" fill="#123159"/>
-          <rect x="308" y="248" width="70" height="102" rx="3" fill="#2c5590"/>
-          <path d="M312 248 L340 248 L318 350 L308 350 L308 280 Z" fill="#ffffff" opacity="0.1"/>
-          <circle cx="372" cy="322" r="3.2" fill="#f2b566"/>
-
-          <!-- second warm window with plant silhouette -->
-          <g>
-            <rect x="418" y="228" width="112" height="128" rx="6" fill="#ffd79b" opacity="0.35" filter="url(#oSoft)"/>
-            <rect class="lit l2" x="418" y="228" width="112" height="128" rx="6" fill="url(#oGlow)"/>
-            <g fill="#8a5a1d" opacity="0.5">
-              <path d="M446 352 h20 l-3 -18 h-14 Z"/>
-              <path d="M456 334 C 444 320, 446 302, 454 294 C 458 308, 459 320, 456 334 Z"/>
-              <path d="M456 334 C 468 322, 468 306, 460 298 C 456 310, 454 322, 456 334 Z"/>
-              <rect x="488" y="308" width="26" height="44" rx="2"/>
-            </g>
-            <path d="M434 228 L478 228 L442 356 L418 356 L418 312 Z" fill="#ffffff" opacity="0.12"/>
-            <rect x="418" y="228" width="112" height="128" rx="6" fill="none" stroke="#123159" stroke-width="3.4"/>
-            <line x1="474" y1="228" x2="474" y2="356" stroke="#123159" stroke-width="2.4" opacity="0.7"/>
-            <line x1="418" y1="292" x2="530" y2="292" stroke="#123159" stroke-width="2.4" opacity="0.7"/>
-          </g>
-
-          <!-- lamppost with warm breathing glow -->
-          <g>
-            <rect x="52" y="234" width="6" height="158" rx="3" fill="#0a1c33"/>
-            <path d="M55 234 Q 55 214 78 214" fill="none" stroke="#0a1c33" stroke-width="6" stroke-linecap="round"/>
-            <circle class="lamp" cx="80" cy="222" r="20" fill="#ffd79b" opacity="0.55" filter="url(#oSoft)"/>
-            <circle cx="80" cy="220" r="7" fill="#ffd79b"/>
-            <ellipse class="lamp" cx="72" cy="398" rx="52" ry="12" fill="#f2b566" opacity="0.14" filter="url(#oSoft)"/>
-          </g>
-
-          <!-- A-frame sidewalk sign (blank) -->
-          <g transform="translate(232 392)">
-            <path d="M-16 0 L0 -34 L16 0 Z" fill="#0f2747"/>
-            <path d="M-10 -6 L0 -28 L10 -6 Z" fill="#e7e0d0"/>
-            <path d="M-6 -12 h12 M-4 -17 h8" stroke="#8a93a6" stroke-width="2" stroke-linecap="round"/>
-          </g>
-
-          <!-- potted plant by the door -->
-          <g transform="translate(268 356)">
-            <rect x="-12" y="18" width="24" height="19" rx="4" fill="#0a1c33"/>
-            <path d="M0 18 C -14 4, -12 -14, -2 -22 C 2 -8, 4 4, 0 18 Z" fill="#2f9e6b"/>
-            <path d="M0 18 C 14 2, 14 -12, 4 -20 C 0 -6, -2 6, 0 18 Z" fill="#38b47c"/>
-            <path d="M0 18 C -6 8, -10 -2, -8 -10 C -2 -2, 0 8, 0 18 Z" fill="#1f7a52"/>
-          </g>
-        </svg>
-      </figure>
-    </div>
-    <div class="compare reveal stagger">
-      <div class="cmp bad">
-        <h3><span class="mk">✕</span> Door-to-door &amp; in-store pitching</h3>
-        <ul>
-          <li><span class="mk">✕</span> Interrupts people who aren't shopping for insurance.</li>
-          <li><span class="mk">✕</span> A handful of doors or walk-ups a day.</li>
-          <li><span class="mk">✕</span> Hours, gas, and rejection at the door.</li>
-          <li><span class="mk">✕</span> No way to measure what worked.</li>
-        </ul>
-      </div>
-      <div class="vs" aria-hidden="true">VS</div>
-      <div class="cmp good">
-        <h3><span class="mk">✓</span> Online advertising</h3>
-        <ul>
-          <li><span class="mk">✓</span> Reaches people <b>actively searching</b> for coverage.</li>
-          <li><span class="mk">✓</span> Targeted precisely to your territory.</li>
-          <li><span class="mk">✓</span> Runs around the clock, at scale.</li>
-          <li><span class="mk">✓</span> Measured and optimized — every lead <b>exclusively yours</b>.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== PRICING — THREE TIERS ===================== -->
-<section class="band offer" id="pricing">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">Pricing</span>
-      <h2>Priced by lead flow. Exclusive to you.</h2>
-      <p>You're buying exclusive lead flow, not a fixed zip list — we manage and adjust your coverage to keep the leads coming, and they're only ever sent to you.</p>
-    </div>
-    <div class="founding reveal">
-      <span class="fb-tag"><span class="fb-dot" aria-hidden="true"></span>Founding Agencies · Limited</span>
-      <p>We're opening a limited number of <b>founding agency</b> spots per market. Lock in <b>50% off your first month — $1,000</b> (then $2,000/mo, month to month).</p>
-    </div>
-    <div class="riskband rb-wide reveal" role="note" aria-label="Money-back guarantee">
-      <span class="rb-shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
+    <span class="eyebrow" style="color:#B9B4FF">See it in action</span>
+    <div class="demo-grid">
       <div>
-        <span class="rb-tag">Zero-risk guarantee</span>
-        <p>If we don't deliver at least <b>3 valid exclusive leads in your first 30 days</b>, your <b>first month is refunded</b>. You either get exclusive leads, or you get your money back.</p>
-      </div>
-    </div>
-    <div class="plans reveal stagger">
-
-      <!-- Tier 1: Standard — founding offer, live Stripe checkout -->
-      <div class="plan featured">
-        <span class="pop">Most popular</span>
-        <h3>Standard</h3>
-        <div class="p-offer">Special limited-time offer</div>
-        <div class="p-price">
-          <span class="big">$1,000</span>
-          <span class="per">first month</span>
-        </div>
-        <div class="p-then">then <b>$2,000/month</b> — month to month</div>
-        <div class="p-tax">Before applicable tax. Cancel anytime.</div>
-        <p class="p-desc">A steady flow of exclusive leads in your area. We manage the coverage and zip mix to keep them coming.</p>
-        <ul class="plist">
-          <li><span class="tick">✓</span> Exclusive leads — never shared with another agency</li>
-          <li><span class="tick">✓</span> Done-for-you ad campaigns</li>
-          <li><span class="tick">✓</span> We manage your coverage to keep leads flowing</li>
-          <li><span class="tick">✓</span> Real-time delivery</li>
-          <li><span class="tick">✓</span> No per-lead charges, no contracts</li>
+        <h2 class="section-title">This is what your website<br>could be doing tonight.</h2>
+        <p class="section-sub">Try the interactive preview — it's a scripted walkthrough of a real conversation shape our website assistants handle: answering, qualifying, and capturing the lead.</p>
+        <ul class="demo-points">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Answers questions in your business's voice, 24/7</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Qualifies visitors and books the next step</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Captures every lead with full context for your team</li>
         </ul>
-        <div class="guar">
-          <span class="shield"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
-          <div>
-            <b>Zero-risk guarantee:</b> If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded.
+        <p class="demo-note">Honesty first: this preview is scripted, not a live AI — your real assistant is built and trained on <em>your</em> business before launch. No smoke, no mirrors.</p>
+      </div>
+
+      <div class="chat" id="chat" aria-label="Interactive scripted demo of an AI website assistant">
+        <div class="chat-head">
+          <div class="chat-avatar">
+            <svg width="20" height="20" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="11" fill="#fff"/></svg>
           </div>
+          <div>
+            <div class="chat-head-name">Summit Plumbing Assistant</div>
+            <div class="chat-head-sub"><span class="live-dot"></span>Sample business · scripted preview</div>
+          </div>
+          <span class="demo-chip">Demo</span>
         </div>
-        <div class="p-cta">
-          <a class="btn btn-amber btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Get started <span class="arr">→</span></a>
+        <div class="chat-body" id="chatBody" aria-live="polite"></div>
+        <div class="chat-input">
+          <input id="chatInput" type="text" placeholder="Type a message…" aria-label="Type a message" autocomplete="off">
+          <button class="chat-send" id="chatSend" aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4l-4.5 16-4-6.5L4 12z" fill="#fff"/></svg>
+          </button>
         </div>
-        <p class="p-fine"><b>$1,000 today, then $2,000/month.</b> Cancel anytime.<br>Secure Stripe checkout · 2-minute setup after payment</p>
+        <div class="chat-foot">Scripted demo — your assistant is custom-built &amp; trained on your business.</div>
       </div>
-
-      <!-- Tier 2: Growth — message to start -->
-      <div class="plan">
-        <h3>Growth</h3>
-        <div class="p-price">
-          <span class="big">$4,000</span>
-          <span class="per">/month</span>
-        </div>
-        <div class="p-sub">Higher lead volume &amp; wider reach</div>
-        <p class="p-desc">For agencies that can handle more volume.</p>
-        <ul class="plist">
-          <li><span class="tick">✓</span> Higher monthly lead volume</li>
-          <li><span class="tick">✓</span> Expanded coverage &amp; reach</li>
-          <li><span class="tick">✓</span> Same exclusivity — never shared</li>
-          <li><span class="tick">✓</span> Priority delivery + support</li>
-        </ul>
-        <div class="p-cta">
-          <a class="btn btn-ghost btn-lg" href="#contact">Get started</a>
-        </div>
-        <p class="p-fine">Message us to start.</p>
-      </div>
-
-      <!-- Tier 3: Scale — message to start -->
-      <div class="plan">
-        <h3>Scale</h3>
-        <div class="p-price">
-          <span class="big">$8,000</span>
-          <span class="per">/month</span>
-        </div>
-        <div class="p-sub">Highest volume · multi-market</div>
-        <p class="p-desc">For high-volume agencies covering more than one market.</p>
-        <ul class="plist">
-          <li><span class="tick">✓</span> Highest monthly lead volume</li>
-          <li><span class="tick">✓</span> Multiple territories or metros</li>
-          <li><span class="tick">✓</span> Same exclusivity — never shared</li>
-          <li><span class="tick">✓</span> Priority delivery + support</li>
-        </ul>
-        <div class="p-cta">
-          <a class="btn btn-ghost btn-lg" href="#contact">Get started</a>
-        </div>
-        <p class="p-fine">Message us to start.</p>
-      </div>
-
     </div>
-    <p class="plans-foot">Need more than this? Message us for enterprise volume.</p>
   </div>
 </section>
 
-<!-- ===================== FAQ ===================== -->
-<section class="band" id="faq" style="background:#fff;border-top:1px solid var(--line)">
+<!-- ============ COMMITMENTS ============ -->
+<section id="commitments">
   <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">FAQ</span>
-      <h2>Questions, answered</h2>
-      <p>Anything else? Message us through the chat in the corner.</p>
+    <span class="eyebrow">Our promise</span>
+    <h2 class="section-title">Trust, spelled out.</h2>
+    <p class="section-sub">We're a young company, so we won't ask you to trust vague claims. We'll ask you to hold us to specific commitments.</p>
+
+    <div class="commit-grid">
+      <div class="commit reveal">
+        <div class="commit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-2.9 8.2-7 9.5C7.9 19.2 5 15.4 5 11V6l7-3z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 11.5l2 2 4-4.5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>You own everything we build</h3>
+        <p>The tools, the prompts, the content, the accounts they run in — all yours from day one. If we ever part ways, everything keeps working and leaves with you.</p>
+      </div>
+      <div class="commit reveal">
+        <div class="commit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2.5" stroke="#4F46E5" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="15" r="1.6" fill="#4F46E5"/></svg></div>
+        <h3>We never hold your passwords</h3>
+        <p>When an automation needs to touch one of your accounts, you connect it yourself through your own login. We design around secure connections — never around your credentials.</p>
+      </div>
+      <div class="commit reveal">
+        <div class="commit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#4F46E5" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Live in days, not months</h3>
+        <p>We scope tight and ship fast. Your first automation goes live in days, then improves week over week — instead of vanishing into a months-long project plan.</p>
+      </div>
     </div>
-    <div class="faq reveal">
-      <details open>
-        <summary>Are the leads really exclusive? <span class="chev">＋</span></summary>
-        <p>Yes. One agency per area. Every lead we generate in your territory goes to you alone — never shared or resold.</p>
-      </details>
-      <details>
-        <summary>What happens right after I pay? <span class="chev">＋</span></summary>
-        <p>You land on a short setup form — about two minutes. It captures your territory, insurance lines, and where leads should go. Then we build and launch your campaign.</p>
-      </details>
-      <details>
-        <summary>What does it cost? <span class="chev">＋</span></summary>
-        <p>As a Special Limited-Time Offer: $1,000 first month before applicable tax, then $2,000/month before applicable tax, month to month. Your subscription renews automatically each month until you cancel. One flat fee — no per-lead charges. Full details in our <a href="/terms-of-service.html" style="color:var(--brand);font-weight:600">Terms of Service</a> and <a href="/refund-policy.html" style="color:var(--brand);font-weight:600">Refund Policy</a>.</p>
-      </details>
-      <details>
-        <summary>How does the guarantee work? <span class="chev">＋</span></summary>
-        <p>It makes trying Oyzla zero-risk. If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded. Either you get exclusive leads, or you get your money back — full details in our <a href="/refund-policy.html" style="color:var(--brand);font-weight:600">Refund Policy</a>.</p>
-      </details>
-      <details>
-        <summary>Do I have to get on a call? <span class="chev">＋</span></summary>
-        <p>No. Everything is self-serve online. Questions? Message us through the chat in the corner.</p>
-      </details>
-      <details>
-        <summary>Can I cancel anytime? <span class="chev">＋</span></summary>
-        <p>Yes. Month-to-month, no contracts, no cancellation fee. To cancel, just email <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a> or message us in the chat before your next renewal date — no phone call, no hoops. You keep receiving leads through the end of the period you've paid for.</p>
-      </details>
+
+    <div class="honesty reveal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#4F46E5" stroke-width="1.8"/><path d="M12 8v5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1.2" fill="#4F46E5"/></svg>
+      <p><b>Why no testimonials or client logos on this page?</b> Because we'd rather show you nothing than show you something invented. We'll earn real reviews the slow way — by building things that work. In the meantime, judge us by the demo above and the commitments we put in writing.</p>
     </div>
   </div>
 </section>
 
-<!-- ===================== FINAL CTA ===================== -->
-<section class="band">
+<!-- ============ CONTACT ============ -->
+<section id="contact">
   <div class="wrap">
-    <div class="final reveal">
-      <span class="eyebrow">Special Limited-Time Offer</span>
-      <h2>Claim your area before it's taken.</h2>
-      <p>One agency per territory. $1,000 first month, then $2,000/month — backed by the 3-lead guarantee.</p>
-      <a class="btn btn-lg" data-checkout href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top">Claim your territory <span class="arr">→</span></a>
-      <div class="riskband rb-center" role="note" aria-label="Money-back guarantee">
-        <span class="rb-shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V7z"/><path d="M8.5 12l2.2 2.2L16 9.2"/></svg></span>
-        <div>
-          <span class="rb-tag">Zero-risk guarantee</span>
-          <p>At least <b>3 valid exclusive leads in your first 30 days</b> — or your <b>first month is refunded</b>.</p>
+    <span class="eyebrow">Get started</span>
+    <h2 class="section-title">Tell us what's eating your week.</h2>
+    <p class="section-sub">Describe the repetitive work — in plain words — and we'll come back with what we'd build, what it costs, and how fast it can be live.</p>
+
+    <div class="contact-grid">
+      <div class="form-card">
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" placeholder="Alex Rivera" required>
+          </div>
+          <div class="field">
+            <label for="f-biz">Business name</label>
+            <input id="f-biz" name="business" type="text" placeholder="Summit Plumbing Co." required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="you@yourbusiness.com" required>
+          </div>
+          <div class="field">
+            <label for="f-msg">What would you automate?</label>
+            <textarea id="f-msg" name="message" placeholder="e.g. We miss calls after 6pm, and it takes us two days to reply to website leads…" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%">Send it — we'll reply within a day</button>
+        </form>
+        <div class="form-success" id="formSuccess" role="status">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#EAF7EF"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="big">Thanks — we've got it.</div>
+          <p>We'll reply within a day with a plan and a price.<br>Talk soon.</p>
         </div>
       </div>
-      <div class="micro">
-        <span><span class="tick" style="color:#7fd8ab">✓</span> Self-serve</span>
-        <span><span class="tick" style="color:#7fd8ab">✓</span> No calls</span>
-        <span><span class="tick" style="color:#7fd8ab">✓</span> Cancel anytime</span>
+
+      <div class="start-card reveal">
+        <h3>Already know what you want?</h3>
+        <p>Skip the back-and-forth. Start your build now and we'll schedule your kickoff call as soon as checkout completes.</p>
+        <!-- STRIPE INTEGRATION POINT ─────────────────────────────────────
+             Replace href="#" with your Stripe Payment Link, e.g.
+             href="https://buy.stripe.com/XXXXXXXX"
+             (or set data-stripe-payment-link and wire it in JS). -->
+        <a class="btn btn-light" id="checkoutBtn" href="#" data-stripe-payment-link="" style="width:100%">Get started — secure checkout</a>
+        <div class="or">or</div>
+        <div class="mail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#B9B4FF" stroke-width="1.7"/><path d="M3.5 7l8.5 6 8.5-6" stroke="#B9B4FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Prefer email? <a href="mailto:hello@oyzla.ai">hello@oyzla.ai</a></span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== FOOTER ===================== -->
+</main>
+
+<!-- ============ FOOTER ============ -->
 <footer>
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <div class="logo" style="font-size:19px"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="#2456d6" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></div>
-        <p class="foot-meta sub" style="margin-top:10px;max-width:34ch">
-          Exclusive insurance leads for independent agencies.
-        </p>
-      </div>
-      <div class="foot-meta" id="contact">
-        <strong>Contact</strong><br>
-        <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
-        OYZLA LEADS LLC<br>
-        1429 S Hillside Drive<br>
-        Saratoga Springs, UT 84045 — serving nationwide
-      </div>
-      <div class="foot-links">
-        <a href="#how">How it works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-        <a href="/privacy-policy.html">Privacy Policy</a>
-        <a href="/terms-of-service.html">Terms of Service</a>
-        <a href="/refund-policy.html">Refund Policy</a>
-      </div>
+  <div class="wrap foot-inner">
+    <a class="logo" href="#top" style="color:#fff">
+      <svg class="logo-mark" viewBox="0 0 140 140" aria-hidden="true">
+        <rect x="14" y="14" width="112" height="112" rx="28" fill="url(#lg2)"/>
+        <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+        <circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/>
+        <circle cx="93.5" cy="46.5" r="9.5" fill="#fff"/><circle cx="93.5" cy="46.5" r="4" fill="#4F46E5"/>
+      </svg>
+      <span>Oyzla&nbsp;<span class="ai" style="color:#B9B4FF">AI</span></span>
+    </a>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#services">Services</a>
+      <a href="#demo">Demo</a>
+      <a href="mailto:hello@oyzla.ai">hello@oyzla.ai</a>
     </div>
-    <div class="foot-bottom sub">
-      <span>© 2026 OYZLA LEADS LLC. All rights reserved.</span>
-      <span>One area · One agency · Never shared.</span>
-    </div>
+    <div class="foot-copy">© 2026 Oyzla AI</div>
   </div>
 </footer>
 
-<!-- Pre-checkout consent step — shown before the (unchanged) Stripe payment link.
-     Gives clear, affirmative, un-pre-checked consent to the auto-renewing charge
-     (FTC + state auto-renewal law). The Stripe URL itself is untouched. -->
-<div id="cg-overlay" class="cg-overlay" role="dialog" aria-modal="true" aria-labelledby="cg-title">
-  <div class="cg-modal">
-    <div class="cg-head">
-      <div>
-        <h3 id="cg-title">Quick confirmation before checkout</h3>
-        <p class="cg-sub">One box so your billing is crystal clear — no surprises, cancel anytime.</p>
-      </div>
-      <button id="cg-close" class="cg-x" type="button" aria-label="Close">✕</button>
-    </div>
-    <div class="cg-price" aria-label="Price summary">
-      <span class="cg-big"><b>$1,000 today</b>, then $2,000/month — cancel anytime.</span>
-      <span class="cg-cancel">Month to month · No contract · Prices before applicable tax</span>
-    </div>
-    <div class="cg-body">
-      <label class="cg-check" for="cg-c1">
-        <input type="checkbox" id="cg-c1">
-        <span>I've read and agree to the <a href="/terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a> &amp; <a href="/refund-policy.html" target="_blank" rel="noopener">Refund Policy</a>, and I understand my first month is <b>$1,000</b>, then <b>$2,000/month</b> automatically until I cancel.</span>
-      </label>
-      <a id="cg-go" class="btn btn-amber btn-lg cg-go is-off" href="https://buy.stripe.com/eVq3cv0XHbEGgzN9qS8so02?prefilled_promo_code=WELCOME50" target="_top" aria-disabled="true">Continue to secure checkout <span class="arr">→</span></a>
-      <p id="cg-hint" class="cg-hint">Check the box above to continue.</p>
-      <p class="cg-fine">Secure checkout by Stripe · Backed by our 3-lead first-month guarantee · Cancel anytime by emailing <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a></p>
-    </div>
-  </div>
-</div>
-
-<!-- AI chat widget — in-page assistant (no mailto; never opens the Mail app) -->
-<div id="oyzla-chat" class="oyc">
-  <button id="oyc-toggle" class="oyc-bubble" type="button" aria-label="Chat with the Oyzla Leads assistant" aria-expanded="false" aria-controls="oyc-panel">
-    <span class="oyc-dot" aria-hidden="true">💬</span>
-    <span class="oyc-t">Chat with us</span>
-  </button>
-  <div id="oyc-panel" class="oyc-panel" role="dialog" aria-label="Oyzla Leads chat" aria-modal="false" hidden>
-    <div class="oyc-head">
-      <div class="oyc-head-id">
-        <span class="oyc-avatar" aria-hidden="true">O</span>
-        <div>
-          <div class="oyc-title">Oyzla Leads</div>
-          <div class="oyc-sub"><span class="oyc-online" aria-hidden="true"></span> Typically replies instantly</div>
-        </div>
-      </div>
-      <button id="oyc-close" class="oyc-close" type="button" aria-label="Close chat">✕</button>
-    </div>
-    <div id="oyc-msgs" class="oyc-msgs" aria-live="polite"></div>
-    <form id="oyc-form" class="oyc-form" autocomplete="off">
-      <input id="oyc-input" class="oyc-input" type="text" placeholder="Type your question…" maxlength="1000" aria-label="Type your message" />
-      <button id="oyc-send" class="oyc-send" type="submit" aria-label="Send message">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-      </button>
-    </form>
-    <div class="oyc-foot">Powered by AI · For account help, email info@oyzlaleads.com</div>
-  </div>
-</div>
-
 <script>
-  // Nav elevation on scroll
-  (function(){
-    var nav = document.querySelector('header.nav');
-    function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 8); }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-  })();
+/* ============================================================
+   Oyzla AI — landing page scripts
+   ============================================================ */
 
-  // Respect reduced-motion: skip observers/counters, show everything
-  (function(){
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Under reduced motion, remove the SMIL flow dots entirely (CSS can't stop SMIL)
-    if (reduce){
-      document.querySelectorAll('.flowdot').forEach(function(n){
-        if (n.parentNode) n.parentNode.removeChild(n);
-      });
-    }
-
-    // ---- Animated number counters ----
-    function runCounter(el){
-      var target = parseFloat(el.getAttribute('data-count'));
-      var suffix = el.getAttribute('data-suffix') || '';
-      if (isNaN(target)) return;
-      if (reduce || target === 0){ el.textContent = target + suffix; return; }
-      el.classList.add('npop');
-      var dur = 1200, start = null;
-      function tick(ts){
-        if (start === null) start = ts;
-        var p = Math.min((ts - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-        else el.textContent = target + suffix;
-      }
-      requestAnimationFrame(tick);
-    }
-
-    var reveals = document.querySelectorAll('.reveal');
-
-    if (reduce || !('IntersectionObserver' in window)){
-      reveals.forEach(function(n){ n.classList.add('in'); });
-      document.querySelectorAll('.n[data-count]').forEach(function(n){
-        n.textContent = n.getAttribute('data-count') + (n.getAttribute('data-suffix')||'');
-      });
-    } else {
-      var io = new IntersectionObserver(function(entries, obs){
-        entries.forEach(function(e){
-          if (!e.isIntersecting) return;
-          e.target.classList.add('in');
-          e.target.querySelectorAll && e.target.querySelectorAll('.n[data-count]').forEach(runCounter);
-          obs.unobserve(e.target);
-        });
-      }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
-      reveals.forEach(function(n){ io.observe(n); });
-    }
-  })();
-
-  // Pre-checkout consent gate. Intercepts clicks on the checkout buttons
-  // (their Stripe hrefs are unchanged and still work if JS is unavailable),
-  // shows the consent step, and only enables "Continue to secure checkout"
-  // once the single box — never pre-checked — is ticked. The renewal terms
-  // ($1,000 first month, then $2,000/month until cancelled) appear in the
-  // checkbox's own label for conspicuous, affirmative consent.
-  (function(){
-    var ov = document.getElementById('cg-overlay');
-    if (!ov) return;
-    var c1 = document.getElementById('cg-c1');
-    var go = document.getElementById('cg-go');
-    var x  = document.getElementById('cg-close');
-    var hint = document.getElementById('cg-hint');
-    var lastTrigger = null;
-
-    function sync(){
-      var ok = c1.checked;
-      go.classList.toggle('is-off', !ok);
-      go.setAttribute('aria-disabled', ok ? 'false' : 'true');
-      if (hint) hint.textContent = ok ? 'You’re all set — continue when ready.' : 'Check the box above to continue.';
-    }
-    function openGate(){
-      c1.checked = false;   // always starts unchecked
-      sync();
-      ov.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      setTimeout(function(){ try{ c1.focus(); }catch(e){} }, 80);
-    }
-    function closeGate(){
-      ov.classList.remove('open');
-      document.body.style.overflow = '';
-      if (lastTrigger){ try{ lastTrigger.focus(); }catch(e){} }
-    }
-
-    c1.addEventListener('change', sync);
-    x.addEventListener('click', closeGate);
-    ov.addEventListener('click', function(e){ if (e.target === ov) closeGate(); });
-    document.addEventListener('keydown', function(e){
-      if (e.key === 'Escape' && ov.classList.contains('open')) closeGate();
-    });
-    // Belt-and-braces: block activation (incl. keyboard) while disabled
-    go.addEventListener('click', function(e){
-      if (go.getAttribute('aria-disabled') === 'true'){ e.preventDefault(); }
-    });
-
-    document.querySelectorAll('a[data-checkout]').forEach(function(a){
-      a.addEventListener('click', function(e){
-        e.preventDefault();
-        lastTrigger = a;
-        openGate();
-      });
-    });
-  })();
-
-  // Smooth-scroll for in-page anchors, accounting for sticky header
-  (function(){
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var nav = document.querySelector('header.nav');
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      a.addEventListener('click', function(ev){
-        var id = a.getAttribute('href');
-        if (id === '#' || id.length < 2) return;
-        var t = document.querySelector(id);
-        if (!t) return;
-        ev.preventDefault();
-        var offset = (nav ? nav.offsetHeight : 0) + 12;
-        var y = t.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
-      });
-    });
-  })();
-</script>
-
-<!-- AI chat widget logic — JSONP to the Oyzla Apps Script backend (source=sitebot) -->
-<script>
+/* ---------- Scroll reveal ---------- */
 (function(){
-  var ENDPOINT = "https://script.google.com/macros/s/AKfycbzIQW_1mDolIl-BoWi1_Xa2QVJP6f58LTsvKF9DOZZgZ1b6saqWL_CV7HQdMo2VqoQ9Bg/exec";
-  var FALLBACK = "Sorry — I'm having trouble connecting right now. You can email us at info@oyzlaleads.com and we'll get right back to you.";
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}});
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
 
-  var root   = document.getElementById('oyzla-chat');
-  if (!root) return;
-  var toggle = document.getElementById('oyc-toggle');
-  var closeB = document.getElementById('oyc-close');
-  var panel  = document.getElementById('oyc-panel');
-  var msgs   = document.getElementById('oyc-msgs');
-  var form   = document.getElementById('oyc-form');
-  var input  = document.getElementById('oyc-input');
-  var sendB  = document.getElementById('oyc-send');
-
-  var history = [];          // [{role:'user'|'assistant', content:'...'}]
-  var greeted = false;
-  var pending = false;
-
-  function esc(s){
-    return String(s).replace(/[&<>"']/g, function(c){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-  // Minimal, safe formatting: escape first, then **bold**, emails -> mailto links, newlines -> <br>
-  function fmt(s){
-    var h = esc(s);
-    h = h.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    h = h.replace(/([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1">$1</a>');
-    h = h.replace(/\n/g, '<br>');
-    return h;
-  }
-  function addMsg(role, text){
-    var row = document.createElement('div');
-    row.className = 'oyc-row ' + (role === 'user' ? 'user' : 'bot');
-    var b = document.createElement('div');
-    b.className = 'oyc-bub';
-    b.innerHTML = fmt(text);
-    row.appendChild(b);
-    msgs.appendChild(row);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-  function showTyping(){
-    var row = document.createElement('div');
-    row.className = 'oyc-row bot';
-    row.id = 'oyc-typing-row';
-    row.innerHTML = '<div class="oyc-bub oyc-typing"><span></span><span></span><span></span></div>';
-    msgs.appendChild(row);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-  function hideTyping(){
-    var t = document.getElementById('oyc-typing-row');
-    if (t && t.parentNode) t.parentNode.removeChild(t);
-  }
-  function setPending(p){
-    pending = p;
-    sendB.disabled = p;
-    input.disabled = p;
-  }
-
-  function openChat(){
-    root.classList.add('open');
-    panel.hidden = false;
-    toggle.setAttribute('aria-expanded', 'true');
-    if (!greeted){
-      greeted = true;
-      addMsg('bot', "Hi! 👋 I'm the Oyzla Leads assistant. Ask me anything about our exclusive insurance leads, pricing, or how it all works.");
-    }
-    setTimeout(function(){ try{ input.focus(); }catch(e){} }, 80);
-  }
-  function closeChat(){
-    root.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-    setTimeout(function(){ if (!root.classList.contains('open')) panel.hidden = true; }, 300);
-    try{ toggle.focus(); }catch(e){}
-  }
-  toggle.addEventListener('click', openChat);
-  closeB.addEventListener('click', closeChat);
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && root.classList.contains('open')) closeChat();
-  });
-
-  function renderReply(reply){
-    hideTyping();
-    setPending(false);
-    var r = (reply && String(reply).trim()) || FALLBACK;
-    addMsg('bot', r);
-    history.push({ role:'assistant', content:r });
-    if (history.length > 12) history = history.slice(-12);
-    try{ input.focus(); }catch(e){}
-  }
-
-  function send(text){
-    if (pending) return;
-    addMsg('user', text);
-    history.push({ role:'user', content:text });
-    if (history.length > 12) history = history.slice(-12);
-    input.value = '';
-    setPending(true);
-    showTyping();
-
-    // Prior turns only (backend appends the current message itself)
-    var prior = history.slice(0, -1).slice(-8);
-    var base = ENDPOINT + '?source=sitebot'
-      + '&message='  + encodeURIComponent(text)
-      + '&history='  + encodeURIComponent(JSON.stringify(prior));
-
-    // JSONP request with one automatic retry on a transient failure,
-    // so a one-off network/script-load hiccup doesn't surface an error.
-    function attempt(tryNo){
-      var cbName = 'oycCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
-      var script = document.createElement('script');
-      var settled = false, timer;
-
-      function cleanup(){
-        try{ delete window[cbName]; }catch(e){ window[cbName] = undefined; }
-        if (script.parentNode) script.parentNode.removeChild(script);
-      }
-      function ok(reply){
-        if (settled) return; settled = true; clearTimeout(timer); cleanup();
-        renderReply(reply);
-      }
-      function fail(){
-        if (settled) return; settled = true; clearTimeout(timer); cleanup();
-        // Apps Script web apps occasionally return a transient 503; retry a
-        // couple of times with a short backoff before showing the fallback.
-        if (tryNo < 2) setTimeout(function(){ attempt(tryNo + 1); }, 700 * (tryNo + 1));
-        else renderReply(FALLBACK);
-      }
-
-      window[cbName] = function(data){ ok(data && data.reply); };
-      timer = setTimeout(fail, 20000);
-      script.onerror = fail;
-      script.src = base + '&callback=' + encodeURIComponent(cbName);
-      document.body.appendChild(script);
-    }
-    attempt(0);
-  }
-
-  form.addEventListener('submit', function(e){
+/* ---------- Contact form (client-side only) ---------- */
+(function(){
+  var form=document.getElementById('contactForm');
+  var ok=document.getElementById('formSuccess');
+  form.addEventListener('submit',function(e){
     e.preventDefault();
-    var t = (input.value || '').trim();
-    if (!t || pending) return;
-    send(t);
+    if(!form.checkValidity()){form.reportValidity();return}
+    /* FORM BACKEND INTEGRATION POINT: POST the fields to your
+       endpoint (Formspree, your API, etc.) here before showing
+       the confirmation. */
+    form.style.display='none';
+    ok.style.display='block';
   });
+})();
+
+/* ---------- Stripe placeholder guard ---------- */
+(function(){
+  var btn=document.getElementById('checkoutBtn');
+  btn.addEventListener('click',function(e){
+    var link=btn.getAttribute('data-stripe-payment-link');
+    if(link){btn.setAttribute('href',link);return}
+    e.preventDefault();
+    document.getElementById('contactForm').scrollIntoView({behavior:'smooth',block:'center'});
+    var n=document.getElementById('f-name');if(n)n.focus({preventScroll:true});
+  });
+})();
+
+/* ============================================================
+   Chat demo widget — SCRIPTED PREVIEW (clearly labeled as demo)
+   ------------------------------------------------------------
+   LIVE API INTEGRATION POINT:
+   Set CHAT_API_ENDPOINT to your backend URL to make this a real
+   assistant. Expected contract:
+     POST { message: string, history: [{role, text}] }
+     -> JSON { reply: string }
+   When CHAT_API_ENDPOINT is null the widget runs the scripted
+   demo conversation below.
+   ============================================================ */
+var CHAT_API_ENDPOINT = null;
+
+(function(){
+  var body=document.getElementById('chatBody');
+  var input=document.getElementById('chatInput');
+  var send=document.getElementById('chatSend');
+  var history=[];
+  var busy=false;
+
+  /* --- scripted conversation tree (example client: a plumber) --- */
+  var script={
+    start:{
+      bot:"Hi! I'm the assistant for Summit Plumbing. I can answer questions, check availability, or get you a quote. What can I help with tonight?",
+      chips:[
+        {label:"Do you do emergency calls?",next:"emergency"},
+        {label:"How much is a water heater install?",next:"quote"},
+        {label:"Book an appointment",next:"book"}
+      ]
+    },
+    emergency:{
+      user:"Do you do emergency calls?",
+      bot:"We do — 24/7 for burst pipes, major leaks, and no-hot-water situations. After-hours call-outs have a $95 dispatch fee that's credited toward the repair.\n\nIs this an emergency right now, or planning ahead?",
+      chips:[
+        {label:"It's happening now!",next:"urgent"},
+        {label:"Just planning ahead",next:"plan"}
+      ]
+    },
+    urgent:{
+      user:"It's happening now!",
+      bot:"On it. I've flagged this as urgent and pinged the on-call technician — you'll get a call back within 15 minutes.\n\nQuick one so they arrive prepared: is water actively flowing, and have you found your main shut-off valve?",
+      chips:[
+        {label:"Water's off, waiting on the call",next:"urgentDone"}
+      ]
+    },
+    urgentDone:{
+      user:"Water's off, waiting on the call",
+      bot:"Perfect — shutting off the main was exactly right. Tech is en route to a callback. This whole exchange, including your address and photos if you'd shared them, lands in the owner's inbox with an URGENT tag.\n\n(That's the demo! In real life this just saved a 2 AM customer — and the job.)",
+      chips:[
+        {label:"Restart demo",next:"start"},
+        {label:"I want this for my business",next:"pitch"}
+      ]
+    },
+    plan:{
+      user:"Just planning ahead",
+      bot:"Smart. I've noted your interest and can send our emergency checklist — where your shut-off valve is, what to do first, who to call. Want me to email it to you?",
+      chips:[
+        {label:"Sure, send it over",next:"leadCapture"},
+        {label:"Restart demo",next:"start"}
+      ]
+    },
+    quote:{
+      user:"How much is a water heater install?",
+      bot:"Great question. A standard 40–50 gallon tank install typically runs $1,400–$2,100 installed, depending on venting and code updates. Tankless conversions run higher.\n\nWant a firm quote? I can grab a couple of details and have the office confirm a price by morning.",
+      chips:[
+        {label:"Yes, get me a quote",next:"leadCapture"},
+        {label:"What brands do you install?",next:"brands"}
+      ]
+    },
+    brands:{
+      user:"What brands do you install?",
+      bot:"Mostly Rheem and Bradford White for tanks, Navien and Rinnai for tankless — all with manufacturer warranties plus our 2-year labor warranty.\n\nShall I set up that quote?",
+      chips:[
+        {label:"Yes, get me a quote",next:"leadCapture"},
+        {label:"Restart demo",next:"start"}
+      ]
+    },
+    book:{
+      user:"Book an appointment",
+      bot:"Happy to help. We've got openings Tuesday morning and Thursday afternoon this week. I just need your name, address, and a quick note about the job, and you'll get a confirmation right away.",
+      chips:[
+        {label:"Tuesday works",next:"leadCapture"},
+        {label:"Restart demo",next:"start"}
+      ]
+    },
+    leadCapture:{
+      user:"Yes — let's do it",
+      bot:"Done — in the live version I'd collect your name and best contact here, confirm instantly, and drop the full conversation into the owner's inbox and calendar. Lead captured, context included, zero phone tag.\n\n(End of scripted demo — the real thing is trained on your business.)",
+      chips:[
+        {label:"Restart demo",next:"start"},
+        {label:"I want this for my business",next:"pitch"}
+      ]
+    },
+    pitch:{
+      user:"I want this for my business",
+      bot:"That's the easy part — Oyzla AI builds assistants like this one, trained on your services, prices, and voice. Setup in days, you own everything, and we never hold your passwords.\n\nScroll down and tell us what you'd automate, or email hello@oyzla.ai.",
+      chips:[
+        {label:"Restart demo",next:"start"}
+      ]
+    },
+    fallback:{
+      bot:"Good question — and exactly the kind a live assistant would answer from your business's own knowledge base. This preview is scripted, so I'll hand that one to the humans: scroll down and tell us what you'd automate, and Oyzla AI will reply within a day.",
+      chips:[
+        {label:"Restart demo",next:"start"},
+        {label:"I want this for my business",next:"pitch"}
+      ]
+    }
+  };
+
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  function scrollBottom(){body.scrollTop=body.scrollHeight}
+  function addMsg(role,text){
+    body.appendChild(el('div','msg '+(role==='user'?'msg-user':'msg-bot'),text));
+    history.push({role:role,text:text});
+    scrollBottom();
+  }
+  function clearChips(){var c=body.querySelector('.chips');if(c)c.remove()}
+  function addChips(chips){
+    if(!chips||!chips.length)return;
+    var wrap=el('div','chips');
+    chips.forEach(function(ch){
+      var b=el('button','chip',ch.label);
+      b.type='button';
+      b.addEventListener('click',function(){
+        if(busy)return;
+        clearChips();
+        if(ch.next==='start'){addMsg('user',ch.label);playNode('start',true);return}
+        playNode(ch.next);
+      });
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+    scrollBottom();
+  }
+  function typing(on){
+    var t=body.querySelector('.typing');
+    if(on&&!t){var d=el('div','msg msg-bot typing');d.appendChild(el('i'));d.appendChild(el('i'));d.appendChild(el('i'));body.appendChild(d);scrollBottom()}
+    if(!on&&t)t.remove();
+  }
+  function botReply(text,chips,delay){
+    busy=true;typing(true);
+    setTimeout(function(){
+      typing(false);addMsg('bot',text);addChips(chips);busy=false;
+    },delay||900);
+  }
+  function playNode(key,skipUser){
+    var node=script[key];if(!node)node=script.fallback;
+    clearChips();
+    if(node.user&&!skipUser)addMsg('user',node.user);
+    botReply(node.bot,node.chips,key==='start'?650:950);
+  }
+  function handleFree(text){
+    clearChips();
+    addMsg('user',text);
+    if(CHAT_API_ENDPOINT){
+      busy=true;typing(true);
+      fetch(CHAT_API_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:text,history:history})})
+        .then(function(r){return r.json()})
+        .then(function(d){typing(false);addMsg('bot',d.reply||'…');busy=false})
+        .catch(function(){typing(false);botReply(script.fallback.bot,script.fallback.chips,200)});
+      return;
+    }
+    botReply(script.fallback.bot,script.fallback.chips,1100);
+  }
+  function submitFree(){
+    var v=input.value.trim();
+    if(!v||busy)return;
+    input.value='';
+    handleFree(v);
+  }
+  send.addEventListener('click',submitFree);
+  input.addEventListener('keydown',function(e){if(e.key==='Enter')submitFree()});
+
+  /* kick off when the demo scrolls into view (or immediately if visible) */
+  var started=false;
+  function start(){if(started)return;started=true;botReply(script.start.bot,script.start.chips,700)}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){
+      if(en[0].isIntersecting){start();io.disconnect()}
+    },{threshold:.25});
+    io.observe(document.getElementById('chat'));
+    setTimeout(start,6000); /* safety: start anyway */
+  }else{start()}
 })();
 </script>
 </body>
