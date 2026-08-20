@@ -500,11 +500,11 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
              Replace href="#" with your Stripe Payment Link, e.g.
              href="https://buy.stripe.com/XXXXXXXX"
              (or set data-stripe-payment-link and wire it in JS). -->
-        <a class="btn btn-light" id="checkoutBtn" href="#" data-stripe-payment-link="" style="width:100%">Get started — secure checkout</a>
+        <a class="btn btn-light" id="checkoutBtn" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03" style="width:100%">Get started — secure checkout</a>
         <div class="or">or</div>
         <div class="mail">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#B9B4FF" stroke-width="1.7"/><path d="M3.5 7l8.5 6 8.5-6" stroke="#B9B4FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Prefer email? <a href="mailto:hello@oyzla.ai">hello@oyzla.ai</a></span>
+          <span>Prefer email? <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a></span>
         </div>
       </div>
     </div>
@@ -529,7 +529,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       <a href="#how">How it works</a>
       <a href="#services">Services</a>
       <a href="#demo">Demo</a>
-      <a href="mailto:hello@oyzla.ai">hello@oyzla.ai</a>
+      <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>
     </div>
     <div class="foot-copy">© 2026 Oyzla AI</div>
   </div>
@@ -557,6 +557,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(!form.checkValidity()){form.reportValidity();return}
+    var _g=function(id){var e=document.getElementById(id);return e?e.value:''};var _s=encodeURIComponent('New Oyzla AI inquiry — '+_g('f-biz'));var _b=encodeURIComponent('Name: '+_g('f-name')+'\nBusiness: '+_g('f-biz')+'\nEmail: '+_g('f-email')+'\n\nWhat to automate:\n'+_g('f-msg'));window.location.href='mailto:oyzla.ai@gmail.com?subject='+_s+'&body='+_b;
     /* FORM BACKEND INTEGRATION POINT: POST the fields to your
        endpoint (Formspree, your API, etc.) here before showing
        the confirmation. */
@@ -672,7 +673,7 @@ var CHAT_API_ENDPOINT = null;
     },
     pitch:{
       user:"I want this for my business",
-      bot:"That's the easy part — Oyzla AI builds assistants like this one, trained on your services, prices, and voice. Setup in days, you own everything, and we never hold your passwords.\n\nScroll down and tell us what you'd automate, or email hello@oyzla.ai.",
+      bot:"That's the easy part — Oyzla AI builds assistants like this one, trained on your services, prices, and voice. Setup in days, you own everything, and we never hold your passwords.\n\nScroll down and tell us what you'd automate, or email oyzla.ai@gmail.com.",
       chips:[
         {label:"Restart demo",next:"start"}
       ]

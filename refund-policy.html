@@ -1,261 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Refund Policy — Oyzla Leads</title>
-<meta name="description" content="Refund Policy for Oyzla Leads — the 3-lead first-month guarantee, how refunds work, and how to cancel your month-to-month subscription." />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Oyzla Leads" />
-<meta property="og:title" content="Refund Policy — Oyzla Leads" />
-<meta property="og:url" content="https://oyzlaleads.com/refund-policy.html" />
-<meta property="og:image" content="https://oyzlaleads.com/og-image.png" />
-<meta name="twitter:card" content="summary_large_image" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refund Policy — Oyzla AI</title>
+<meta name="description" content="Oyzla AI Refund Policy — how setup fees, monthly fees, and cancellations work.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect x="14" y="14" width="112" height="112" rx="28" fill="%234F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="white"/><circle cx="93.5" cy="46.5" r="4" fill="%234F46E5"/></svg>'>
 <style>
-  /* ============ DESIGN TOKENS (shared with homepage) ============ */
-  :root{
-    --ink:#0a0f1e; --ink-2:#242e4d; --mut:#5b6579; --mut-2:#949db2;
-    --brand:#2f6fed; --brand-hi:#4f86ff; --brand-2:#1d4ed8; --brand-deep:#0a2a4f; --navy:#0a2a4f;
-    --brand-soft:#eef4ff; --brand-line:#d9e6ff;
-    --accent:#ff8a2a;
-    --good:#10a56b; --good-deep:#0b7a4c; --good-soft:#e9f9f1; --good-line:#c4ecd8;
-    --line:#e7ecf5; --line-2:#dde4f0; --bg:#f7f9fd; --card:#ffffff;
-    --ring:rgba(37,99,235,.30);
-    --sh-xs:0 1px 2px rgba(10,15,30,.05);
-    --sh-sm:0 1px 2px rgba(10,15,30,.04), 0 10px 30px -14px rgba(10,15,30,.14);
-    --sh-md:0 2px 4px rgba(10,15,30,.04), 0 28px 60px -28px rgba(10,15,30,.28);
-    --radius:20px;
-    --ease:cubic-bezier(.22,1,.36,1);
-    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Lato,Roboto,Helvetica,Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;color:var(--ink);background:var(--bg);
-    font:19px/1.7 var(--font);
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  ::selection{background:rgba(37,99,235,.16)}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-  h1,h2,h3{letter-spacing:-.028em;line-height:1.15;margin:0;font-weight:800}
-  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
-    font-family:inherit;font-weight:700;font-size:18px;letter-spacing:-.01em;
-    border:0;border-radius:14px;padding:17px 30px;cursor:pointer;overflow:hidden;
-    transition:transform .2s var(--ease), box-shadow .25s var(--ease), filter .2s ease}
-  .btn-primary{color:#fff;
-    background:linear-gradient(180deg,var(--brand-hi) 0%,var(--brand) 52%,var(--brand-2) 100%);
-    box-shadow:0 1px 2px rgba(16,48,111,.45), 0 14px 34px -12px var(--ring),
-      inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(16,48,111,.28)}
-  .btn-primary:hover{transform:translateY(-2px);
-    box-shadow:0 2px 3px rgba(16,48,111,.4), 0 22px 46px -14px var(--ring),
-      inset 0 1px 0 rgba(255,255,255,.34)}
-  .btn-primary:active{transform:translateY(0) scale(.985);filter:brightness(.97)}
-  .sub{color:var(--mut)}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--brand-2);
-    background:linear-gradient(180deg,#f4f8ff,var(--brand-soft));border:1px solid var(--brand-line);
-    padding:8px 15px;border-radius:999px;box-shadow:var(--sh-xs)}
-
-  /* ---------- NAV (shared) ---------- */
-  header.nav{position:sticky;top:0;z-index:50;background:rgba(250,252,255,.78);
-    -webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);
-    border-bottom:1px solid rgba(222,229,241,.7)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:78px}
-  .logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.045em;color:var(--navy)}
-  .logo .mark{width:34px;height:34px;flex:0 0 auto;filter:drop-shadow(0 3px 6px rgba(47,111,237,.35))}
-  .logo span{color:var(--brand)}
-  .nav-links{display:flex;gap:6px;font-weight:600;font-size:17px;color:var(--ink-2)}
-  .nav-links a{padding:10px 15px;border-radius:10px;transition:background .15s ease,color .15s ease}
-  .nav-links a:hover{color:var(--brand-2);background:var(--brand-soft)}
-  .nav-cta{display:flex;align-items:center;gap:14px}
-  .nav-cta .btn{padding:13px 22px;font-size:16.5px;border-radius:12px}
-  @media(max-width:900px){.nav-links{display:none}}
-  @media(max-width:620px){
-    .nav-in{height:66px}
-    .logo{font-size:16.5px;gap:9px;letter-spacing:.035em}
-    .logo .mark{width:29px;height:29px}
-    .nav-cta .btn{padding:11px 14px;font-size:15px;white-space:nowrap}
-  }
-
-  /* ---------- LEGAL PAGE ---------- */
-  .page-head{position:relative;overflow:hidden;
-    background:
-      radial-gradient(900px 460px at 85% -10%, rgba(255,138,42,.09), transparent 55%),
-      radial-gradient(1100px 620px at 4% -6%, rgba(37,99,235,.11), transparent 55%),
-      linear-gradient(180deg,#fdfeff, var(--bg));
-    border-bottom:1px solid var(--line);padding:68px 0 52px}
-  .page-head::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(10,15,30,.05) 1px, transparent 1.5px);
-    background-size:24px 24px;
-    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 80%);
-    mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 80%)}
-  .page-head .wrap{position:relative}
-  .page-head h1{font-size:clamp(32px,4.5vw,44px);font-weight:800;letter-spacing:-.034em;margin-top:18px}
-  .page-head .meta{margin-top:14px;color:var(--mut);font-size:17px;line-height:1.7}
-  .legal{max-width:840px;margin:0 auto;padding:56px 24px 20px}
-  .legal-card{position:relative;background:var(--card);border:1px solid rgba(219,227,240,.9);border-radius:24px;
-    box-shadow:var(--sh-md);padding:44px 42px}
-  .legal-card::after{content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;pointer-events:none;
-    background:linear-gradient(90deg,transparent,rgba(79,134,255,.5),transparent)}
-  .legal h2{font-size:23px;font-weight:800;letter-spacing:-.022em;margin:40px 0 14px}
-  .legal h2:first-child{margin-top:0}
-  .legal p{margin:0 0 15px;color:var(--ink-2);line-height:1.72}
-  .legal ul{margin:0 0 15px;padding-left:22px;color:var(--ink-2)}
-  .legal li{margin:8px 0;line-height:1.68}
-  .legal .callout{background:linear-gradient(180deg,#f4fdf8,var(--good-soft));border:1px solid var(--good-line);
-    border-radius:16px;padding:17px 19px;margin:16px 0;color:var(--ink-2);line-height:1.68;
-    box-shadow:var(--sh-xs)}
-  .legal .callout b{color:var(--good-deep)}
-  .legal .callout-blue{background:linear-gradient(180deg,#f4f8ff,var(--brand-soft));border:1px solid var(--brand-line);
-    border-radius:16px;padding:17px 19px;margin:16px 0;color:var(--ink-2);line-height:1.68;
-    box-shadow:var(--sh-xs)}
-  .legal .callout-blue b{color:var(--brand-2)}
-  .legal a{color:var(--brand);font-weight:600}
-  .legal a:hover{color:var(--brand-2)}
-  @media(max-width:640px){
-    .page-head{padding:48px 0 40px}
-    .legal{padding:36px 20px 12px}
-    .legal-card{padding:28px 22px;border-radius:20px}
-  }
-
-  /* ---------- FOOTER (shared) ---------- */
-  footer{padding:64px 0 44px;border-top:1px solid var(--line);margin-top:88px;color:var(--mut);
-    background:linear-gradient(180deg,var(--bg),#f2f6fc)}
-  .foot-in{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-start}
-  .foot-links{display:flex;gap:8px 22px;flex-wrap:wrap;font-weight:600;font-size:16.5px;color:var(--ink-2)}
-  .foot-links a{transition:color .15s ease}
-  .foot-links a:hover{color:var(--brand)}
-  .foot-meta{font-size:16px;line-height:1.9}
-  .foot-meta a:hover{color:var(--brand)}
-  .foot-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);
-    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:15px}
-
-  @media(prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    .btn{transition:none}
-  }
+:root{--ink:#0E1330;--muted:#646A85;--line:#E6E8F2;--brand:#4F46E5;--navy:#0C1024}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.65;background:#fff;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+header{border-bottom:1px solid var(--line);padding:20px 0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--ink)}
+.logo .ai{color:var(--brand)}
+.logo svg{width:32px;height:32px}
+main{padding:56px 0 80px}
+h1{font-size:34px;letter-spacing:-.02em;margin-bottom:8px}
+.updated{color:var(--muted);font-size:14px;margin-bottom:36px}
+h2{font-size:20px;margin:34px 0 10px;letter-spacing:-.01em}
+p,li{color:#2C3350;font-size:15.5px;margin-bottom:12px}
+ul{padding-left:22px;margin-bottom:12px}
+a{color:var(--brand)}
+.note{background:#F6F7FC;border:1px solid var(--line);border-radius:12px;padding:18px 20px;font-size:14.5px;color:var(--muted);margin:20px 0}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--muted);margin-right:18px}
 </style>
 </head>
 <body>
+<header><div class="wrap"><a class="logo" href="/"><svg viewBox="0 0 140 140" aria-hidden="true"><rect x="14" y="14" width="112" height="112" rx="28" fill="#4F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="#fff"/><circle cx="93.5" cy="46.5" r="4" fill="#4F46E5"/></svg><span>Oyzla&nbsp;<span class="ai">AI</span></span></a></div></header>
+<main class="wrap">
+<h1>Refund &amp; Cancellation Policy</h1>
+<div class="updated">Last updated: August 2026</div>
 
-<!-- ===================== NAV ===================== -->
-<header class="nav">
-  <div class="wrap nav-in">
-    <a class="logo" href="/"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></a>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/index.html#how">How it works</a>
-      <a href="/index.html#pricing">Pricing</a>
-      <a href="/terms-of-service.html">Terms</a>
-      <a href="/refund-policy.html">Refunds</a>
-      <a href="/privacy-policy.html">Privacy</a>
-    </nav>
-    <div class="nav-cta">
-      <a class="btn btn-primary" href="/index.html#pricing">Claim your territory</a>
-    </div>
-  </div>
-</header>
+<p>We want you to be happy with what we build. This policy explains how setup fees, monthly fees, and cancellations work.</p>
 
-<!-- ===================== PAGE HEAD ===================== -->
-<section class="page-head">
-  <div class="wrap">
-    <span class="eyebrow">Legal</span>
-    <h1>Refund Policy</h1>
-    <p class="meta">Last updated: August 10, 2026 · Questions? Message us through the chat or email <a href="mailto:info@oyzlaleads.com" style="color:var(--brand);font-weight:600">info@oyzlaleads.com</a>.</p>
-  </div>
-</section>
+<h2>Monthly service — cancel anytime</h2>
+<p>Your monthly hosting and maintenance fee is billed in advance and recurs until you cancel. You can cancel at any time; cancellation stops all future billing. To cancel, email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a> — we'll confirm and stop the next charge. Monthly fees already paid for the current period are generally non-refundable, since the service (hosting and maintenance) was provided during that period.</p>
 
-<!-- ===================== POLICY ===================== -->
-<main class="legal">
-  <div class="legal-card">
+<h2>Setup fees</h2>
+<p>Setup fees cover the design and build of your custom tool. Before build begins, a setup fee is fully refundable. Once we've started building, setup fees are refundable on a pro-rated basis for work not yet performed, at our reasonable discretion. Once a build is delivered, setup fees are non-refundable.</p>
 
-    <h2>The Short Version</h2>
-    <div class="callout">
-      <b>Our guarantee:</b> If we don't deliver at least 3 valid exclusive leads in your territory within the first 30 days after your campaign goes live, your first month is refunded. Cancelling is just as simple — email us or message the chat, and your subscription ends at the close of the period you've already paid for. No phone calls, no hoops, no cancellation fee.
-    </div>
-    <p>This Refund Policy is part of our <a href="/terms-of-service.html">Terms of Service</a> and applies to subscriptions purchased from OYZLA LEADS LLC ("Oyzla Leads," "we," "us") at oyzlaleads.com.</p>
+<h2>If something's wrong</h2>
+<p>If a tool we built isn't working as agreed, tell us and we'll fix it — that's what the monthly maintenance is for. We'd always rather make it right than leave you unhappy.</p>
 
-    <h2>1. Pricing and Automatic Renewal</h2>
-    <div class="callout-blue">
-      <b>What you pay:</b> $1,000 for your first month, then $2,000/month — both before applicable tax. Your subscription is month to month with no long-term contract, and it <b>renews automatically each month</b>: your payment method on file is charged at the start of each billing period until you cancel.
-    </div>
-    <p>There are no per-lead charges and no setup fees. Payments are processed securely by Stripe. Any applicable sales or similar taxes are added at checkout as required by law.</p>
+<h2>What you keep</h2>
+<p>Because you own your deliverables, cancelling means future billing stops and ongoing hosting/maintenance ends, but the work created for you remains yours.</p>
 
-    <h2>2. The 3-Lead First-Month Guarantee</h2>
-    <p>If we don't deliver at least <b>3 valid exclusive leads</b> in your approved territory within the <b>first 30 days after your campaign goes live</b>, we refund your first month in full.</p>
-    <ul>
-      <li><b>"Valid" lead</b> means a prospect with working contact information, located in (or seeking coverage in) your approved territory, who expressed interest in an insurance product for a line your agency writes. A lead is not invalid merely because it doesn't result in a sale, doesn't respond to your outreach, or chooses another provider.</li>
-      <li><b>"Campaign goes live"</b> means the date your advertising campaign begins running, which follows your completion of the short onboarding questionnaire after checkout. If onboarding information is incomplete, the 30-day window starts once the campaign actually launches.</li>
-      <li>The guarantee applies once per agency, to the first month of a new territory subscription.</li>
-    </ul>
+<h2>Contact</h2>
+<p>Questions, or want to cancel? Email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>.</p>
 
-    <h2>3. How to Request a Refund</h2>
-    <ul>
-      <li>Email <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a> (or simply reply to any email from us, or message the chat on our website) within <b>14 days after your 30-day guarantee window ends</b>. One sentence is enough — no forms, no calls.</li>
-      <li>We confirm the lead count for your territory and respond by email.</li>
-      <li>Approved refunds are issued to your original payment method via Stripe, typically within 5–10 business days of approval.</li>
-    </ul>
-
-    <h2>4. Territory-Availability Refund</h2>
-    <p>One agency per area is the whole model. If the territory you request at checkout is already taken, we'll offer you the nearest available adjacent territory. If you don't accept the alternative, your first payment is <b>refunded in full</b> — just tell us by email or chat.</p>
-
-    <h2>5. Cancelling Your Subscription</h2>
-    <ul>
-      <li><b>How to cancel:</b> email <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a> (or reply to any of our emails, or message the chat) any time before your next renewal date. That's the entire process.</li>
-      <li>Cancellation takes effect at the end of the current paid billing period — you keep receiving leads until then.</li>
-      <li>There is no cancellation fee and no long-term contract.</li>
-      <li>Other than the guarantee in Section 2, the territory refund in Section 4, or where required by law, fees already paid are not refunded or prorated for partial months.</li>
-      <li>When your subscription ends, your territory becomes available to other agencies.</li>
-    </ul>
-
-    <h2>6. Failed or Disputed Payments</h2>
-    <p>If a renewal payment fails, we may pause lead delivery and campaign activity until payment is completed, and territory exclusivity may lapse after a reasonable period following notice. If you believe a charge is wrong, contact us first — we resolve billing questions quickly by email.</p>
-
-    <h2>7. Contact</h2>
-    <p>
-      OYZLA LEADS LLC<br>
-      1429 S Hillside Drive<br>
-      Saratoga Springs, UT 84045, USA<br>
-      <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a>
-    </p>
-
-  </div>
+<div class="note">This is a plain-language summary. Where a specific signed agreement exists for your engagement, its terms control.</div>
 </main>
-
-<!-- ===================== FOOTER ===================== -->
-<footer>
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <div class="logo" style="font-size:19px"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="omark2" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f86ff"/><stop offset=".55" stop-color="#2f6fed"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><path d="M31.5 9.9A16 16 0 1 1 16.5 9.9" fill="none" stroke="url(#omark2)" stroke-width="7" stroke-linecap="round"/></svg>OYZLA<span> LEADS</span></div>
-        <p class="foot-meta sub" style="margin-top:10px;max-width:34ch">
-          Exclusive insurance leads for independent agencies.
-        </p>
-      </div>
-      <div class="foot-meta">
-        <strong>Contact</strong><br>
-        <a href="mailto:info@oyzlaleads.com">info@oyzlaleads.com</a><br>
-        OYZLA LEADS LLC<br>
-        1429 S Hillside Drive<br>
-        Saratoga Springs, UT 84045 — serving nationwide
-      </div>
-      <div class="foot-links">
-        <a href="/">Home</a>
-        <a href="/index.html#how">How it works</a>
-        <a href="/index.html#pricing">Pricing</a>
-        <a href="/privacy-policy.html">Privacy Policy</a>
-        <a href="/terms-of-service.html">Terms of Service</a>
-        <a href="/refund-policy.html">Refund Policy</a>
-      </div>
-    </div>
-    <div class="foot-bottom sub">
-      <span>© 2026 OYZLA LEADS LLC. All rights reserved.</span>
-      <span>One area · One agency · Never shared.</span>
-    </div>
-  </div>
-</footer>
-
+<footer><div class="wrap"><a href="/">Home</a><a href="/terms-of-service.html">Terms</a><a href="/privacy-policy.html">Privacy</a><span>© 2026 Oyzla AI</span></div></footer>
 </body>
 </html>
