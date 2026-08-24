@@ -136,6 +136,7 @@ section{padding:88px 0}
 .svc-price .per{font-size:14px;color:var(--muted);font-weight:500}
 .svc-price .est{width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .svc .btn{margin-top:16px;width:100%}
+.svc-note{margin-top:12px;font-size:12.5px;color:var(--muted)}
 .svc-buy{background:var(--brand-soft);color:var(--brand)}
 .svc-buy:hover{background:var(--brand);color:#fff;transform:translateY(-1px)}
 .svc-dark{background:linear-gradient(140deg,var(--navy),#242A55);border-color:transparent;color:#fff}
@@ -392,7 +393,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <p>A chat assistant on your site that answers questions in your voice, helps visitors decide, and books the next step — around the clock.</p>
         <!-- old price: <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div> -->
         <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$500/mo</span></div>
-        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
+        <p class="svc-note">Final price scoped on a quick call.</p>
+        <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
       <div class="svc reveal">
@@ -401,7 +403,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <p>An after-hours and overflow responder for web and email. Every message gets a helpful answer, urgent ones get flagged, nothing sits overnight.</p>
         <!-- old price: <div class="svc-price"><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;$500/mo</span></div> -->
         <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$3,000</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$750/mo</span></div>
-        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
+        <p class="svc-note">Final price scoped on a quick call.</p>
+        <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
       <div class="svc reveal">
@@ -410,7 +413,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <p>Requests come in; priced quotes and booked time slots go out. Built on your rules, your prices, and your calendar — you just approve.</p>
         <!-- old card: Instant Lead Responder — old price: <div class="svc-price"><span class="setup">$2,000</span><span class="per">setup&nbsp;·&nbsp;$400/mo</span></div> -->
         <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$3,500</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$1,000/mo</span></div>
-        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
+        <p class="svc-note">Final price scoped on a quick call.</p>
+        <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
       <div class="svc reveal">
@@ -419,7 +423,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <p>Invoices, intake forms, orders, reports — read, extracted, and filed where they belong. Hours of re-typing gone, with a paper trail you can check.</p>
         <!-- old card: Reputation Autopilot — old price: <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div> -->
         <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$4,000</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$2,000/mo</span></div>
-        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
+        <p class="svc-note">Final price scoped on a quick call.</p>
+        <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
       <div class="svc svc-dark reveal">
@@ -642,20 +647,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   });
 })();
 
-/* ---------- Stripe payment buttons (one per fixed-price service card) ----------
-   Each button carries its own data-stripe-payment-link so links can be
-   swapped to per-product Stripe links later. */
-(function(){
-  var btns=document.querySelectorAll('[data-stripe-payment-link]');
-  Array.prototype.forEach.call(btns,function(btn){
-    btn.addEventListener('click',function(e){
-      var link=btn.getAttribute('data-stripe-payment-link');
-      if(!link){e.preventDefault();return}
-      if(btn.tagName==='A'){btn.setAttribute('href',link)}
-      else{e.preventDefault();window.location.href=link}
-    });
-  });
-})();
+/* ---------- Service card buttons route to the contact form; every service
+   is scoped on a call and quoted privately — no instant checkout. ---------- */
 
 /* ---------- Book-a-call button → focus the contact form ---------- */
 (function(){
