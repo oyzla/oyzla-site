@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oyzla AI — Custom AI tools &amp; automations, built for your business</title>
-<meta name="description" content="Oyzla AI builds custom AI assistants and automations for businesses. You own everything we build, we never hold your passwords, and you're live in days — not months.">
+<meta name="description" content="Oyzla AI builds custom AI assistants and automations for any business — customer-facing or back-office. You own everything we build, we never hold your passwords, and you're live in days.">
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect x="14" y="14" width="112" height="112" rx="28" fill="%234F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="white"/><circle cx="93.5" cy="46.5" r="4" fill="%234F46E5"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,12 +88,24 @@ section{padding:88px 0}
 .card-a{top:0;left:6%;animation:bob 7s ease-in-out infinite}
 .card-b{top:150px;right:0;animation:bob 8s .8s ease-in-out infinite}
 .card-c{top:296px;left:0;animation:bob 7.5s .4s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr;gap:48px}
   .hero-visual{min-height:0;display:grid;gap:16px}
   .float-card{position:static;width:100%;animation:none}
 }
+
+/* ---------- Ambient motion (always-on, transform/opacity only) ---------- */
+.hero .wrap{position:relative;z-index:1}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;will-change:transform}
+.hero::before{width:560px;height:560px;top:-180px;left:-140px;background:radial-gradient(circle,rgba(79,70,229,.18),transparent 65%);animation:aurora-a 19s ease-in-out infinite}
+.hero::after{width:640px;height:640px;top:-220px;right:-180px;background:radial-gradient(circle,rgba(124,58,237,.16),transparent 65%);animation:aurora-b 23s ease-in-out infinite}
+@keyframes aurora-a{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(70px,50px,0) scale(1.1)}66%{transform:translate3d(20px,90px,0) scale(.96)}}
+@keyframes aurora-b{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-90px,60px,0) scale(1.12)}}
+.logo-mark circle[stroke-dasharray],.chat-avatar circle[stroke-dasharray]{transform-origin:70px 70px;animation:orbit 14s linear infinite}
+@keyframes orbit{from{transform:rotate(-56deg)}to{transform:rotate(304deg)}}
+.fc-badge{animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.6}}
 
 /* ---------- Trust strip ---------- */
 .trust-strip{background:var(--navy);color:#fff;padding:26px 0}
@@ -122,6 +134,10 @@ section{padding:88px 0}
 .svc-price{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .svc-price .setup{font-family:var(--font-head);font-size:21px;font-weight:700}
 .svc-price .per{font-size:14px;color:var(--muted);font-weight:500}
+.svc-price .est{width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.svc .btn{margin-top:16px;width:100%}
+.svc-buy{background:var(--brand-soft);color:var(--brand)}
+.svc-buy:hover{background:var(--brand);color:#fff;transform:translateY(-1px)}
 .svc-dark{background:linear-gradient(140deg,var(--navy),#242A55);border-color:transparent;color:#fff}
 .svc-dark p{color:#B6BAD6}
 .svc-dark .svc-icon{background:rgba(255,255,255,.12)}
@@ -149,7 +165,8 @@ section{padding:88px 0}
 .chat-avatar{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex:none}
 .chat-head-name{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.2}
 .chat-head-sub{font-size:12px;opacity:.85;display:flex;align-items:center;gap:6px}
-.chat-head-sub .live-dot{width:7px;height:7px;border-radius:50%;background:#6EF3A5;display:inline-block}
+.chat-head-sub .live-dot{width:7px;height:7px;border-radius:50%;background:#6EF3A5;display:inline-block;animation:livePulse 2.4s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(1.35)}}
 .demo-chip{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:4px 10px}
 .chat-body{height:398px;overflow-y:auto;padding:18px 16px;background:#F7F8FC;display:flex;flex-direction:column;gap:12px}
 .msg{max-width:82%;padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.5;white-space:pre-line}
@@ -163,6 +180,7 @@ section{padding:88px 0}
 .chips{display:flex;flex-wrap:wrap;gap:8px;align-self:flex-start;max-width:95%}
 .chip{background:#fff;border:1.5px solid var(--brand);color:var(--brand);font-family:var(--font-body);font-size:13px;font-weight:600;border-radius:99px;padding:8px 14px;cursor:pointer;transition:background .15s,color .15s}
 .chip:hover{background:var(--brand);color:#fff}
+.chips-label{width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .chat-input{display:flex;gap:10px;padding:13px 14px;border-top:1px solid var(--line);background:#fff}
 .chat-input input{flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .15s;color:var(--ink)}
 .chat-input input:focus{border-color:var(--brand)}
@@ -212,12 +230,34 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 .foot-copy{font-size:13px;color:#6C7194}
 @media(max-width:700px){.foot-inner{flex-direction:column;align-items:flex-start}}
 
+/* ---------- Testimonial / reference ---------- */
+#reference{background:var(--navy);color:#fff}
+#reference .eyebrow{color:#B9B4FF}
+#reference .section-title{color:#fff}
+#reference .section-sub{color:#A7ABC9}
+.quote-card{margin:44px auto 0;max-width:820px;background:#fff;color:var(--ink);border-radius:var(--radius);padding:44px 46px;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative}
+.quote-mark{position:absolute;top:26px;right:34px;color:var(--brand-soft)}
+.quote-card blockquote{font-family:var(--font-head);font-weight:600;font-size:clamp(19px,2.5vw,25px);line-height:1.42;letter-spacing:-.01em;color:var(--ink);margin-bottom:28px}
+.quote-attrib{display:flex;align-items:center;gap:14px}
+.quote-avatar{width:52px;height:52px;border-radius:14px;background:linear-gradient(140deg,var(--brand),var(--violet));color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:17px;flex:none;letter-spacing:.02em}
+.quote-name{font-family:var(--font-head);font-weight:700;font-size:16px;line-height:1.3}
+.quote-role{font-size:14px;color:var(--muted)}
+@media(max-width:640px){.quote-card{padding:32px 26px}}
+
+/* ---------- Services CTA ---------- */
+.svc-cta{text-align:center;margin-top:30px}
+
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
   .card-a,.card-b,.card-c{animation:none}
+  .hero::before,.hero::after{animation:none}
+  .logo-mark circle[stroke-dasharray],.chat-avatar circle[stroke-dasharray]{animation:none}
+  .chat-head-sub .live-dot{animation:none}
+  .fc-badge{animation:none}
+  .typing i{animation:none;opacity:.6}
   html{scroll-behavior:auto}
 }
 </style>
@@ -239,10 +279,10 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     <nav class="nav-links" aria-label="Main">
       <a href="#how">How it works</a>
       <a href="#services">Services</a>
-      <a href="#demo">Live demo</a>
+      <a href="#demo">Demo</a>
       <a href="#commitments">Our promise</a>
     </nav>
-    <a class="btn btn-primary" href="#contact">Get started</a>
+    <a class="btn btn-primary" href="#contact">Book a call</a>
   </div>
 </header>
 
@@ -252,12 +292,12 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 <section class="hero" id="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Done-for-you AI, built around your business</span>
+      <span class="eyebrow">Custom AI, done for you</span>
       <h1>Your busywork, <span class="hl">automated.</span><br>Your AI, <span class="hl">owned.</span></h1>
-      <p class="hero-sub">Oyzla AI designs and builds custom AI assistants and automations that answer, respond, follow up, and file — so you and your team can get back to real work.</p>
+      <p class="hero-sub">We build custom AI for businesses of every kind — assistants that answer your customers, automations that run the back office, and one-off tools for whatever eats your week.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#contact">Tell us what to automate</a>
-        <a class="btn btn-ghost" href="#services">See services &amp; pricing</a>
+        <a class="btn btn-primary" href="#contact">Book a free scoping call</a>
+        <a class="btn btn-ghost" href="#services">See what we build</a>
       </div>
       <p class="hero-note">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="2"/></svg>
@@ -271,24 +311,24 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
           <div class="fc-dot" style="background:#EEF0FE"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div><div class="fc-title">Website assistant</div><div class="fc-sub">Visitor · 11:42 PM</div></div>
         </div>
-        <div class="fc-body">"Do you handle emergency call-outs on weekends?" — answered, booked, and logged while the office slept.</div>
-        <span class="fc-badge">● Lead captured</span>
+        <div class="fc-body">"Do you handle emergency call-outs on weekends?" — answered and booked while the office slept.</div>
+        <span class="fc-badge">● Answered &amp; booked</span>
       </div>
       <div class="float-card card-b">
         <div class="fc-head">
-          <div class="fc-dot" style="background:#FDF2E7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-          <div><div class="fc-title">Instant lead responder</div><div class="fc-sub">New inquiry · just now</div></div>
+          <div class="fc-dot" style="background:#FDF2E7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3z" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h4" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 13h5M10 16.5h5" stroke="#EA8A2B" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div><div class="fc-title">Document automation</div><div class="fc-sub">Invoice received · just now</div></div>
         </div>
-        <div class="fc-body">New form fill → personal reply drafted and sent in 8 seconds, with your calendar link attached.</div>
-        <span class="fc-badge">● Replied in seconds</span>
+        <div class="fc-body">Supplier invoice → line items read, coded, and filed in your books. No re-typing, no typos.</div>
+        <span class="fc-badge">● Filed automatically</span>
       </div>
       <div class="float-card card-c">
         <div class="fc-head">
-          <div class="fc-dot" style="background:#EAF7EF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9L12 3z" stroke="#16A34A" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
-          <div><div class="fc-title">Reputation autopilot</div><div class="fc-sub">After job completed</div></div>
+          <div class="fc-dot" style="background:#EAF7EF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="16" rx="2.5" stroke="#16A34A" stroke-width="1.7"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="#16A34A" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <div><div class="fc-title">Quote &amp; schedule</div><div class="fc-sub">Request · this morning</div></div>
         </div>
-        <div class="fc-body">Review request sent to today's happy customers; a thoughtful response drafted for yesterday's review.</div>
-        <span class="fc-badge">● On autopilot</span>
+        <div class="fc-body">Job details in → priced estimate drafted and a time slot held, waiting for your one-click approval.</div>
+        <span class="fc-badge">● Ready for approval</span>
       </div>
     </div>
   </div>
@@ -322,7 +362,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       <div class="step reveal">
         <div class="step-num">1</div>
         <h3>Map the busywork</h3>
-        <p>A short call to walk through your day. We find the repetitive stuff — missed calls, slow replies, chasing reviews, re-typing data — and pick what to automate first.</p>
+        <p>A short call to walk through your day. We find the repetitive work — unanswered messages, re-typed data, manual quotes, scheduling ping-pong — and pick what to automate first.</p>
       </div>
       <div class="step reveal">
         <div class="step-num">2</div>
@@ -343,46 +383,60 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   <div class="wrap">
     <span class="eyebrow">Services &amp; pricing</span>
     <h2 class="section-title">Pick a tool, or dream one up.</h2>
-    <p class="section-sub">Straightforward setup + monthly care. Setup covers design, build, and launch; the monthly covers hosting, monitoring, and ongoing tuning.</p>
+    <p class="section-sub">Setup covers design, build, and launch; the monthly covers hosting, monitoring, and tuning. Every price below is a starting estimate — we confirm exact scope and cost on a quick call before you commit.</p>
 
     <div class="svc-grid">
       <div class="svc reveal">
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>AI Website Assistant</h3>
-        <p>A chatbot on your site that answers FAQs in your voice, qualifies visitors, and captures leads around the clock — so browsers become bookings.</p>
-        <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div>
+        <p>A chat assistant on your site that answers questions in your voice, helps visitors decide, and books the next step — around the clock.</p>
+        <!-- old price: <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div> -->
+        <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$500/mo</span></div>
+        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
       </div>
 
       <div class="svc reveal">
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v11H8l-4 4V5z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9h8M8 12.5h5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         <h3>AI Front Desk</h3>
-        <p>An after-hours and overflow responder across web and email. Every message gets a helpful answer, urgent ones get flagged, and nothing slips through.</p>
-        <div class="svc-price"><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;$500/mo</span></div>
+        <p>An after-hours and overflow responder for web and email. Every message gets a helpful answer, urgent ones get flagged, nothing sits overnight.</p>
+        <!-- old price: <div class="svc-price"><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;$500/mo</span></div> -->
+        <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$3,000</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$750/mo</span></div>
+        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
       </div>
 
       <div class="svc reveal">
-        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>Instant Lead Responder</h3>
-        <p>Speed wins deals. Every inbound inquiry — forms, email, listings — gets a smart, personal reply in seconds, before your competitors even see it.</p>
-        <div class="svc-price"><span class="setup">$2,000</span><span class="per">setup&nbsp;·&nbsp;$400/mo</span></div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2.5" stroke="#4F46E5" stroke-width="1.8"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Scheduling &amp; Quoting Engine</h3>
+        <p>Requests come in; priced quotes and booked time slots go out. Built on your rules, your prices, and your calendar — you just approve.</p>
+        <!-- old card: Instant Lead Responder — old price: <div class="svc-price"><span class="setup">$2,000</span><span class="per">setup&nbsp;·&nbsp;$400/mo</span></div> -->
+        <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$3,500</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$1,000/mo</span></div>
+        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
       </div>
 
       <div class="svc reveal">
-        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9L12 3z" stroke="#4F46E5" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
-        <h3>Reputation Autopilot</h3>
-        <p>Automated review requests at the perfect moment, plus drafted responses to every new review — your reputation grows while you work.</p>
-        <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h4" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 13h5M10 16.5h5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Document &amp; Data Automation</h3>
+        <p>Invoices, intake forms, orders, reports — read, extracted, and filed where they belong. Hours of re-typing gone, with a paper trail you can check.</p>
+        <!-- old card: Reputation Autopilot — old price: <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div> -->
+        <div class="svc-price"><span class="est">Starting estimate</span><span class="setup">$4,000</span><span class="per">setup&nbsp;·&nbsp;from&nbsp;$2,000/mo</span></div>
+        <a class="btn svc-buy" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03">Get started</a>
       </div>
 
       <div class="svc svc-dark reveal">
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 4.5l5 5L8 21H3v-5L14.5 4.5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M12.5 6.5l5 5" stroke="#fff" stroke-width="1.8"/></svg></div>
         <h3>Custom AI Build</h3>
-        <p>Anything AI your business needs — document &amp; data automations, quoting engines, scheduling brains, internal copilots, one-off ideas. If it's repetitive, we can probably automate it.</p>
-        <div class="svc-price"><span class="setup">Let's talk scope</span></div>
+        <p>Anything repetitive, whatever your business does — internal copilots, content and production pipelines, niche workflows, one-off ideas. If you can describe it, we can usually build it.</p>
+        <!-- old price: <div class="svc-price"><span class="setup">Let's talk scope</span></div> -->
+        <div class="svc-price"><span class="setup">Scoped &amp; quoted per project</span></div>
+        <a class="btn btn-light" href="#contact">Tell us what you need</a>
       </div>
     </div>
 
-    <p class="bundle"><span class="tag">Bundle 2+ and save</span> The tools work even better together — pair the Front Desk with the Lead Responder and cover every hour of the day.</p>
+    <p class="bundle"><span class="tag">Bundle 2+ and save</span> The tools work even better together — pair the Website Assistant with the Front Desk and cover every hour of the day.</p>
+
+    <div class="svc-cta">
+      <a class="btn btn-primary" href="#contact">Not sure which? Book a free scoping call</a>
+    </div>
   </div>
 </section>
 
@@ -393,13 +447,13 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     <div class="demo-grid">
       <div>
         <h2 class="section-title">This is what your website<br>could be doing tonight.</h2>
-        <p class="section-sub">Try the interactive preview — it's a scripted walkthrough of a real conversation shape our website assistants handle: answering, qualifying, and capturing the lead.</p>
+        <p class="section-sub">A scripted preview of the kind of conversation our website assistants handle — answering, helping, booking. And this is just the customer-facing half of what we build.</p>
         <ul class="demo-points">
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Answers questions in your business's voice, 24/7</li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Qualifies visitors and books the next step</li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Captures every lead with full context for your team</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Answers customer questions in your voice, 24/7</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Books the next step while you sleep</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Hands your team the full conversation, ready to act on</li>
         </ul>
-        <p class="demo-note">Honesty first: this preview is scripted, not a live AI — your real assistant is built and trained on <em>your</em> business before launch. No smoke, no mirrors.</p>
+        <p class="demo-note">Honesty first: this preview is scripted, not a live AI. Your real assistant is built and trained on <em>your</em> business before launch.</p>
       </div>
 
       <div class="chat" id="chat" aria-label="Interactive scripted demo of an AI website assistant">
@@ -431,7 +485,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   <div class="wrap">
     <span class="eyebrow">Our promise</span>
     <h2 class="section-title">Trust, spelled out.</h2>
-    <p class="section-sub">We're a young company, so we won't ask you to trust vague claims. We'll ask you to hold us to specific commitments.</p>
+    <p class="section-sub">We're a young company, so instead of vague claims, here's what you can hold us to.</p>
 
     <div class="commit-grid">
       <div class="commit reveal">
@@ -453,8 +507,29 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 
     <div class="honesty reveal">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#4F46E5" stroke-width="1.8"/><path d="M12 8v5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1.2" fill="#4F46E5"/></svg>
-      <p><b>Why no testimonials or client logos on this page?</b> Because we'd rather show you nothing than show you something invented. We'll earn real reviews the slow way — by building things that work. In the meantime, judge us by the demo above and the commitments we put in writing.</p>
+      <p><b>Why only one reference below, and no wall of logos?</b> Because we'd rather show you one real, named client than a page of invented ones. We're just getting started, so we'll add references the slow, honest way — as we earn them. Everything else, judge by the demo above and the commitments we put in writing.</p>
     </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIAL / REFERENCE ============ -->
+<section id="reference">
+  <div class="wrap">
+    <span class="eyebrow">A word from a client</span>
+    <h2 class="section-title">One real reference, not a wall of logos.</h2>
+    <p class="section-sub">We only put names on this page when they're real and we have permission. Here's ours.</p>
+
+    <figure class="quote-card reveal">
+      <svg class="quote-mark" width="46" height="46" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 7H6a3 3 0 0 0-3 3v7h7v-7H6a2 2 0 0 1 2-2h2V7zm11 0h-4a3 3 0 0 0-3 3v7h7v-7h-4a2 2 0 0 1 2-2h2V7z"/></svg>
+      <blockquote>“Oyzla built us a tool that catches the calls and messages we used to lose. It was live in days, it's ours to keep, and they never once asked for a password. They did exactly what they said they would.”</blockquote>
+      <figcaption class="quote-attrib">
+        <div class="quote-avatar" aria-hidden="true">SF</div>
+        <div>
+          <div class="quote-name">Samson Folau</div>
+          <div class="quote-role">Malosi Solutions · Saratoga Springs, NY</div>
+        </div>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -463,7 +538,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   <div class="wrap">
     <span class="eyebrow">Get started</span>
     <h2 class="section-title">Tell us what's eating your week.</h2>
-    <p class="section-sub">Describe the repetitive work — in plain words — and we'll come back with what we'd build, what it costs, and how fast it can be live.</p>
+    <p class="section-sub">Describe the repetitive work in plain words. We'll come back with what we'd build, what it costs, and how fast it can be live.</p>
 
     <div class="contact-grid">
       <div class="form-card">
@@ -481,8 +556,12 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
             <input id="f-email" name="email" type="email" placeholder="you@yourbusiness.com" required>
           </div>
           <div class="field">
+            <label for="f-phone">Phone number</label>
+            <input id="f-phone" name="phone" type="tel" placeholder="(555) 123-4567" required>
+          </div>
+          <div class="field">
             <label for="f-msg">What would you automate?</label>
-            <textarea id="f-msg" name="message" placeholder="e.g. We miss calls after 6pm, and it takes us two days to reply to website leads…" required></textarea>
+            <textarea id="f-msg" name="message" placeholder="e.g. We re-type every invoice by hand, and customer emails sit unanswered overnight…" required></textarea>
           </div>
           <button class="btn btn-primary" type="submit" style="width:100%">Send it — we'll reply within a day</button>
         </form>
@@ -494,13 +573,9 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       </div>
 
       <div class="start-card reveal">
-        <h3>Already know what you want?</h3>
-        <p>Skip the back-and-forth. Start your build now and we'll schedule your kickoff call as soon as checkout completes.</p>
-        <!-- STRIPE INTEGRATION POINT ─────────────────────────────────────
-             Replace href="#" with your Stripe Payment Link, e.g.
-             href="https://buy.stripe.com/XXXXXXXX"
-             (or set data-stripe-payment-link and wire it in JS). -->
-        <a class="btn btn-light" id="checkoutBtn" href="#" data-stripe-payment-link="https://buy.stripe.com/bJe28rcGp1026Zd46y8so03" style="width:100%">Get started — secure checkout</a>
+        <h3>What happens next</h3>
+        <p>A quick, no-pressure call — no payment up front. We'll learn what's eating your week, tell you what we'd build, and give you an exact price before you commit to anything.</p>
+        <a class="btn btn-light" id="bookCallBtn" href="#contact" style="width:100%">Book a free scoping call</a>
         <div class="or">or</div>
         <div class="mail">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#B9B4FF" stroke-width="1.7"/><path d="M3.5 7l8.5 6 8.5-6" stroke="#B9B4FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -508,6 +583,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -557,7 +633,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(!form.checkValidity()){form.reportValidity();return}
-    var _g=function(id){var e=document.getElementById(id);return e?e.value:''};var _s=encodeURIComponent('New Oyzla AI inquiry — '+_g('f-biz'));var _b=encodeURIComponent('Name: '+_g('f-name')+'\nBusiness: '+_g('f-biz')+'\nEmail: '+_g('f-email')+'\n\nWhat to automate:\n'+_g('f-msg'));window.location.href='mailto:oyzla.ai@gmail.com?subject='+_s+'&body='+_b;
+    var _g=function(id){var e=document.getElementById(id);return e?e.value:''};var _s=encodeURIComponent('New Oyzla AI inquiry — '+_g('f-biz'));var _b=encodeURIComponent('Name: '+_g('f-name')+'\nBusiness: '+_g('f-biz')+'\nEmail: '+_g('f-email')+'\nPhone: '+_g('f-phone')+'\n\nWhat to automate:\n'+_g('f-msg'));window.location.href='mailto:oyzla.ai@gmail.com?subject='+_s+'&body='+_b;
     /* FORM BACKEND INTEGRATION POINT: POST the fields to your
        endpoint (Formspree, your API, etc.) here before showing
        the confirmation. */
@@ -566,15 +642,31 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   });
 })();
 
-/* ---------- Stripe placeholder guard ---------- */
+/* ---------- Stripe payment buttons (one per fixed-price service card) ----------
+   Each button carries its own data-stripe-payment-link so links can be
+   swapped to per-product Stripe links later. */
 (function(){
-  var btn=document.getElementById('checkoutBtn');
-  btn.addEventListener('click',function(e){
-    var link=btn.getAttribute('data-stripe-payment-link');
-    if(link){btn.setAttribute('href',link);return}
+  var btns=document.querySelectorAll('[data-stripe-payment-link]');
+  Array.prototype.forEach.call(btns,function(btn){
+    btn.addEventListener('click',function(e){
+      var link=btn.getAttribute('data-stripe-payment-link');
+      if(!link){e.preventDefault();return}
+      if(btn.tagName==='A'){btn.setAttribute('href',link)}
+      else{e.preventDefault();window.location.href=link}
+    });
+  });
+})();
+
+/* ---------- Book-a-call button → focus the contact form ---------- */
+(function(){
+  var book=document.getElementById('bookCallBtn');
+  if(!book)return;
+  book.addEventListener('click',function(e){
     e.preventDefault();
-    document.getElementById('contactForm').scrollIntoView({behavior:'smooth',block:'center'});
-    var n=document.getElementById('f-name');if(n)n.focus({preventScroll:true});
+    var f=document.getElementById('contactForm');
+    if(f)f.scrollIntoView({behavior:'smooth',block:'center'});
+    var n=document.getElementById('f-name');
+    if(n)setTimeout(function(){n.focus({preventScroll:true})},300);
   });
 })();
 
@@ -602,14 +694,16 @@ var CHAT_API_ENDPOINT = null;
   var script={
     start:{
       bot:"Hi! I'm the assistant for Summit Plumbing. I can answer questions, check availability, or get you a quote. What can I help with tonight?",
+      chipLabel:"Common requests",
       chips:[
-        {label:"Do you do emergency calls?",next:"emergency"},
-        {label:"How much is a water heater install?",next:"quote"},
-        {label:"Book an appointment",next:"book"}
+        {label:"Do you do emergency call-outs?",next:"emergency"},
+        {label:"Can I get a quote?",next:"quote"},
+        {label:"Book an appointment",next:"book"},
+        {label:"What else can Oyzla automate?",next:"backoffice"}
       ]
     },
     emergency:{
-      user:"Do you do emergency calls?",
+      user:"Do you do emergency call-outs?",
       bot:"We do — 24/7 for burst pipes, major leaks, and no-hot-water situations. After-hours call-outs have a $95 dispatch fee that's credited toward the repair.\n\nIs this an emergency right now, or planning ahead?",
       chips:[
         {label:"It's happening now!",next:"urgent"},
@@ -640,8 +734,8 @@ var CHAT_API_ENDPOINT = null;
       ]
     },
     quote:{
-      user:"How much is a water heater install?",
-      bot:"Great question. A standard 40–50 gallon tank install typically runs $1,400–$2,100 installed, depending on venting and code updates. Tankless conversions run higher.\n\nWant a firm quote? I can grab a couple of details and have the office confirm a price by morning.",
+      user:"Can I get a quote?",
+      bot:"Sure. For a common job — say a 40–50 gallon water heater swap — installed prices typically run $1,400–$2,100, depending on venting and code updates.\n\nWant a firm number? I can grab a couple of details and have the office confirm a price by morning.",
       chips:[
         {label:"Yes, get me a quote",next:"leadCapture"},
         {label:"What brands do you install?",next:"brands"}
@@ -665,15 +759,23 @@ var CHAT_API_ENDPOINT = null;
     },
     leadCapture:{
       user:"Yes — let's do it",
-      bot:"Done — in the live version I'd collect your name and best contact here, confirm instantly, and drop the full conversation into the owner's inbox and calendar. Lead captured, context included, zero phone tag.\n\n(End of scripted demo — the real thing is trained on your business.)",
+      bot:"Done — in the live version I'd take your name and best contact here, confirm instantly, and drop the full conversation into the owner's inbox and calendar. No phone tag, no lost context.\n\n(End of the scripted demo — the real thing is trained on your business.)",
       chips:[
         {label:"Restart demo",next:"start"},
         {label:"I want this for my business",next:"pitch"}
       ]
     },
+    backoffice:{
+      user:"What else can Oyzla automate?",
+      bot:"Plenty — this chat is just the customer-facing half. Behind the scenes, Oyzla builds automations for paperwork, quoting, scheduling, data entry, and internal tools — whatever's repetitive in your business, whatever your industry.\n\n(That part's real, not scripted.)",
+      chips:[
+        {label:"I want this for my business",next:"pitch"},
+        {label:"Restart demo",next:"start"}
+      ]
+    },
     pitch:{
       user:"I want this for my business",
-      bot:"That's the easy part — Oyzla AI builds assistants like this one, trained on your services, prices, and voice. Setup in days, you own everything, and we never hold your passwords.\n\nScroll down and tell us what you'd automate, or email oyzla.ai@gmail.com.",
+      bot:"That's what we do — Oyzla AI builds assistants and automations like this for any business, customer-facing or back-office, trained on your services and voice. You own everything, we never hold your passwords, and it's live in days.\n\nScroll down and tell us what you'd automate, or email oyzla.ai@gmail.com.",
       chips:[
         {label:"Restart demo",next:"start"}
       ]
@@ -695,9 +797,10 @@ var CHAT_API_ENDPOINT = null;
     scrollBottom();
   }
   function clearChips(){var c=body.querySelector('.chips');if(c)c.remove()}
-  function addChips(chips){
+  function addChips(chips,label){
     if(!chips||!chips.length)return;
     var wrap=el('div','chips');
+    if(label)wrap.appendChild(el('div','chips-label',label));
     chips.forEach(function(ch){
       var b=el('button','chip',ch.label);
       b.type='button';
@@ -717,17 +820,17 @@ var CHAT_API_ENDPOINT = null;
     if(on&&!t){var d=el('div','msg msg-bot typing');d.appendChild(el('i'));d.appendChild(el('i'));d.appendChild(el('i'));body.appendChild(d);scrollBottom()}
     if(!on&&t)t.remove();
   }
-  function botReply(text,chips,delay){
+  function botReply(text,chips,delay,chipLabel){
     busy=true;typing(true);
     setTimeout(function(){
-      typing(false);addMsg('bot',text);addChips(chips);busy=false;
+      typing(false);addMsg('bot',text);addChips(chips,chipLabel);busy=false;
     },delay||900);
   }
   function playNode(key,skipUser){
     var node=script[key];if(!node)node=script.fallback;
     clearChips();
     if(node.user&&!skipUser)addMsg('user',node.user);
-    botReply(node.bot,node.chips,key==='start'?650:950);
+    botReply(node.bot,node.chips,key==='start'?650:950,node.chipLabel);
   }
   function handleFree(text){
     clearChips();
@@ -754,7 +857,7 @@ var CHAT_API_ENDPOINT = null;
 
   /* kick off when the demo scrolls into view (or immediately if visible) */
   var started=false;
-  function start(){if(started)return;started=true;botReply(script.start.bot,script.start.chips,700)}
+  function start(){if(started)return;started=true;botReply(script.start.bot,script.start.chips,700,script.start.chipLabel)}
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(en){
       if(en[0].isIntersecting){start();io.disconnect()}
