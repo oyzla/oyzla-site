@@ -629,17 +629,36 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   els.forEach(function(e){io.observe(e)});
 })();
 
-/* ---------- Contact form (client-side only) ---------- */
+/* ---------- Contact form → Google Form capture (lands in the leads sheet) ----------
+   Every submission is POSTed to a Google Form (owned by oyzla.ai@gmail.com) via a
+   hidden iframe, so it records automatically in "Oyzla — Leads & Clients". No
+   dependency on the visitor's email client. */
 (function(){
   var form=document.getElementById('contactForm');
   var ok=document.getElementById('formSuccess');
+  if(!form)return;
+  var GFORM='https://docs.google.com/forms/d/e/1FAIpQLScKVs0iI7RWrQ8fZc36s-SLtpy1B6-ONF4-X1HljK_6E2-23w/formResponse';
+  var MAP={'f-name':'entry.725308185','f-biz':'entry.186522232','f-email':'entry.1947894225','f-phone':'entry.1328294641','f-msg':'entry.693913589'};
+  function val(id){var e=document.getElementById(id);return e?e.value:''}
+  function sendToSheet(){
+    var iframe=document.createElement('iframe');
+    iframe.name='oyzla_gf_'+Date.now();iframe.style.display='none';
+    document.body.appendChild(iframe);
+    var gf=document.createElement('form');
+    gf.action=GFORM;gf.method='POST';gf.target=iframe.name;gf.style.display='none';
+    for(var id in MAP){
+      var inp=document.createElement('input');
+      inp.type='hidden';inp.name=MAP[id];inp.value=val(id);
+      gf.appendChild(inp);
+    }
+    document.body.appendChild(gf);
+    gf.submit();
+    setTimeout(function(){try{gf.remove();iframe.remove();}catch(e){}},5000);
+  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(!form.checkValidity()){form.reportValidity();return}
-    var _g=function(id){var e=document.getElementById(id);return e?e.value:''};var _s=encodeURIComponent('New Oyzla AI inquiry — '+_g('f-biz'));var _b=encodeURIComponent('Name: '+_g('f-name')+'\nBusiness: '+_g('f-biz')+'\nEmail: '+_g('f-email')+'\nPhone: '+_g('f-phone')+'\n\nWhat to automate:\n'+_g('f-msg'));window.location.href='mailto:oyzla.ai@gmail.com?subject='+_s+'&body='+_b;
-    /* FORM BACKEND INTEGRATION POINT: POST the fields to your
-       endpoint (Formspree, your API, etc.) here before showing
-       the confirmation. */
+    sendToSheet();
     form.style.display='none';
     ok.style.display='block';
   });
