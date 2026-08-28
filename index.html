@@ -214,6 +214,7 @@ section{padding:88px 0}
 .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:var(--font-body);font-size:14.5px;color:var(--ink);outline:none;background:#FDFDFF;transition:border-color .15s,box-shadow .15s}
 .field input:focus,.field textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
 .field textarea{resize:vertical;min-height:110px}
+.form-reassure{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px}
 .form-success{display:none;text-align:center;padding:36px 10px}
 .form-success .big{font-family:var(--font-head);font-size:22px;font-weight:700;margin:16px 0 8px}
 .form-success p{color:var(--muted);font-size:15px}
@@ -571,13 +572,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
             <label for="f-msg">What would you automate?</label>
             <textarea id="f-msg" name="message" placeholder="e.g. We re-type every invoice by hand, and customer emails sit unanswered overnight…" required></textarea>
           </div>
-          <div class="field field-consent">
-            <label class="consent">
-              <input id="f-consent" name="consent" type="checkbox" required>
-              <span>I understand and agree to the <a href="terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a>.</span>
-            </label>
-          </div>
-          <button class="btn btn-primary" type="submit" style="width:100%">Send it — we'll reply within a day</button>
+          <p class="form-reassure">Add your phone number and we'll call you at a time that works — no pressure, no payment up front.</p>
+          <button class="btn btn-primary" type="submit" style="width:100%">Send it — we'll call you back.</button>
         </form>
         <div class="form-success" id="formSuccess" role="status">
           <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#EAF7EF"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
