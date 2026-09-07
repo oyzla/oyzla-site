@@ -145,8 +145,12 @@ section{padding:88px 0}
 .svc-dark .svc-price{border-top-color:rgba(255,255,255,.14)}
 .svc-dark .svc-price .setup{font-size:18px}
 .svc:nth-child(4),.svc:nth-child(5){grid-column:span 3}
-.bundle{margin-top:32px;display:flex;align-items:center;gap:10px;justify-content:center;font-size:15px;font-weight:600;color:var(--ink-soft)}
-.bundle .tag{background:var(--brand-soft);color:var(--brand);border-radius:99px;padding:6px 14px;font-size:13.5px;font-weight:700}
+.bundle{margin-top:32px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;font-size:16px;font-weight:600;color:var(--ink-soft);background:var(--brand-soft);border-radius:16px;padding:16px 22px;max-width:760px}
+.bundle .tag{background:var(--brand);color:#fff;border-radius:99px;padding:6px 15px;font-size:13.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap}
+.price-band{margin:22px 0 4px;display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;background:var(--brand-soft);border-radius:16px;padding:18px 24px}
+.price-band .fig{font-family:var(--font-head);font-size:clamp(26px,3.4vw,34px);font-weight:800;color:var(--brand);line-height:1}
+.price-band .lbl{font-size:15px;font-weight:600;color:var(--muted)}
+.price-band .note{width:100%;font-size:13px;color:var(--muted);font-weight:500;margin-top:2px}
 @media(max-width:960px){.svc-grid{grid-template-columns:1fr 1fr}.svc,.svc:nth-child(4),.svc:nth-child(5){grid-column:span 1}.svc:nth-child(5){grid-column:span 2}}
 @media(max-width:640px){.svc-grid{grid-template-columns:1fr}.svc,.svc:nth-child(4),.svc:nth-child(5){grid-column:span 1}}
 
@@ -389,7 +393,12 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   <div class="wrap">
     <span class="eyebrow">Services &amp; pricing</span>
     <h2 class="section-title">Pick a tool, or dream one up.</h2>
-    <p class="section-sub">Most builds run about <strong>~$2,500 to build + ~$1,500/mo to run</strong> — setup covers design, build, and launch; the monthly covers hosting, monitoring, and tuning. Every build is different, so we confirm exact scope and price on a quick call before you commit.</p>
+    <p class="section-sub">Setup covers design, build, and launch; the monthly covers hosting, monitoring, and tuning. Every build is different, so we confirm exact scope on a quick call before you commit.</p>
+    <div class="price-band">
+      <span class="fig">~$2,500</span><span class="lbl">to build</span>
+      <span class="fig">+&nbsp;~$1,500</span><span class="lbl">/mo to run</span>
+      <span class="note">Typical range — exact price confirmed on a quick call.</span>
+    </div>
 
     <div class="svc-grid">
       <div class="svc reveal">
@@ -434,7 +443,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       </div>
     </div>
 
-    <p class="bundle"><span class="tag">Bundle 2+ and save</span> The tools work even better together — pair the Website Assistant with the Front Desk and cover every hour of the day.</p>
+    <p class="bundle"><span class="tag">Save 20%</span> Bundle 2 or more services and take <strong>20% off your setup</strong> — the tools work even better together, like pairing the Website Assistant with the Front Desk to cover every hour of the day.</p>
 
     <div class="svc-cta">
       <a class="btn btn-primary" href="#contact">Not sure which? Book a free scoping call</a>
