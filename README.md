@@ -1,88 +1,56 @@
-# Oyzla Leads — Static Website
+# Oyzla AI — Static Marketing Site
 
-Complete static site for **oyzlaleads.com**. No build step, no server, no external
-dependencies — every page is a single self-contained HTML file with inline CSS/JS.
+Static site served at **oyzlaleads.com** (legacy domain name; the business is
+**Oyzla AI**). No build step, no server, no framework — every page is a single
+self-contained HTML file with inline CSS and JS.
+
+Business email: **oyzla.ai@gmail.com**
 
 ## File structure
 
 | File | Purpose |
 |---|---|
-| `index.html` | Approved homepage. All primary CTAs go to the live Stripe founding checkout. |
-| `terms-of-service.html` | Terms of Service (**DRAFT** — reconcile with the existing Sept-2025 ToS on Wix and have an attorney review before publishing). |
-| `privacy-policy.html` | Privacy Policy (**DRAFT** — same reconciliation/attorney note applies). |
-| `onboarding.html` | Post-payment questionnaire ("Payment confirmed — let's set up your territory"). Collects agency name/email, territory, insurance lines, and CRM info, then POSTs JSON to a webhook. |
-| `CNAME` | GitHub Pages custom-domain file. Contains exactly `oyzlaleads.com`. |
-| `favicon.svg` / `favicon-48.png` | Oyzla logomark favicon (SVG + PNG fallback), referenced from every page. |
-| `apple-touch-icon.png` | 180×180 icon for iOS home screen / Google result icon; also the Organization logo in JSON-LD. |
-| `og-image.png` | 1200×630 branded share image for Open Graph / Twitter cards. |
-| `previews/` | Rendered full-page previews (home desktop/mobile, onboarding mobile). Not needed in production. |
-| `README.md` | This file. |
+| `index.html` | Landing page: hero, how-it-works, services & pricing, scripted chat demo, commitments, client reference, contact form. |
+| `privacy-policy.html` | Privacy Policy — includes a Cookies section. **Needs counsel review.** |
+| `terms-of-service.html` | Terms of Service. **Needs counsel review.** |
+| `refund-policy.html` | Refund & Cancellation Policy. **Needs counsel review.** |
+| `onboarding.html` | ⚠ **Legacy.** Post-Stripe questionnaire for the retired "Oyzla Leads" insurance-lead product. Not linked from anywhere and `noindex`, but still publicly reachable. See `AUDIT-REPORT.md` — retire or rewrite. |
+| `favicon.svg` | ⚠ Old "Oyzla Leads" mark (blue ring on navy). Only `onboarding.html` uses it; the other pages use an inline data-URI favicon of the current Oyzla AI mark. |
+| `CNAME` | GitHub Pages custom domain — contains exactly `oyzlaleads.com`. |
+| `AUDIT-REPORT.md` | Compliance / accessibility / credibility audit, 11 Sep 2026. Lists the owner placeholders still to fill. |
 
-> Logo note: the logomark is a simple inline SVG (blue rounded square, white ring,
-> orange dot) used in the header/footer of every page. If there is an official
-> Oyzla logo file, swap it into the same spots: the inline `<svg class="mark">` in
-> each page's header/footer, plus `favicon.svg`, `favicon-48.png`,
-> `apple-touch-icon.png`, and `og-image.png`.
+There are **no raster images in this repo**. Every logo, icon and illustration is
+an inline SVG. `favicon-48.png`, `apple-touch-icon.png`, `og-image.png` and
+`previews/` were referenced by the old README but do not exist; the dead `<link>`
+tags for the first two were removed from `onboarding.html`.
 
-## Before go-live (required)
+## External requests the site makes
 
-1. **Onboarding webhook** — in `onboarding.html`, find the CONFIG block at the top
-   of the `<script>` and replace
-   `const BACKEND_WEBHOOK_URL = "REPLACE_WITH_APPS_SCRIPT_WEBHOOK_URL";`
-   with the real Google Apps Script Web App URL (or any endpoint accepting a JSON POST).
-   Until then the form shows the thank-you screen but sends nothing.
-2. **Legal review** — both legal pages are drafts; reconcile with the existing
-   Sept-2025 ToS/Privacy currently on Wix and have an attorney review.
-3. **Stripe success URL** — in the Stripe payment link settings, set the
-   post-checkout redirect to `https://oyzlaleads.com/onboarding.html` so customers
-   land on the questionnaire after paying.
-4. **Chat widget** — the bottom-right chat bubble on the homepage is a visual
-   placeholder; wire in the real chat widget's embed snippet if desired.
+1. `fonts.googleapis.com` + `fonts.gstatic.com` — Inter and Sora webfonts (`index.html` only).
+2. `docs.google.com/forms/.../formResponse` — **only on contact-form submit**, from `index.html`.
+3. `script.google.com/macros/.../exec` — **only on onboarding-form submit**, from `onboarding.html`.
 
-## Deploy to GitHub Pages
+No analytics, no advertising, no tracking pixels, no third-party JS. The site sets
+no cookies of its own. This is documented in the Privacy Policy; if that ever
+changes, update the Privacy Policy in the same commit.
 
-1. **Create the repo.** On github.com, create a new public repository
-   (e.g., `oyzla-site`).
-2. **Push these files** (everything in this folder, at the repo root):
-   ```bash
-   cd /Users/mataif/Downloads/oyzla-site
-   git init
-   git add .
-   git commit -m "Oyzla Leads static site"
-   git branch -M main
-   git remote add origin https://github.com/<YOUR-USERNAME>/oyzla-site.git
-   git push -u origin main
-   ```
-3. **Enable Pages.** In the repo: **Settings → Pages** → under *Build and
-   deployment*, set **Source: Deploy from a branch**, **Branch: `main`**,
-   folder **`/ (root)`** → Save.
-4. **Set the custom domain.** Still in **Settings → Pages**, enter
-   `oyzlaleads.com` in the *Custom domain* field and save. (The `CNAME` file in
-   the repo keeps this setting across deploys.) Once DNS resolves, check
-   **Enforce HTTPS**.
+## Before making changes
 
-## DNS records (at your domain registrar)
+- **Pricing is estimate-only.** Setups typically around $5,000, running cost about
+  $2,000/month, always framed as an estimate confirmed on a call. Price depends on
+  **scope** (what we connect, how many workflows) — never on the client's income or
+  size. Do not add a fixed price, a guarantee, or a discount offer.
+- **Everything is approval-gated.** Copy must never imply the AI acts on its own.
+- **No unsupported claims.** No numbers without a source, no superlatives, no
+  "guaranteed", and no implied scale ("our team", "our clients") — this is a
+  one-person business with one named client reference.
+- The client reference (Samson Folau, Malosi Solutions) is used with permission and
+  quoted verbatim. Do not edit the quote, add a star rating, or present it as a
+  review-platform review.
 
-Point the domain at GitHub Pages:
+## Deploy (GitHub Pages)
 
-**Apex domain (`oyzlaleads.com`) — four A records:**
-
-| Type | Host | Value |
-|---|---|---|
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-
-**`www` subdomain — one CNAME record:**
-
-| Type | Host | Value |
-|---|---|---|
-| CNAME | www | `<YOUR-USERNAME>.github.io` |
-
-DNS changes can take up to 24–48 hours to propagate, though it's usually much
-faster. After propagation, GitHub will provision the HTTPS certificate
-(this can take up to an hour); then enable **Enforce HTTPS**.
-
-> Note: if the domain currently points at Wix, remove/replace the existing Wix
-> A/CNAME records when you're ready to cut over.
+Push to `main`; Pages serves from the repo root. The `CNAME` file keeps the custom
+domain across deploys. DNS: four A records for the apex
+(`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) and a `www` CNAME to
+`<username>.github.io`. Enable **Enforce HTTPS** once the certificate is issued.

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oyzla AI — Custom AI tools &amp; automations, built for your business</title>
-<meta name="description" content="Oyzla AI builds custom AI assistants and automations for any business — customer-facing or back-office. We build, host, and run it for you, we never hold your passwords, and you're live in days.">
+<meta name="description" content="Oyzla AI builds custom AI assistants and automations for small businesses — customer-facing or back-office. We build, host, and run it for you, we never hold your passwords, and most builds go live in days.">
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect x="14" y="14" width="112" height="112" rx="28" fill="%234F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="white"/><circle cx="93.5" cy="46.5" r="4" fill="%234F46E5"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
   --violet:#7C3AED;
   --navy:#0C1024;
   --navy-2:#151A38;
-  --ok:#16A34A;
+  --ok:#15803D;
   --radius:18px;
   --shadow-sm:0 1px 2px rgba(14,19,48,.05),0 4px 14px rgba(14,19,48,.06);
   --shadow-lg:0 6px 18px rgba(14,19,48,.07),0 24px 60px rgba(14,19,48,.12);
@@ -36,6 +36,15 @@ body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-hei
 img,svg{display:block}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ---------- Focus visibility (keyboard users) ---------- */
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:4px}
+#demo :focus-visible,.trust-strip :focus-visible,footer :focus-visible,#reference :focus-visible{outline-color:#B9B4FF}
+.chat-input input:focus-visible,.field input:focus-visible,.field textarea:focus-visible{outline-offset:0}
+
+/* ---------- Skip link ---------- */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--brand);color:#fff;font-weight:600;font-size:14.5px;padding:12px 18px;border-radius:0 0 10px 0}
+.skip-link:focus{left:0}
 h1,h2,h3{font-family:var(--font-head);letter-spacing:-.02em;line-height:1.15}
 .eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
 .section-title{font-size:clamp(28px,4vw,40px);font-weight:700;margin-bottom:14px}
@@ -144,9 +153,8 @@ section{padding:88px 0}
 .svc-dark .svc-icon{background:rgba(255,255,255,.12)}
 .svc-dark .svc-price{border-top-color:rgba(255,255,255,.14)}
 .svc-dark .svc-price .setup{font-size:18px}
+.svc-dark .svc-price .est{color:#B6BAD6}
 .svc:nth-child(4),.svc:nth-child(5){grid-column:span 3}
-.bundle{margin-top:32px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;font-size:16px;font-weight:600;color:var(--ink-soft);background:var(--brand-soft);border-radius:16px;padding:16px 22px;max-width:760px}
-.bundle .tag{background:var(--brand);color:#fff;border-radius:99px;padding:6px 15px;font-size:13.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap}
 .price-band{margin:22px 0 4px;display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;background:var(--brand-soft);border-radius:16px;padding:18px 24px}
 .price-band .fig{font-family:var(--font-head);font-size:clamp(26px,3.4vw,34px);font-weight:800;color:var(--brand);line-height:1}
 .price-band .lbl{font-size:15px;font-weight:600;color:var(--muted)}
@@ -222,6 +230,7 @@ section{padding:88px 0}
 .field input:focus,.field textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
 .field textarea{resize:vertical;min-height:110px}
 .form-reassure{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+.form-error{margin-top:8px;font-size:13px;font-weight:600;color:#B02020}
 .form-success{display:none;text-align:center;padding:36px 10px}
 .form-success .big{font-family:var(--font-head);font-size:22px;font-weight:700;margin:16px 0 8px}
 .form-success p{color:var(--muted);font-size:15px}
@@ -240,7 +249,11 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .foot-links{display:flex;gap:26px;font-size:13.5px;color:#A7ABC9}
 .foot-links a:hover{color:#fff}
-.foot-copy{font-size:13px;color:#6C7194}
+.foot-copy{font-size:13px;color:#8A8FB0}
+.foot-legal{width:100%;font-size:13px;color:#8A8FB0;line-height:1.7;border-top:1px solid rgba(255,255,255,.12);padding-top:20px;margin-top:4px}
+.foot-legal b{color:#C9CCE3;font-weight:600}
+.foot-legal a{color:#B9B4FF}
+.foot-legal a:hover{text-decoration:underline}
 @media(max-width:700px){.foot-inner{flex-direction:column;align-items:flex-start}}
 
 /* ---------- Testimonial / reference ---------- */
@@ -277,6 +290,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 </head>
 <body>
 
+<a class="skip-link" href="#top">Skip to main content</a>
+
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="wrap nav-inner">
@@ -299,7 +314,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   </div>
 </header>
 
-<main id="top">
+<main id="top" tabindex="-1">
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
@@ -307,37 +322,37 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     <div>
       <span class="eyebrow">Custom AI, done for you</span>
       <h1>We automate your business,<br>so you get your <span class="hl">time back</span>.</h1>
-      <p class="hero-sub">We build custom AI for businesses of every kind — assistants that answer your customers, automations that run the back office, and one-off tools for whatever eats your week.</p>
+      <p class="hero-sub">We build custom AI for small businesses — assistants that answer your customers, automations that take the back-office typing off your plate, and one-off tools for whatever eats your week. Anything that acts on your behalf comes to you as a draft to approve.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#contact">Book a free scoping call</a>
         <a class="btn btn-ghost" href="#services">See what we build</a>
       </div>
       <p class="hero-note">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="2"/></svg>
-        We build, host, and run it for you. We never hold your passwords. Live in days.
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#15803D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#15803D" stroke-width="2"/></svg>
+        We build, host, and run it for you. We never hold your passwords. Most builds go live in days.
       </p>
     </div>
 
     <div class="hero-visual" aria-hidden="true">
       <div class="float-card card-a">
         <div class="fc-head">
-          <div class="fc-dot" style="background:#EEF0FE"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="fc-dot" style="background:#EEF0FE"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div><div class="fc-title">Website assistant</div><div class="fc-sub">Visitor · 11:42 PM</div></div>
         </div>
-        <div class="fc-body">"Do you handle emergency call-outs on weekends?" — answered and booked while the office slept.</div>
-        <span class="fc-badge">● Answered &amp; booked</span>
+        <div class="fc-body">"Do you handle emergency call-outs on weekends?" — answered from your own FAQ, with the booking request waiting for you in the morning.</div>
+        <span class="fc-badge">● Answered · booking to confirm</span>
       </div>
       <div class="float-card card-b">
         <div class="fc-head">
-          <div class="fc-dot" style="background:#FDF2E7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3z" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h4" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 13h5M10 16.5h5" stroke="#EA8A2B" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div class="fc-dot" style="background:#FDF2E7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3z" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h4" stroke="#EA8A2B" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 13h5M10 16.5h5" stroke="#EA8A2B" stroke-width="1.8" stroke-linecap="round"/></svg></div>
           <div><div class="fc-title">Document automation</div><div class="fc-sub">Invoice received · just now</div></div>
         </div>
-        <div class="fc-body">Supplier invoice → line items read, coded, and filed in your books. No re-typing, no typos.</div>
-        <span class="fc-badge">● Filed automatically</span>
+        <div class="fc-body">Supplier invoice → line items read and coded, drafted for your books. You approve; nothing files itself.</div>
+        <span class="fc-badge">● Ready for approval</span>
       </div>
       <div class="float-card card-c">
         <div class="fc-head">
-          <div class="fc-dot" style="background:#EAF7EF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="16" rx="2.5" stroke="#16A34A" stroke-width="1.7"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="#16A34A" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <div class="fc-dot" style="background:#EAF7EF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2.5" stroke="#15803D" stroke-width="1.7"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="#15803D" stroke-width="1.7" stroke-linecap="round"/></svg></div>
           <div><div class="fc-title">Quote &amp; schedule</div><div class="fc-sub">Request · this morning</div></div>
         </div>
         <div class="fc-body">Job details in → priced estimate drafted and a time slot held, waiting for your one-click approval.</div>
@@ -360,7 +375,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     </div>
     <div class="trust-item">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#B9B4FF" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#B9B4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Live in&nbsp;<b>days, not months</b></span>
+      <span>Usually live in&nbsp;<b>days, not months</b></span>
     </div>
   </div>
 </div>
@@ -380,12 +395,12 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       <div class="step reveal">
         <div class="step-num">2</div>
         <h3>We build it. We run it.</h3>
-        <p>We design and build your custom AI tool, tuned to your business and your voice — then we host it, run it, and keep it working on our own infrastructure. You just get the results.</p>
+        <p>We design and build your custom AI tool, tuned to your business and your voice — then we host it, run it, and keep it working on our own infrastructure. Anything it sends or files on your behalf comes to you as a draft to approve first.</p>
       </div>
       <div class="step reveal">
         <div class="step-num">3</div>
         <h3>We host, monitor, maintain</h3>
-        <p>We keep it live, watch it daily, and keep improving it as your business changes. You get the results; we handle the machinery.</p>
+        <p>We keep it live, keep an eye on it, and keep improving it as your business changes. You stay in control of what goes out; we handle the machinery.</p>
       </div>
     </div>
   </div>
@@ -396,20 +411,20 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   <div class="wrap">
     <span class="eyebrow">Services &amp; pricing</span>
     <h2 class="section-title">Pick a tool, or dream one up.</h2>
-    <p class="section-sub">Setup covers design, build, and launch; the monthly covers hosting, monitoring, and tuning. Every build is different, so we confirm exact scope on a quick call before you commit.</p>
+    <p class="section-sub">Setup covers design, build, and launch; the monthly covers hosting, monitoring, and tuning. The figures below are estimates, not a fixed price — what you pay depends on scope: what we connect and how many workflows we build. We confirm your exact number on a short call before you commit to anything.</p>
     <div class="price-band">
-      <span class="fig">~$2,500</span><span class="lbl">to build</span>
-      <span class="fig">+&nbsp;~$1,500</span><span class="lbl">/mo to run</span>
-      <span class="note">Typical range — exact price confirmed on a quick call.</span>
+      <span class="fig">~$5,000</span><span class="lbl">typical setup</span>
+      <span class="fig">+&nbsp;~$2,000</span><span class="lbl">/mo to run</span>
+      <span class="note">Estimate only. Your exact number is confirmed on a short call, based on what we connect and how many workflows we build.</span>
     </div>
-    <p class="vs-employee"><strong>Half the cost of a hire.</strong> A full-time employee doing this work runs <strong>$3,000+/mo</strong> — and usually more. Your AI is <strong class="big">$1,500/mo flat</strong> — about <strong>50% less</strong> — and it works <strong>24/7</strong>, not 9-to-5, and never takes a day off.</p>
+    <p class="vs-employee"><strong>How it tends to compare.</strong> A loaded in-house admin — salary, payroll taxes, benefits, software, desk — typically runs around <strong>$6,000/month</strong>. A virtual assistant usually lands somewhere between <strong>$2,000 and $8,000/month</strong>, depending on hours and agency. Oyzla is typically <strong class="big">about $2,000/month</strong>, works around the clock, and doesn't need onboarding twice. All figures are estimates and will vary with your scope.</p>
 
     <div class="svc-grid">
       <div class="svc reveal">
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.2-.6L3 21l1.7-4.1A8.4 8.4 0 1 1 21 11.5z" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>AI Website Assistant</h3>
-        <p>A chat assistant on your site that answers questions in your voice, helps visitors decide, and books the next step — around the clock.</p>
-        <!-- old price: <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div> -->
+        <p>A chat assistant on your site that answers questions in your voice, helps visitors decide, and captures the next step for you to confirm — around the clock.</p>
+        <div class="svc-price"><span class="setup">Estimated on a call</span><span class="est">Typical setup ~$5,000 · ~$2,000/mo — estimate, varies with scope</span></div>
         <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
@@ -417,7 +432,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v11H8l-4 4V5z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9h8M8 12.5h5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         <h3>AI Front Desk</h3>
         <p>An after-hours and overflow responder for web and email. Every message gets a helpful answer, urgent ones get flagged, nothing sits overnight.</p>
-        <!-- old price: <div class="svc-price"><span class="setup">$2,500</span><span class="per">setup&nbsp;·&nbsp;$500/mo</span></div> -->
+        <div class="svc-price"><span class="setup">Estimated on a call</span><span class="est">Typical setup ~$5,000 · ~$2,000/mo — estimate, varies with scope</span></div>
         <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
@@ -425,7 +440,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2.5" stroke="#4F46E5" stroke-width="1.8"/><path d="M4 10h16M8.5 3v4M15.5 3v4" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         <h3>Scheduling &amp; Quoting Engine</h3>
         <p>Requests come in; priced quotes and booked time slots go out. Built on your rules, your prices, and your calendar — you just approve.</p>
-        <!-- old card: Instant Lead Responder — old price: <div class="svc-price"><span class="setup">$2,000</span><span class="per">setup&nbsp;·&nbsp;$400/mo</span></div> -->
+        <div class="svc-price"><span class="setup">Estimated on a call</span><span class="est">Typical setup ~$5,000 · ~$2,000/mo — estimate, varies with scope</span></div>
         <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
@@ -433,7 +448,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h4" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 13h5M10 16.5h5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         <h3>Document &amp; Data Automation</h3>
         <p>Invoices, intake forms, orders, reports — read, extracted, and filed where they belong. Hours of re-typing gone, with a paper trail you can check.</p>
-        <!-- old card: Reputation Autopilot — old price: <div class="svc-price"><span class="setup">$1,500</span><span class="per">setup&nbsp;·&nbsp;$300/mo</span></div> -->
+        <div class="svc-price"><span class="setup">Estimated on a call</span><span class="est">Typical setup ~$5,000 · ~$2,000/mo — estimate, varies with scope</span></div>
         <a class="btn svc-buy" href="#contact">Book a call</a>
       </div>
 
@@ -441,13 +456,12 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 4.5l5 5L8 21H3v-5L14.5 4.5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M12.5 6.5l5 5" stroke="#fff" stroke-width="1.8"/></svg></div>
         <h3>Custom AI Build</h3>
         <p>Anything repetitive, whatever your business does — internal copilots, content and production pipelines, niche workflows, one-off ideas. If you can describe it, we can usually build it.</p>
-        <!-- old price: <div class="svc-price"><span class="setup">Let's talk scope</span></div> -->
-        <div class="svc-price"><span class="setup">Scoped &amp; quoted per project</span></div>
+        <div class="svc-price"><span class="setup">Scoped &amp; estimated per project</span><span class="est">No standard figure — scope decides it</span></div>
         <a class="btn btn-light" href="#contact">Tell us what you need</a>
       </div>
     </div>
 
-    <p class="bundle"><span class="tag">Save 20%</span> Bundle 2 or more services and take <strong>20% off your setup</strong> — the tools work even better together, like pairing the Website Assistant with the Front Desk to cover every hour of the day.</p>
+    <p class="svc-note" style="margin-top:28px;max-width:760px">Every build is different. The tools often work well together — pairing the Website Assistant with the Front Desk, for example, covers more of the day — and combined scope is estimated on the same call, as one quote.</p>
 
     <div class="svc-cta">
       <a class="btn btn-primary" href="#contact">Not sure which? Book a free scoping call</a>
@@ -462,16 +476,16 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     <div class="demo-grid">
       <div>
         <h2 class="section-title">This is what your website<br>could be doing tonight.</h2>
-        <p class="section-sub">A scripted preview of the kind of conversation our website assistants handle — answering, helping, booking. And this is just the customer-facing half of what we build.</p>
+        <p class="section-sub">A <strong>scripted preview</strong> — not a live AI — of the kind of conversation a website assistant handles: answering, helping, capturing the next step. The sample business below is made up. And this is just the customer-facing half of what we build.</p>
         <ul class="demo-points">
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Answers customer questions in your voice, 24/7</li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Books the next step while you sleep</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Captures the next step while you sleep — you confirm it</li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-5" stroke="#8B7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#8B7FFF" stroke-width="2"/></svg>Hands your team the full conversation, ready to act on</li>
         </ul>
-        <p class="demo-note">Honesty first: this preview is scripted, not a live AI. Your real assistant is built and trained on <em>your</em> business before launch.</p>
+        <p class="demo-note">Honesty first: this preview is scripted, not a live AI, and "Summit Plumbing" is an invented example — the prices and policies in it are illustrative only. Your real assistant would be built and tuned on <em>your</em> business before launch.</p>
       </div>
 
-      <div class="chat" id="chat" aria-label="Interactive scripted demo of an AI website assistant">
+      <div class="chat" id="chat" role="region" aria-label="Scripted demo of an AI website assistant — not a live AI">
         <div class="chat-head">
           <div class="chat-avatar">
             <svg width="20" height="20" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="11" fill="#fff"/></svg>
@@ -480,16 +494,16 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
             <div class="chat-head-name">Summit Plumbing Assistant</div>
             <div class="chat-head-sub"><span class="live-dot"></span>Sample business · scripted preview</div>
           </div>
-          <span class="demo-chip">Demo</span>
+          <span class="demo-chip">Scripted demo</span>
         </div>
         <div class="chat-body" id="chatBody" aria-live="polite"></div>
         <div class="chat-input">
           <input id="chatInput" type="text" placeholder="Type a message…" aria-label="Type a message" autocomplete="off">
-          <button class="chat-send" id="chatSend" aria-label="Send message">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4l-4.5 16-4-6.5L4 12z" fill="#fff"/></svg>
+          <button class="chat-send" id="chatSend" type="button" aria-label="Send message to the scripted demo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12L20 4l-4.5 16-4-6.5L4 12z" fill="#fff"/></svg>
           </button>
         </div>
-        <div class="chat-foot">Scripted demo — your assistant is custom-built &amp; trained on your business.</div>
+        <div class="chat-foot">Scripted demo. A real assistant would be custom-built and tuned on your business.</div>
       </div>
     </div>
   </div>
@@ -506,7 +520,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       <div class="commit reveal">
         <div class="commit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-2.9 8.2-7 9.5C7.9 19.2 5 15.4 5 11V6l7-3z" stroke="#4F46E5" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 11.5l2 2 4-4.5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Fully managed, end to end</h3>
-        <p>We build, host, and run your tools on our own infrastructure — the tech, the tools, and the upkeep are all handled for you. You just get the results, live in days.</p>
+        <p>We build, host, and run your tools on our own infrastructure — the tech and the upkeep are handled for you. Nothing goes out under your name without your approval.</p>
       </div>
       <div class="commit reveal">
         <div class="commit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2.5" stroke="#4F46E5" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="15" r="1.6" fill="#4F46E5"/></svg></div>
@@ -515,8 +529,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       </div>
       <div class="commit reveal">
         <div class="commit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#4F46E5" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Live in days, not months</h3>
-        <p>We scope tight and ship fast. Your first automation goes live in days, then improves week over week — instead of vanishing into a months-long project plan.</p>
+        <h3>Usually live in days, not months</h3>
+        <p>We scope tight and ship fast. A first automation is usually live within days, then improves week over week — instead of vanishing into a months-long project plan. Bigger builds take longer, and we'll say so up front.</p>
       </div>
     </div>
   </div>
@@ -525,8 +539,9 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 <!-- ============ TESTIMONIAL / REFERENCE ============ -->
 <section id="reference">
   <div class="wrap">
-    <span class="eyebrow">One of our top clients</span>
+    <span class="eyebrow">Client reference</span>
     <h2 class="section-title">One real reference, not a wall of logos.</h2>
+    <p class="section-sub">A direct quote from a client, shared with his permission. It isn't a review-platform rating, and we haven't added anything to it.</p>
 
     <figure class="quote-card reveal">
       <svg class="quote-mark" width="46" height="46" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 7H6a3 3 0 0 0-3 3v7h7v-7H6a2 2 0 0 1 2-2h2V7zm11 0h-4a3 3 0 0 0-3 3v7h7v-7h-4a2 2 0 0 1 2-2h2V7z"/></svg>
@@ -535,7 +550,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
         <div class="quote-avatar" aria-hidden="true">SF</div>
         <div>
           <div class="quote-name">Samson Folau</div>
-          <div class="quote-role">Malosi Solutions · Saratoga Springs, NY</div>
+          <div class="quote-role">Malosi Solutions · Saratoga Springs, UT</div>
         </div>
       </figcaption>
     </figure>
@@ -547,38 +562,45 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   <div class="wrap">
     <span class="eyebrow">Get started</span>
     <h2 class="section-title">Tell us what's eating your week.</h2>
-    <p class="section-sub">Describe the repetitive work in plain words. We'll come back with what we'd build, what it costs, and how fast it can be live.</p>
+    <p class="section-sub">Describe the repetitive work in plain words. We'll come back with what we'd build, an estimate of what it would cost, and a realistic timeline.</p>
 
     <div class="contact-grid">
       <div class="form-card">
         <form id="contactForm" novalidate>
           <div class="field">
             <label for="f-name">Your name</label>
-            <input id="f-name" name="name" type="text" placeholder="Alex Rivera" required>
+            <input id="f-name" name="name" type="text" placeholder="Alex Rivera" autocomplete="name" required>
           </div>
           <div class="field">
             <label for="f-biz">Business name</label>
-            <input id="f-biz" name="business" type="text" placeholder="Summit Plumbing Co." required>
+            <input id="f-biz" name="business" type="text" placeholder="Summit Plumbing Co." autocomplete="organization" required>
           </div>
           <div class="field">
             <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" placeholder="you@yourbusiness.com" required>
+            <input id="f-email" name="email" type="email" placeholder="you@yourbusiness.com" autocomplete="email" required>
           </div>
           <div class="field">
-            <label for="f-phone">Phone number</label>
-            <input id="f-phone" name="phone" type="tel" placeholder="(555) 123-4567" required>
+            <label for="f-phone">Phone number <span style="font-weight:500;color:var(--muted)">(optional — only if you'd rather we called)</span></label>
+            <input id="f-phone" name="phone" type="tel" placeholder="(555) 123-4567" autocomplete="tel">
           </div>
           <div class="field">
             <label for="f-msg">What would you automate?</label>
             <textarea id="f-msg" name="message" placeholder="e.g. We re-type every invoice by hand, and customer emails sit unanswered overnight…" required></textarea>
           </div>
-          <p class="form-reassure">Add your phone number and we'll call you at a time that works — no pressure, no payment up front.</p>
-          <button class="btn btn-primary" type="submit" style="width:100%">Send it — we'll call you back.</button>
+          <div class="field field-consent">
+            <label class="consent" for="f-consent">
+              <input id="f-consent" name="consent" type="checkbox" required>
+              <span>I agree to be contacted about my enquiry and have read the <a href="privacy-policy.html">Privacy Policy</a>.</span>
+            </label>
+            <p id="consentError" class="form-error" role="alert" hidden>Please tick the consent box so we know it's OK to reply to you.</p>
+          </div>
+          <p class="form-reassure">We use these details only to reply to you about this enquiry. No obligation, and nothing is charged from this form.</p>
+          <button class="btn btn-primary" type="submit" style="width:100%">Send enquiry</button>
         </form>
-        <div class="form-success" id="formSuccess" role="status">
-          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#EAF7EF"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="form-success" id="formSuccess" role="status" tabindex="-1">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#EAF7EF"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="#15803D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <div class="big">Thanks — we've got it.</div>
-          <p>We'll reply within a day with a plan and a price.<br>Talk soon.</p>
+          <p>We usually reply within one business day with what we'd build and an estimate.<br>Talk soon.</p>
         </div>
       </div>
     </div>
@@ -591,7 +613,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap foot-inner">
-    <a class="logo" href="#top" style="color:#fff">
+    <a class="logo" href="#top" style="color:#fff" aria-label="Oyzla AI — back to top">
       <svg class="logo-mark" viewBox="0 0 140 140" aria-hidden="true">
         <rect x="14" y="14" width="112" height="112" rx="28" fill="url(#lg2)"/>
         <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
@@ -600,16 +622,22 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       </svg>
       <span>Oyzla&nbsp;<span class="ai" style="color:#B9B4FF">AI</span></span>
     </a>
-    <div class="foot-links">
+    <nav class="foot-links" aria-label="Footer">
       <a href="#how">How it works</a>
       <a href="#services">Services</a>
       <a href="#demo">Demo</a>
-      <a href="terms-of-service.html">Terms</a>
-      <a href="privacy-policy.html">Privacy</a>
-      <a href="refund-policy.html">Refund</a>
-      <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>
-    </div>
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund &amp; Cancellation</a>
+    </nav>
     <div class="foot-copy">© 2026 Oyzla AI</div>
+    <div class="foot-legal">
+      <!-- OWNER TO CONFIRM: replace the two placeholders below with the registered legal name
+           and the city/state you operate from. Do not publish invented details. -->
+      <b>Oyzla Leads LLC</b> · Oyzla AI is a trading name of the above.<br>
+      Saratoga Springs, Utah, United States · <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a><br>
+      Prices shown on this site are estimates and are not offers; scope is confirmed in writing before any work begins.
+    </div>
   </div>
 </footer>
 
@@ -636,6 +664,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   var form=document.getElementById('contactForm');
   var ok=document.getElementById('formSuccess');
   if(!form)return;
+  var consent=document.getElementById('f-consent');
+  var consentError=document.getElementById('consentError');
   var GFORM='https://docs.google.com/forms/d/e/1FAIpQLSc-qkbx06ZryOLmMjpW0MAkz36SilthQ_nx8Xf5zhN5zycGrA/formResponse';
   var MAP={'f-name':'entry.1932371136','f-biz':'entry.1167623666','f-email':'entry.1359411807','f-phone':'entry.460682089','f-msg':'entry.616416220'};
   function val(id){var e=document.getElementById(id);return e?e.value:''}
@@ -654,12 +684,25 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     gf.submit();
     setTimeout(function(){try{gf.remove();iframe.remove();}catch(e){}},5000);
   }
+  if(consent&&consentError){
+    consent.addEventListener('change',function(){
+      if(consent.checked){consentError.hidden=true;consent.removeAttribute('aria-invalid')}
+    });
+  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
+    /* Consent is mandatory: without an explicit tick nothing is sent anywhere. */
+    if(!consent||!consent.checked){
+      if(consentError)consentError.hidden=false;
+      if(consent){consent.setAttribute('aria-invalid','true');consent.focus()}
+      return;
+    }
+    if(consentError)consentError.hidden=true;
     if(!form.checkValidity()){form.reportValidity();return}
     sendToSheet();
     form.style.display='none';
     ok.style.display='block';
+    ok.focus&&ok.focus();
   });
 })();
 
@@ -721,7 +764,7 @@ var CHAT_API_ENDPOINT = null;
     },
     urgent:{
       user:"It's happening now!",
-      bot:"On it. I've flagged this as urgent and pinged the on-call technician — you'll get a call back within 15 minutes.\n\nQuick one so they arrive prepared: is water actively flowing, and have you found your main shut-off valve?",
+      bot:"On it. I've flagged this as urgent for the on-call technician so they can call you straight back.\n\nQuick one so they arrive prepared: is water actively flowing, and have you found your main shut-off valve?",
       chips:[
         {label:"Water's off, waiting on the call",next:"urgentDone"}
       ]
@@ -776,7 +819,7 @@ var CHAT_API_ENDPOINT = null;
     },
     backoffice:{
       user:"What else can Oyzla automate?",
-      bot:"Plenty — this chat is just the customer-facing half. Behind the scenes, Oyzla builds automations for paperwork, quoting, scheduling, data entry, and internal tools — whatever's repetitive in your business, whatever your industry.\n\n(That part's real, not scripted.)",
+      bot:"Plenty — this chat is just the customer-facing half. Behind the scenes, Oyzla builds automations for paperwork, quoting, scheduling, data entry, and internal tools — whatever's repetitive in your business.\n\n(That part's a real description of what we do; this conversation is still scripted.)",
       chips:[
         {label:"I want this for my business",next:"pitch"},
         {label:"Restart demo",next:"start"}
@@ -784,13 +827,13 @@ var CHAT_API_ENDPOINT = null;
     },
     pitch:{
       user:"I want this for my business",
-      bot:"That's what we do — Oyzla AI builds assistants and automations like this for any business, customer-facing or back-office, trained on your services and voice. We build, host, and run it for you, we never hold your passwords, and it's live in days.\n\nScroll down and tell us what you'd automate, or email oyzla.ai@gmail.com.",
+      bot:"That's what we do — Oyzla AI builds assistants and automations like this, customer-facing or back-office, tuned to your services and voice. We build, host, and run it for you, we never hold your passwords, and anything it does on your behalf comes to you as a draft to approve. Most builds go live in days.\n\nScroll down and tell us what you'd automate, or email oyzla.ai@gmail.com.",
       chips:[
         {label:"Restart demo",next:"start"}
       ]
     },
     fallback:{
-      bot:"Good question — and exactly the kind a live assistant would answer from your business's own knowledge base. This preview is scripted, so I'll hand that one to the humans: scroll down and tell us what you'd automate, and Oyzla AI will reply within a day.",
+      bot:"Good question — and exactly the kind a live assistant would answer from your business's own knowledge base. This preview is scripted, so I'll hand that one to the humans: scroll down and tell us what you'd automate, and we'll usually reply within one business day.",
       chips:[
         {label:"Restart demo",next:"start"},
         {label:"I want this for my business",next:"pitch"}
@@ -809,6 +852,8 @@ var CHAT_API_ENDPOINT = null;
   function addChips(chips,label){
     if(!chips||!chips.length)return;
     var wrap=el('div','chips');
+    wrap.setAttribute('role','group');
+    wrap.setAttribute('aria-label',label||'Suggested replies');
     if(label)wrap.appendChild(el('div','chips-label',label));
     chips.forEach(function(ch){
       var b=el('button','chip',ch.label);

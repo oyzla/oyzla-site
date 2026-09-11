@@ -25,15 +25,25 @@ a{color:var(--brand)}
 .note{background:#F6F7FC;border:1px solid var(--line);border-radius:12px;padding:18px 20px;font-size:14.5px;color:var(--muted);margin:20px 0}
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13px}
 footer a{color:var(--muted);margin-right:18px}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:4px}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--brand);color:#fff;font-weight:600;font-size:14.5px;padding:12px 18px;border-radius:0 0 10px 0;text-decoration:none}
+.skip-link:focus{left:0}
+.foot-legal{margin-top:14px;line-height:1.7}
+.foot-legal a{margin-right:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:#F6F7FC;border:1px solid var(--line);border-radius:5px;padding:1px 5px}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header><div class="wrap"><a class="logo" href="/"><svg viewBox="0 0 140 140" aria-hidden="true"><rect x="14" y="14" width="112" height="112" rx="28" fill="#4F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="#fff"/><circle cx="93.5" cy="46.5" r="4" fill="#4F46E5"/></svg><span>Oyzla&nbsp;<span class="ai">AI</span></span></a></div></header>
-<main class="wrap">
+<main class="wrap" id="main" tabindex="-1">
 <h1>Refund &amp; Cancellation Policy</h1>
-<div class="updated">Last updated: August 2026</div>
+<div class="updated">Effective date: 11 September 2026 · Last updated: 11 September 2026</div>
 
-<p>We want you to be happy with what we build. This policy explains how setup fees, monthly fees, and cancellations work.</p>
+<p>This policy explains how setup fees, monthly fees, and cancellations work for services provided by <b>Oyzla Leads LLC</b>, trading as Oyzla AI, of Saratoga Springs, Utah, United States. It forms part of our <a href="/terms-of-service.html">Terms of Service</a>; where the two differ, the Terms control.</p>
+
+<h2>How we charge</h2>
+<p>Oyzla AI is a <b>managed service</b>. Engagements normally have two parts: a <b>one-time setup fee</b> covering design, build, and launch, and a <b>recurring monthly fee</b> covering hosting, monitoring, and maintenance for as long as you keep the service. Amounts shown on our website are estimates for illustration; your actual amounts are the ones in the written proposal or order you approve.</p>
 
 <h2>Monthly service — cancel anytime</h2>
 <p>Your monthly hosting and maintenance fee is billed in advance and recurs until you cancel. You can cancel at any time; cancellation stops all future billing. To cancel, email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a> — we'll confirm and stop the next charge. Monthly fees already paid for the current period are generally non-refundable, since the service (hosting and maintenance) was provided during that period.</p>
@@ -43,16 +53,34 @@ footer a{color:var(--muted);margin-right:18px}
 <p>The deposit is fully refundable any time before we begin building. Once we've started, setup fees (including the deposit) are refundable on a pro-rated basis for work not yet performed, at our reasonable discretion. Once a build is delivered, setup fees are non-refundable.</p>
 
 <h2>If something's wrong</h2>
-<p>If a tool we built isn't working as agreed, tell us and we'll fix it — that's what the monthly maintenance is for. We'd always rather make it right than leave you unhappy.</p>
+<p>If a tool we built isn't working as agreed in your proposal, tell us and we'll fix it — that's what the monthly maintenance is for. We would always rather put it right than leave you unhappy. This covers the tool doing what we agreed it would do; it is not a promise about business results, which we do not make (see section 7a of the <a href="/terms-of-service.html">Terms</a>).</p>
 
-<h2>What happens when you cancel</h2>
-<p>Oyzla AI is a fully managed service — we build, host, and run your tools on our own infrastructure. Cancelling stops future billing and ends the ongoing hosting, operation, and maintenance of your tools. Your own business data and the content you provided remain yours, and any accounts you connected stay under your control.</p>
+<h2>What happens to your live system when you stop paying</h2>
+<p>Read this part before you sign up, because it is the most important thing in this policy.</p>
+<p>We build, host, and run your tools on <b>our own infrastructure</b>, using our own accounts with hosting and AI providers. Your monthly fee is what pays for that. So when the monthly service ends — whether you cancel, or we end it for non-payment — <b>the tools stop working</b>. Specifically:</p>
+<ul>
+<li>Hosting, monitoring, and maintenance end at the close of your final paid period.</li>
+<li>Anything running on our infrastructure — the website assistant, automations, scheduled jobs, integrations — is switched off and stops responding. A chat widget on your site will stop answering, and any automated workflow will stop running.</li>
+<li>The underlying build (configurations, prompts, custom code, and infrastructure) stays ours, as set out in the Terms, and is not handed over as part of cancellation.</li>
+<li>Any connections you authorized to your own accounts are revoked, or you can revoke them yourself at any time.</li>
+</ul>
+<p>What stays with you: your own business data and the content you gave us; anything the tools produced and delivered into your own systems while the service was running; and your own accounts, which were always yours. On request we will export the data we hold for you and then delete it, subject to records we are required to keep.</p>
+<p>If you want to keep something running after you stop paying, say so before you cancel and we will tell you honestly whether that is possible and what it would take. We will not present it as included when it is not.</p>
+
+<h2>Notice, and cancelling mid-build</h2>
+<p>You can cancel the monthly service at any time with no notice period; billing stops at the end of the current paid period. If you cancel while a build is still in progress, the setup-fee terms above apply and no further monthly fees are charged.</p>
+
+<h2>Chargebacks</h2>
+<p>If you think you have been charged in error, email us first — we will look at it and correct it if we got it wrong, and that is nearly always faster than a chargeback.</p>
 
 <h2>Contact</h2>
 <p>Questions, or want to cancel? Email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>.</p>
 
-<div class="note">This is a plain-language summary. Where a specific signed agreement exists for your engagement, its terms control.</div>
+<div class="note">This is a plain-language policy. Where a specific signed agreement exists for your engagement, its terms control. It has not been reviewed by an attorney — review with counsel before relying on it.</div>
 </main>
-<footer><div class="wrap"><a href="/">Home</a><a href="/terms-of-service.html">Terms</a><a href="/privacy-policy.html">Privacy</a><span>© 2026 Oyzla AI</span></div></footer>
+<footer><div class="wrap"><a href="/">Home</a><a href="/terms-of-service.html">Terms</a><a href="/privacy-policy.html">Privacy</a><span>© 2026 Oyzla AI</span>
+<!-- OWNER TO CONFIRM: replace both placeholders with the registered legal name and the city you operate from. Do not publish invented details. -->
+<div class="foot-legal"><b>Oyzla Leads LLC</b>, trading as Oyzla AI · Saratoga Springs, Utah, United States · <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a></div>
+</div></footer>
 </body>
 </html>

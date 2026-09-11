@@ -25,18 +25,29 @@ a{color:var(--brand)}
 .note{background:#F6F7FC;border:1px solid var(--line);border-radius:12px;padding:18px 20px;font-size:14.5px;color:var(--muted);margin:20px 0}
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13px}
 footer a{color:var(--muted);margin-right:18px}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:4px}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--brand);color:#fff;font-weight:600;font-size:14.5px;padding:12px 18px;border-radius:0 0 10px 0;text-decoration:none}
+.skip-link:focus{left:0}
+.foot-legal{margin-top:14px;line-height:1.7}
+.foot-legal a{margin-right:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:#F6F7FC;border:1px solid var(--line);border-radius:5px;padding:1px 5px}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header><div class="wrap"><a class="logo" href="/"><svg viewBox="0 0 140 140" aria-hidden="true"><rect x="14" y="14" width="112" height="112" rx="28" fill="#4F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="#fff"/><circle cx="93.5" cy="46.5" r="4" fill="#4F46E5"/></svg><span>Oyzla&nbsp;<span class="ai">AI</span></span></a></div></header>
-<main class="wrap">
+<main class="wrap" id="main" tabindex="-1">
 <h1>Terms of Service</h1>
-<div class="updated">Last updated: August 2026</div>
+<div class="updated">Effective date: 11 September 2026 · Last updated: 11 September 2026</div>
 
-<p>These Terms of Service ("Terms") govern your use of the services provided by Oyzla AI ("Oyzla AI," "we," "us"). By engaging our services or using our website, you agree to these Terms.</p>
+<p>These Terms of Service ("Terms") govern your use of the services provided by <b>Oyzla Leads LLC</b>, trading as Oyzla AI ("Oyzla AI," "we," "us"), of Saratoga Springs, Utah, United States. By engaging our services or using our website, you agree to these Terms. Our services are offered to businesses, not to consumers, and are not directed at anyone under 18.</p>
 
 <h2>1. What we do</h2>
-<p>Oyzla AI designs, builds, hosts, and maintains custom AI tools and automations for businesses — including website assistants, after-hours responders, lead-response automations, review automations, and bespoke builds. The specific scope, deliverables, and price for your engagement are set out in the proposal or order you approve.</p>
+<p>Oyzla AI designs, builds, hosts, and maintains custom AI tools and automations for businesses — including website assistants, after-hours responders, lead-response automations, document and data automations, and bespoke builds. The specific scope, deliverables, and price for your engagement are set out in the proposal or order you approve.</p>
+<p>Our tools are built to work with your approval, not instead of it: where a tool drafts a message, a quote, an entry, or a document on your behalf, it is prepared for you to review and approve unless you and we expressly agree otherwise in writing for a specific workflow.</p>
+
+<h2>1a. Prices on our website are estimates, not offers</h2>
+<p>Any figures shown on our website — including typical setup and monthly amounts, and any comparison to the cost of employing someone — are <b>estimates for illustration</b>. They are not offers, quotes, or a price list, and nothing on the website forms a contract. What you actually pay depends on the scope of your build: what we connect and how many workflows we build. Your price is the one set out in the written proposal or order you approve.</p>
 
 <h2>2. What you get, and what we own</h2>
 <p>Oyzla AI provides a fully managed service: we build, host, and run your custom tools and automations on our own infrastructure, and you receive the results they produce. The underlying build — the configurations, prompts, custom code, and infrastructure we create and operate to deliver the service — remains the property of Oyzla AI, along with our pre-existing tools, templates, frameworks, and general know-how. Your own business data and the content you provide remain yours, and any accounts you connect stay under your control. If our engagement ends, the managed service (including hosting and operation of the build) stops; see our <a href="/refund-policy.html">Refund &amp; Cancellation Policy</a>.</p>
@@ -61,13 +72,22 @@ footer a{color:var(--muted);margin-right:18px}
 <p>Our tools use artificial intelligence, which can occasionally produce inaccurate or unexpected output. You are responsible for reviewing AI-generated output before relying on it for important decisions. We tune and monitor your tools, but we do not guarantee that AI output will always be error-free.</p>
 
 <h2>7. Service availability</h2>
-<p>We work to keep your tools running reliably but do not guarantee uninterrupted availability. Third-party services we rely on (hosting, AI providers, and services you connect) may experience downtime outside our control.</p>
+<p>We work to keep your tools running reliably but do not promise uninterrupted availability, and we do not offer a service-level guarantee unless one is written into your order. Third-party services we rely on (hosting, AI providers, and services you connect) may experience downtime outside our control.</p>
+
+<h2>7a. No promised results</h2>
+<p>We do not promise any business outcome. We make no representation that our tools will produce a particular number of leads, bookings, replies, hours saved, revenue, or cost reduction, or that they will produce any measurable result at all. Any timeline we mention — including "usually live in days" — is our good-faith expectation for a typical small build, not a commitment. Results depend on your business, your market, and how you use what we build.</p>
+
+<h2>7b. Your data, and your privacy</h2>
+<p>How we handle information you give us is set out in our <a href="/privacy-policy.html">Privacy Policy</a>, which forms part of these Terms.</p>
 
 <h2>8. Warranties and liability</h2>
 <p>Services are provided "as is." To the maximum extent permitted by law, Oyzla AI's total liability arising out of or relating to the services is limited to the fees you paid to us in the three months preceding the claim. We are not liable for indirect, incidental, or consequential damages.</p>
 
-<h2>9. Termination</h2>
-<p>Either party may end an engagement with reasonable notice. Non-payment may result in suspension or termination of hosting and maintenance.</p>
+<h2>9. Termination, and what happens to your build</h2>
+<p>Either party may end an engagement with reasonable notice, and non-payment may result in suspension or termination of hosting and maintenance. Because this is a managed service that we host and operate, <b>ending the engagement ends the service</b>: once it stops, the tools we ran for you stop running, and anything that depended on them — chat responses, drafts, scheduled automations, integrations — stops with them. Your own business data and content remain yours, any accounts you connected stay yours and under your control, and we will return or delete the data we hold at your request. See the <a href="/refund-policy.html">Refund &amp; Cancellation Policy</a> for notice and billing details.</p>
+
+<h2>9a. Governing law and disputes</h2>
+<p>These Terms are governed by the laws of the State of <b>the State of Utah</b>, United States, without regard to its conflict-of-law rules, and the state and federal courts sitting in <b>Utah County, Utah</b> have exclusive jurisdiction over any dispute. <span style="color:var(--muted)">(Review with counsel — including whether to add an arbitration or fee-shifting clause.)</span></p>
 
 <h2>10. Changes to these Terms</h2>
 <p>We may update these Terms from time to time. Material changes will be reflected by the "last updated" date above, and continued use of our services constitutes acceptance.</p>
@@ -75,8 +95,11 @@ footer a{color:var(--muted);margin-right:18px}
 <h2>11. Contact</h2>
 <p>Questions about these Terms? Email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>.</p>
 
-<div class="note">Oyzla AI provides software and automation services. Nothing here is legal, financial, or professional advice. These Terms are a plain-language summary of our standard engagement; a specific signed agreement, where one exists, controls.</div>
+<div class="note">Oyzla AI provides software and automation services. Nothing here is legal, financial, or professional advice. These Terms are a plain-language summary of our standard engagement; a specific signed agreement, where one exists, controls. These Terms have not been reviewed by an attorney — review with counsel before relying on them.</div>
 </main>
-<footer><div class="wrap"><a href="/">Home</a><a href="/privacy-policy.html">Privacy</a><a href="/refund-policy.html">Refund</a><span>© 2026 Oyzla AI</span></div></footer>
+<footer><div class="wrap"><a href="/">Home</a><a href="/privacy-policy.html">Privacy</a><a href="/refund-policy.html">Refund</a><span>© 2026 Oyzla AI</span>
+<!-- OWNER TO CONFIRM: replace both placeholders with the registered legal name and the city you operate from. Do not publish invented details. -->
+<div class="foot-legal"><b>Oyzla Leads LLC</b>, trading as Oyzla AI · Saratoga Springs, Utah, United States · <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a></div>
+</div></footer>
 </body>
 </html>
