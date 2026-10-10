@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client sign in — Oyzla AI</title>
+<meta name="description" content="Sign in to your Oyzla AI dashboard.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect x="14" y="14" width="112" height="112" rx="28" fill="%234F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="white"/><circle cx="93.5" cy="46.5" r="4" fill="%234F46E5"/></svg>'>
+<style>
+:root{--ink:#0E1330;--muted:#646A85;--line:#E6E8F2;--brand:#4F46E5;--navy:#0C1024}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.65;background:#fff;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px;width:100%}
+header{border-bottom:1px solid var(--line);padding:20px 0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.logo .ai{color:var(--brand)}
+.logo svg{width:32px;height:32px}
+main{padding:64px 0 80px;flex:1}
+.card{max-width:440px;margin:0 auto;border:1px solid var(--line);border-radius:16px;padding:32px 28px;box-shadow:0 10px 30px rgba(14,19,48,.06)}
+h1{font-size:28px;letter-spacing:-.02em;margin-bottom:6px}
+.sub{color:var(--muted);font-size:15px;margin-bottom:24px}
+label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.field{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.field:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.15)}
+.field input{flex:1;border:0;padding:12px 14px;font:inherit;font-size:16px;min-width:0;outline:none}
+.field span{padding:12px 14px;color:var(--muted);font-size:14px;background:#F6F7FC;border-left:1px solid var(--line);white-space:nowrap}
+.btn{display:inline-block;width:100%;margin-top:16px;background:var(--brand);color:#fff;border:0;border-radius:10px;padding:13px 18px;font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+.btn:hover{background:#4338CA}
+.hint{color:var(--muted);font-size:13.5px;margin-top:16px}
+.err{color:#B3352F;font-size:13.5px;margin-top:10px;display:none}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--muted);margin-right:18px}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:4px}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--brand);color:#fff;font-weight:600;font-size:14.5px;padding:12px 18px;border-radius:0 0 10px 0;text-decoration:none}
+.skip-link:focus{left:0}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header><div class="wrap"><a class="logo" href="/"><svg viewBox="0 0 140 140" aria-hidden="true"><rect x="14" y="14" width="112" height="112" rx="28" fill="#4F46E5"/><circle cx="70" cy="70" r="30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="#fff"/><circle cx="93.5" cy="46.5" r="4" fill="#4F46E5"/></svg><span>Oyzla&nbsp;<span class="ai">AI</span></span></a></div></header>
+<main class="wrap" id="main" tabindex="-1">
+  <form class="card" id="f" autocomplete="off" novalidate>
+    <h1>Client sign in</h1>
+    <p class="sub">Go to your own dashboard.</p>
+    <label for="ws">Your workspace</label>
+    <div class="field"><input id="ws" name="ws" placeholder="e.g. malosi" inputmode="latin" autocapitalize="none" spellcheck="false" required><span>.oyzlaleads.com</span></div>
+    <p class="err" id="err">Letters, numbers and dashes only — it's the short name Oyzla gave you.</p>
+    <button class="btn" type="submit">Continue</button>
+    <p class="hint">You'll sign in on your own dashboard with the code Oyzla sent you. Lost it? Email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>.</p>
+  </form>
+</main>
+<footer><div class="wrap"><a href="/">Home</a><a href="/terms-of-service.html">Terms</a><a href="/privacy-policy.html">Privacy</a><span>© 2026 Oyzla AI</span></div></footer>
+<script>
+(function(){
+  var f=document.getElementById('f'),i=document.getElementById('ws'),e=document.getElementById('err');
+  var q=new URLSearchParams(location.search).get('w'); if(q) i.value=q;
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var v=i.value.trim().toLowerCase().replace(/\.oyzlaleads\.com$/,'');
+    if(!/^[a-z0-9-]{1,40}$/.test(v)){e.style.display='block';i.focus();return;}
+    e.style.display='none';
+    location.href='https://'+v+'.oyzlaleads.com/';
+  });
+})();
+</script>
+</body>
+</html>
