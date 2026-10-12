@@ -71,6 +71,11 @@ section{padding:88px 0}
 .nav-links a:hover{color:var(--brand)}
 .nav .btn{padding:10px 18px;font-size:14.5px}
 @media(max-width:820px){.nav-links{display:none}}
+.nav-cta{display:flex;align-items:center;gap:10px;flex:none}
+.nav-signin .lbl-short{display:none}
+@media(max-width:480px){.nav-cta{gap:8px}.nav .btn{padding:8px 12px;font-size:13.5px}.logo>span{font-size:17px}.nav-signin .lbl-long{display:none}.nav-signin .lbl-short{display:inline}}
+@media(max-width:380px){.nav .btn{padding:8px 10px}}
+@media(max-width:350px){.logo>span{display:none}}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;overflow:hidden;padding:104px 0 96px;background:
@@ -309,9 +314,11 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       <a href="#services">Services</a>
       <a href="#demo">Demo</a>
       <a href="#commitments">Our promise</a>
-      <a href="https://login.oyzla.com/login">Client login</a>
     </nav>
-    <a class="btn btn-primary" href="#contact">Book a call</a>
+    <div class="nav-cta">
+      <a class="btn btn-ghost nav-signin" href="https://login.oyzla.com/login" aria-label="Client login"><span class="lbl-long">Client login</span><span class="lbl-short" aria-hidden="true">Log in</span></a>
+      <a class="btn btn-primary" href="#contact">Book a call</a>
+    </div>
   </div>
 </header>
 
@@ -631,6 +638,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="refund-policy.html">Refund &amp; Cancellation</a>
       <a href="https://login.oyzla.com/login">Client login</a>
+      <a href="https://login.oyzla.com/forgot">Forgot password?</a>
     </nav>
     <div class="foot-copy">© 2026 Oyzla AI</div>
     <div class="foot-legal">
