@@ -44,7 +44,7 @@ footer a{color:var(--muted);margin-right:18px}
     <h1>Client sign in</h1>
     <p class="sub">Go to your own dashboard.</p>
     <label for="ws">Your workspace</label>
-    <div class="field"><input id="ws" name="ws" placeholder="e.g. malosi" inputmode="latin" autocapitalize="none" spellcheck="false" required><span>.oyzlaleads.com</span></div>
+    <div class="field"><input id="ws" name="ws" placeholder="e.g. malosi" inputmode="latin" autocapitalize="none" spellcheck="false" required><span>.oyzla.com</span></div>
     <p class="err" id="err">Letters, numbers and dashes only — it's the short name Oyzla gave you.</p>
     <button class="btn" type="submit">Continue</button>
     <p class="hint">You'll sign in on your own dashboard with the code Oyzla sent you. Lost it? Email <a href="mailto:oyzla.ai@gmail.com">oyzla.ai@gmail.com</a>.</p>
@@ -57,10 +57,10 @@ footer a{color:var(--muted);margin-right:18px}
   var q=new URLSearchParams(location.search).get('w'); if(q) i.value=q;
   f.addEventListener('submit',function(ev){
     ev.preventDefault();
-    var v=i.value.trim().toLowerCase().replace(/\.oyzlaleads\.com$/,'');
+    var v=i.value.trim().toLowerCase().replace(/\.oyzla\.com$/,'');
     if(!/^[a-z0-9-]{1,40}$/.test(v)){e.style.display='block';i.focus();return;}
     e.style.display='none';
-    location.href='https://'+v+'.oyzlaleads.com/';
+    location.href='https://'+v+'.oyzla.com/';
   });
 })();
 </script>
