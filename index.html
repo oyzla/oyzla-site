@@ -810,8 +810,6 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   var form=document.getElementById('contactForm');
   var ok=document.getElementById('formSuccess');
   if(!form)return;
-  var consent=document.getElementById('f-consent');
-  var consentError=document.getElementById('consentError');
   var GFORM='https://docs.google.com/forms/d/e/1FAIpQLSc-qkbx06ZryOLmMjpW0MAkz36SilthQ_nx8Xf5zhN5zycGrA/formResponse';
   var MAP={'f-name':'entry.1932371136','f-biz':'entry.1167623666','f-email':'entry.1359411807','f-phone':'entry.460682089','f-msg':'entry.616416220'};
   function val(id){var e=document.getElementById(id);return e?e.value:''}
@@ -830,20 +828,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     gf.submit();
     setTimeout(function(){try{gf.remove();iframe.remove();}catch(e){}},5000);
   }
-  if(consent&&consentError){
-    consent.addEventListener('change',function(){
-      if(consent.checked){consentError.hidden=true;consent.removeAttribute('aria-invalid')}
-    });
-  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    /* Consent is mandatory: without an explicit tick nothing is sent anywhere. */
-    if(!consent||!consent.checked){
-      if(consentError)consentError.hidden=false;
-      if(consent){consent.setAttribute('aria-invalid','true');consent.focus()}
-      return;
-    }
-    if(consentError)consentError.hidden=true;
     if(!form.checkValidity()){form.reportValidity();return}
     sendToSheet();
     form.style.display='none';
