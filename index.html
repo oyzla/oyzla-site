@@ -320,6 +320,57 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
   .typing i{animation:none;opacity:.6}
   html{scroll-behavior:auto}
 }
+
+/* ---------- Motion layer: GSAP + Lenis + React Bits islands (assets/bits/oyzla-bits.js) ----------
+   Everything below only styles what the deferred module adds. With JS off, none of it hides anything. */
+html.lenis,html.lenis body{height:auto}
+html.lenis{scroll-behavior:auto}
+.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}
+.lenis [data-lenis-prevent]{overscroll-behavior:contain}
+.bits-host,.bits-adopt{display:contents}
+
+/* Threads background (React Bits) — behind the card stack only, never under the copy */
+.hero-threads{position:absolute;inset:auto 0 0 44%;height:88%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.6s ease;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 30%,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,#000 30%,#000 70%,transparent 100%)}
+.hero-threads.is-live{opacity:.55}
+.threads-container{position:relative;width:100%;height:100%}
+.threads-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+@media(max-width:960px){.hero-threads{inset:auto 0 0 0;height:36%}.hero-threads.is-live{opacity:.45}}
+
+/* SplitText headline (React Bits): keep the h1's own block layout */
+.hero h1.split-parent{display:block !important;overflow:visible !important}
+.hero h1 .split-word{will-change:transform}
+
+/* SpotlightCard (React Bits) on .svc / .commit cards — layers only; the card keeps its own surface */
+.spotlight-card{position:relative;isolation:isolate;overflow:hidden}
+.spotlight-card__light,.spotlight-card__grain,.spotlight-card__border,.spotlight-card__edge{position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.spotlight-card__light,.spotlight-card__grain{z-index:-1;opacity:0}
+.spotlight-card__grain{background-size:160px 160px;mix-blend-mode:overlay}
+.spotlight-card__border,.spotlight-card__edge{z-index:1;padding:1px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.spotlight-card__border{background:var(--spotlight-card-border)}
+.spotlight-card__edge{opacity:0}
+
+/* Magnet (React Bits) wrapper on primary CTAs */
+.bits-magnet{vertical-align:top}
+.svc-cta .bits-magnet{max-width:100%}
+
+/* CountUp (React Bits) on the price band */
+.bits-count{font-variant-numeric:tabular-nums}
+
+/* Primary button: a quiet light sweep on hover instead of the stock flat fill */
+.btn-primary{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(135deg,var(--brand) 0%,#5B4BEA 55%,var(--violet) 130%)}
+.btn-primary::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.28) 48%,transparent 66%);transform:translateX(-120%);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.btn-primary:hover::after{transform:translateX(120%)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--brand-deep) 0%,#5243E0 55%,var(--violet) 130%)}
+
+/* Nav lifts once the page scrolls */
+.nav{transition:box-shadow .3s ease,background .3s ease}
+.nav.is-scrolled{box-shadow:0 8px 28px rgba(14,19,48,.07);background:rgba(255,255,255,.92)}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-threads{display:none}
+  .btn-primary::after{display:none}
+}
 </style>
 </head>
 <body>
@@ -359,13 +410,14 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
+  <div class="hero-threads" data-bit="threads" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Custom AI assistants & automations for small businesses</span>
       <h1>Job done.<br>Invoice drafted.<br>You just <span class="hl">hit approve</span>.</h1>
       <p class="hero-sub">We take the repetitive work off your plate &mdash; invoicing, replying to customers, chasing quotes &mdash; and hand it to something that does the first 90%. It drafts. You approve. Nothing goes out until you say so.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#contact">Book a free scoping call</a>
+        <a class="btn btn-primary" href="#contact" data-bit="magnet">Book a free scoping call</a>
         <a class="btn btn-ghost" href="#services">See what we build</a>
       </div>
       <p class="hero-note">
@@ -454,8 +506,8 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     <h2 class="section-title">What it costs, and what the monthly is for.</h2>
     <p class="section-sub"><strong>The setup</strong> is the build: designing it, connecting it to your systems, and getting it working on your real data. <strong>The monthly is the thing running</strong> &mdash; it stays live on our servers and our accounts, and when something upstream changes or your business does, we fix it. A one-time build is a thing that quietly breaks the first time something changes and nobody is watching. The figures below are estimates, not a fixed price: what you pay depends on what we connect and how many jobs we automate. We confirm your exact number on a short call before you commit to anything.</p>
     <div class="price-band">
-      <span class="fig">~$5,000</span><span class="lbl">typical setup</span>
-      <span class="fig">+&nbsp;~$2,000</span><span class="lbl">/mo to run</span>
+      <span class="fig">~$<span data-bit="countup" data-to="5000">5,000</span></span><span class="lbl">typical setup</span>
+      <span class="fig">+&nbsp;~$<span data-bit="countup" data-to="2000">2,000</span></span><span class="lbl">/mo to run</span>
       <span class="note">Estimate only. Your exact number is confirmed on a short call, based on what we connect and how many workflows we build.</span>
     </div>
     <div class="pilot-box reveal">
@@ -516,7 +568,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
     <p class="svc-note" style="margin-top:28px;max-width:760px">Every build is different. The tools often work well together — pairing the Website Assistant with the Front Desk, for example, covers more of the day — and combined scope is estimated on the same call, as one quote.</p>
 
     <div class="svc-cta">
-      <a class="btn btn-primary" href="#contact">Not sure which? Book a free scoping call</a>
+      <a class="btn btn-primary" href="#contact" data-bit="magnet">Not sure which? Book a free scoping call</a>
     </div>
   </div>
 </section>
@@ -548,7 +600,7 @@ footer{background:var(--navy);color:#fff;padding:44px 0}
           </div>
           <span class="demo-chip">Scripted demo</span>
         </div>
-        <div class="chat-body" id="chatBody" aria-live="polite"></div>
+        <div class="chat-body" id="chatBody" aria-live="polite" data-lenis-prevent></div>
         <div class="chat-input">
           <input id="chatInput" type="text" placeholder="Type a message…" aria-label="Type a message" autocomplete="off">
           <button class="chat-send" id="chatSend" type="button" aria-label="Send message to the scripted demo">
@@ -1055,5 +1107,8 @@ var CHAT_API_ENDPOINT = null;
   }else{start()}
 })();
 </script>
+<!-- Motion layer: GSAP + ScrollTrigger, Lenis, React Bits islands. Deferred module, built from src-bits/.
+     Separate from the scripts above, so a failure here can never affect the form or the demo. -->
+<script type="module" src="assets/bits/oyzla-bits.js?v=20261106"></script>
 </body>
 </html>

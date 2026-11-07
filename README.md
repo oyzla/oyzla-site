@@ -54,3 +54,13 @@ Push to `main`; Pages serves from the repo root. The `CNAME` file keeps the cust
 domain across deploys. DNS: four A records for the apex
 (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) and a `www` CNAME to
 `<username>.github.io`. Enable **Enforce HTTPS** once the certificate is issued.
+
+## Motion layer (added 2026-11-06)
+
+GSAP + ScrollTrigger, Lenis smooth scroll, and React Bits components (Threads, SplitText,
+SpotlightCard, Magnet, CountUp) are built from `src-bits/` into `assets/bits/oyzla-bits.js`.
+GitHub Pages has no build step, so the built file is committed. To change it:
+
+    cd src-bits && npm install && npm run build   # then commit assets/bits/
+
+`index.html` stays complete and visible without it; the module only enhances.
