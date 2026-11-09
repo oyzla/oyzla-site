@@ -41,7 +41,7 @@ async function open(width, height, opts = {}) {
   return { ctx, page, errors, posts };
 }
 
-// 1. no errors at 1440 and 390 (errors inside the cross-origin CRM iframe are not ours and don't reach here)
+// 1. no errors at 1440 and 390
 for (const [w, h] of [[1440, 900], [390, 844]]) {
   const { ctx, page, errors } = await open(w, h);
   const H = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -80,54 +80,97 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   await ctx.close();
 }
 
-// 3. CRM proof section
+// 3. CRM proof section: the GENERIC demo, same origin, no specific business, no Lovable
 {
   const { ctx, page } = await open(1440, 900);
   const frame = page.locator('#crm iframe');
   const src = (await frame.count()) ? (await frame.getAttribute('src')) || (await frame.getAttribute('data-src')) : null;
-  check('CRM iframe points at the Cedar & Main demo', !!src && src.startsWith('https://cedar-main-team-hub.lovable.app'), String(src));
-  const link = page.locator('#crm a[href^="https://cedar-main-team-hub.lovable.app"]').first();
+  check('CRM iframe points at the generic demo (demo/crm/)', !!src && /^\/?demo\/crm\/$/.test(src), String(src));
+  const link = page.locator('#crm a[href$="demo/crm/"]').first();
   const ok = (await link.count()) > 0 && (await link.getAttribute('target')) === '_blank' && /noopener/.test((await link.getAttribute('rel')) || '');
   check('CRM "open the full demo" link (new tab, noopener)', ok);
+  // Click = consent: the card flies into a full-screen dialog running the demo; Escape flies it back.
+  await page.locator('[data-crm-open]').first().click();
+  await page.waitForTimeout(1400);
+  const open1 = await page.evaluate(() => { const d = document.getElementById('crmDialog'); if (!d || !d.open) return null; const f = d.querySelector('iframe'); const r = d.getBoundingClientRect(); return { src: f && f.getAttribute('src'), w: r.width, h: r.height }; });
+  check('clicking the CRM card opens the full-screen demo', !!open1 && /demo\/crm\/$/.test(open1.src || '') && open1.w >= 1200 && open1.h >= 700, JSON.stringify(open1));
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(1000);
+  check('Escape closes the demo dialog', await page.evaluate(() => !document.getElementById('crmDialog').open));
+  await ctx.close();
+}
+{
+  const banned = /lovable|cedar|\bRob\b/i;
+  const files = ['index.html', 'demo/crm/index.html'];
+  const hits = files.filter(f => fs.existsSync(path.join(ROOT, f)) && banned.test(fs.readFileSync(path.join(ROOT, f), 'utf8')));
+  check('no Lovable / Cedar & Main / Rob anywhere in the site', fs.existsSync(path.join(ROOT, 'demo/crm/index.html')) && hits.length === 0, hits.join(','));
+  const bundle = fs.readdirSync(path.join(ROOT, 'assets/bits')).filter(f => /lovable|cedar/i.test(fs.readFileSync(path.join(ROOT, 'assets/bits', f), 'utf8')));
+  check('no Lovable / Cedar in built bundles', bundle.length === 0, bundle.join(','));
+}
+// 3b. The demo page itself: loads clean, labelled as a demo, has the CRM screens, and works
+for (const [w, h] of [[1440, 900], [390, 844]]) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: h } });
+  const page = await ctx.newPage();
+  const errors = [], requests = [];
+  page.on('pageerror', e => errors.push(e.message));
+  page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('request', r => { if (!r.url().startsWith(base)) requests.push(r.url()); });
+  await page.goto(base + 'demo/crm/', { waitUntil: 'load' });
+  await page.waitForTimeout(600);
+  const text = await page.evaluate(() => document.body.innerText);
+  check(`demo page: no JS errors at ${w}`, errors.length === 0, errors.join(' | '));
+  check(`demo page: labelled as a demo with fictional data at ${w}`, /demo/i.test(text) && /fictional/i.test(text));
+  const tabs = ['Today', 'Team', 'Pipeline', 'Tasks', 'Text desk', 'Documents'];
+  const missing = [];
+  for (const t of tabs) if (!(await page.getByRole('tab', { name: t }).count())) missing.push(t);
+  check(`demo page: has all six screens at ${w}`, missing.length === 0, missing.join(','));
+  // a tab switch actually changes the screen
+  await page.getByRole('tab', { name: 'Pipeline' }).click();
+  await page.waitForTimeout(300);
+  check(`demo page: Pipeline screen shows at ${w}`, await page.locator('#screen-pipeline').isVisible());
+  const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  check(`demo page: no horizontal overflow at ${w}`, over <= 0, `overflow ${over}px`);
+  check(`demo page: makes no third-party requests at ${w}`, requests.filter(u => !/fonts\.(googleapis|gstatic)\.com/.test(u)).length === 0, requests.join(','));
   await ctx.close();
 }
 
-// 4. Orbit background: present, inert, scroll-linked; still under reduced motion
-const orbitAngle = page => page.evaluate(() => {
-  const el = document.querySelector('.orbit [data-orbit-spin]');
-  return el ? getComputedStyle(el).transform : null;
-});
+// 4. 3D scroll background: present, inert, behind everything, scroll-linked; still under reduced motion
+const sceneZ = page => page.evaluate(() => window.__oyzlaScene ? window.__oyzlaScene.cameraZ : null);
 {
   const { ctx, page } = await open(1440, 900);
-  const meta = await page.evaluate(() => {
-    const o = document.querySelector('.orbit');
-    if (!o) return null;
-    const cs = getComputedStyle(o);
-    return { hidden: o.getAttribute('aria-hidden'), pe: cs.pointerEvents, pos: cs.position };
-  });
-  check('orbit layer exists, aria-hidden, pointer-events:none, fixed', !!meta && meta.hidden === 'true' && meta.pe === 'none' && meta.pos === 'fixed', JSON.stringify(meta));
-  const a0 = await orbitAngle(page);
-  const H = await page.evaluate(() => document.documentElement.scrollHeight);
-  for (let y = 0; y < H; y += 900) { await page.mouse.wheel(0, 900); await page.waitForTimeout(50); }
   await page.waitForTimeout(1500);
-  const a1 = await orbitAngle(page);
-  check('orbit turns with scroll', !!a0 && a0 !== a1, `${a0} -> ${a1}`);
+  const meta = await page.evaluate(() => {
+    const c = document.querySelector('canvas.scene-bg');
+    if (!c) return null;
+    const cs = getComputedStyle(c);
+    return { hidden: c.getAttribute('aria-hidden'), pe: cs.pointerEvents, pos: cs.position, z: cs.zIndex, gl: !!window.__oyzlaScene };
+  });
+  check('3D background canvas exists, aria-hidden, pointer-events:none, fixed, z 0', !!meta && meta.hidden === 'true' && meta.pe === 'none' && meta.pos === 'fixed' && meta.z === '0' && meta.gl, JSON.stringify(meta));
+  const z0 = await sceneZ(page);
+  const H = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < H / 2; y += 900) { await page.mouse.wheel(0, 900); await page.waitForTimeout(50); }
+  await page.waitForTimeout(1500);
+  const z1 = await sceneZ(page);
+  check('3D camera flies with scroll', z0 != null && z1 != null && z1 < z0 - 5, `${z0} -> ${z1}`);
   const hit = await page.evaluate(() => {
     const b = document.querySelector('#contactForm button[type=submit]');
+    b.scrollIntoView({ block: 'center' });
     const r = b.getBoundingClientRect();
     const at = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
     return at === b || b.contains(at);
   });
-  check('orbit never covers content (submit button is hit-testable)', hit);
+  check('background never covers content (submit button is hit-testable)', hit);
   await ctx.close();
 }
 {
   const { ctx, page } = await open(1440, 900, { reduce: true });
-  const a0 = await orbitAngle(page);
+  await page.waitForTimeout(800);
+  const z0 = await sceneZ(page);
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   await page.waitForTimeout(800);
-  const a1 = await orbitAngle(page);
-  check('reduced motion: orbit rests', !!a0 && a0 === a1, `${a0} -> ${a1}`);
+  const z1 = await sceneZ(page);
+  const st = await page.evaluate(() => window.__oyzlaScene ? window.__oyzlaScene.static : null);
+  check('reduced motion: 3D scene rests (one still frame)', st === true && z0 === z1, `static=${st} ${z0} -> ${z1}`);
   const lenis = await page.evaluate(() => document.documentElement.classList.contains('lenis'));
   check('reduced motion: no Lenis', !lenis);
   await ctx.close();
