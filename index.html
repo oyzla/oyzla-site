@@ -380,7 +380,7 @@ html.lenis{scroll-behavior:auto}
 .lenis [data-lenis-prevent]{overscroll-behavior:contain}
 .bits-host,.bits-adopt{display:contents}
 .hero h1.split-parent{display:block !important;overflow:visible !important}
-.hero h1 .split-word{will-change:transform}
+.hero h1 .split-word{will-change:auto} /* a promoted layer clipped the .hl glow into boxes behind "hit approve" */
 .spotlight-card{position:relative;isolation:isolate;overflow:hidden}
 .spotlight-card__light,.spotlight-card__grain,.spotlight-card__border,.spotlight-card__edge{position:absolute;inset:0;border-radius:inherit;pointer-events:none}
 .spotlight-card__light,.spotlight-card__grain{z-index:-1;opacity:0}
@@ -389,6 +389,178 @@ html.lenis{scroll-behavior:auto}
 .spotlight-card__border{background:var(--spotlight-card-border)}
 .spotlight-card__edge{opacity:0}
 .bits-magnet{vertical-align:top}
+
+/* ---------- Desktop: W5 (break test 2026-11-09) ---------- */
+#contact::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(80% 95% at 24% 50%,rgba(7,7,7,.97),rgba(7,7,7,.86) 58%,transparent 90%)}
+@media(min-width:641px){.m-only{display:none !important}}
+@media(min-width:641px) and (max-width:900px){.nav-links a:nth-child(5){border-bottom:none}}
+
+/* =====================================================================
+   PHONE EDITION (<= 640px), 2026-11-09. Not the desktop squeezed down: one column, one idea a screen,
+   no WebGL (the scene script never loads here; a still glow stands in), one sample card in the hero,
+   the CRM as a still + link, every control 44px+, no text under 12px, inputs 16px (no iOS zoom).
+   ===================================================================== */
+@media(max-width:640px){
+  .d-only{display:none !important}
+  :root{--pad:64px}
+  html{scroll-padding-top:68px}
+  body{font-size:16px}
+  section{padding:64px 0}
+  h2{font-size:clamp(30px,8.6vw,36px);max-width:none}
+  .eyebrow{margin-bottom:16px}
+  .lede{font-size:16.5px;margin-top:14px}
+  .grid3,.svc-grid,.price-grid{margin-top:32px;gap:12px}
+  .card{padding:22px 20px}
+  .card p{font-size:15.5px}
+
+  /* still glow instead of the 3D scene: top corner only, never behind body text */
+  .scene-bg{background:radial-gradient(110% 38% at 92% -4%,rgba(232,134,42,.24),rgba(232,134,42,.05) 55%,transparent 75%),#070707}
+  .scene-veil{display:none}
+
+  /* header: logo, the one action, the menu. Log in lives in the menu. */
+  .nav-inner{height:64px;gap:12px}
+  .nav .nav-signin{display:none}
+  .nav .btn.nav-book{padding:0 16px;font-size:14.5px}
+  .logo{font-size:18px}
+  .logo-mark{width:30px;height:30px}
+  .nav .logo,footer .logo{min-height:44px}
+  .nav-toggle .i-close{display:none}
+  .nav-toggle[aria-expanded="true"] .i-open{display:none}
+  .nav-toggle[aria-expanded="true"] .i-close{display:inline}
+  .nav-links{display:flex;top:64px;bottom:0;height:calc(100dvh - 64px);overflow-y:auto;overscroll-behavior:contain;padding:12px 20px calc(28px + env(safe-area-inset-bottom));background:#080808;border-bottom:0;box-shadow:none;
+    visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .2s var(--ease-out),transform .2s var(--ease-out),visibility 0s linear .2s}
+  .nav-links.open{visibility:visible;opacity:1;transform:none;transition:opacity .2s var(--ease-out),transform .2s var(--ease-out),visibility 0s}
+  .nav-links>a{font-size:24px;font-weight:500;letter-spacing:-.02em;color:var(--ink);padding:0;min-height:60px;display:flex;align-items:center;font-stretch:108%}
+  .nav-links>a:nth-child(5){border-bottom:1px solid var(--line-soft)}
+  .menu-acts{display:grid;gap:12px;margin-top:28px}
+  .nav-links .menu-acts .btn{width:100%;min-height:54px;font-size:16px;padding:0 24px;border:1px solid transparent}
+  .menu-acts .btn-primary{background:var(--saffron);color:#120A02}
+  .nav-links .menu-acts .btn-ghost{border-color:rgba(242,237,228,.24);color:var(--ink)}
+  html.menu-open,html.menu-open body{overflow:hidden}
+
+  /* hero: the promise, two buttons, three facts, then ONE sample card */
+  .hero{padding:28px 0 56px;min-height:0}
+  .hero-grid{gap:36px}
+  .pill{font-size:13px;margin-bottom:20px}
+  .hero h1{font-size:clamp(38px,11.4vw,46px);max-width:none;margin-bottom:18px}
+  .hero h1 .hl{text-shadow:none}
+  .hero-sub{font-size:17px;margin-bottom:26px}
+  .hero-ctas{gap:10px;margin-bottom:22px}
+  .hero-ctas .btn{width:100%;min-height:54px;font-size:16px}
+  .hero-facts{flex-direction:column;gap:10px;font-size:15px}
+  .app-stage{perspective:none;position:relative}
+  .app{transform:none;box-shadow:var(--shadow-lg),0 0 0 1px rgba(232,134,42,.08),0 40px 80px -40px rgba(232,134,42,.45)}
+  .queue .q:nth-child(n+2){display:none}
+  .queue-head{padding:16px 18px 6px}
+  .queue-head small{font-size:12px}
+  .count{font-size:12.5px}
+  .q{padding:14px}
+  .q-meta{font-size:13.5px}
+  .q-act{grid-column:1/-1;margin-top:12px}
+  .q-btn{min-height:44px;flex:1;font-size:15px}
+  .q-undo{grid-column:1/-1;min-height:44px;font-size:14px}
+  .app-foot{font-size:12.5px;padding:12px 18px 14px}
+
+  /* how: three steps, compact */
+  #how{min-height:0;display:block}
+  .step-n{margin-bottom:12px}
+  .steps .card::before{display:none}
+
+  /* services: icon beside the words, five tight rows */
+  .svc{display:grid;grid-template-columns:42px minmax(0,1fr);column-gap:16px;align-items:start}
+  .svc :is(h3,.svc-from,p){grid-column:2}
+  .svc-more{display:none !important} /* the sheet repeats the card; on a phone the card is enough */
+  .svc .ic{grid-column:1;grid-row:1 / span 3;margin:0}
+  .svc h3{margin-bottom:4px}
+  .svc-from{margin:0 0 8px;font-size:13px}
+  .gate-note{display:none} /* said again by the statement right below */
+
+  /* statement: auto height, no dead black */
+  .statement{min-height:0;display:block;padding:56px 0}
+  .statement .big{font-size:clamp(40px,12.6vw,54px);line-height:.92}
+  .statement p{margin-top:20px;font-size:16.5px}
+
+  /* pricing: two offers, a three-row comparison */
+  .price{padding:24px 20px}
+  .price .tag{font-size:12px;margin-bottom:16px}
+  .fig{font-size:40px;margin:6px 0 14px}
+  .price .btn{align-self:stretch;min-height:54px}
+  .price .spacer{height:20px}
+  .price-split{display:none} /* the FAQ answers what the monthly pays for */
+  .compare{margin-top:12px}
+  .compare div{padding:16px 20px}
+  .compare small{font-size:12px}
+  .compare strong{font-size:21px}
+  .compare span{font-size:14px}
+  .fine{font-size:13px}
+
+  /* chat demo: readable, thumb-sized, no zoom on focus */
+  .demo-grid{gap:28px}
+  .demo-note{font-size:14px;margin-top:20px}
+  .chat-head{padding:14px 16px}
+  .chat-head-sub{font-size:12.5px}
+  .demo-chip{display:none} /* "scripted preview" is already under the name and in the footer */
+  .chat-body{height:360px;padding:16px 14px}
+  .msg{font-size:15px;max-width:88%}
+  .chip{min-height:44px;font-size:14.5px;padding:10px 16px}
+  .chips-label{font-size:12px}
+  .chat-input input{font-size:16px;min-height:44px}
+  .chat-foot{font-size:12.5px}
+
+  /* CRM: a still and one button, the full demo is its own page */
+  .crm-head{gap:0}
+  .crm-side{display:none}
+  .crm-list{gap:6px}
+  .crm-list{display:none} /* the still shows the screens */
+  .crm-shot{display:grid;gap:16px;margin-top:28px}
+  .crm-shot-frame{display:block;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--panel-solid);box-shadow:var(--shadow-lg),0 0 0 1px rgba(232,134,42,.1),0 40px 80px -40px rgba(232,134,42,.4);aspect-ratio:390/600;max-height:min(460px,56svh)}
+  .crm-shot-frame img{width:100%;height:100%;object-fit:cover;object-position:top}
+  .crm-shot .btn{width:100%;min-height:54px;font-size:16px}
+  .crm-honest{margin-top:20px;font-size:14px}
+
+  /* promise: icon rows; the quote */
+  .commit-grid .card{display:grid;grid-template-columns:42px minmax(0,1fr);column-gap:16px}
+  .commit-grid .card :is(h3,p){grid-column:2}
+  .commit-grid .card{align-items:center;padding:16px 20px}
+  .commit-grid .card p{display:none} /* the titles carry it; the FAQ has the detail */
+  .commit-grid h3{margin:0}
+  .commit-grid .ic{grid-column:1;grid-row:1;margin:0}
+  .commit-grid h3{margin-bottom:4px}
+  .quote{margin-top:40px;padding-top:32px}
+  .quote-mark{font-size:56px}
+  .quote blockquote{font-size:20px;line-height:1.38}
+  .quote-note{font-size:13px}
+
+  /* who + faq */
+  .who-faq{gap:48px}
+  .who-list{margin-top:20px}
+  .who-list li{padding:14px 0}
+  .who-list span{font-size:15px}
+  .faq-item summary{padding:16px 0;font-size:16.5px;min-height:56px}
+  .faq-item p{font-size:15.5px;padding-bottom:18px}
+
+  /* contact: big fields, big send */
+  .contact-grid{gap:28px}
+  .next-steps{margin-top:22px;gap:12px}
+  .next-steps li{font-size:15px}
+  .form-card{padding:20px}
+  .field{margin-bottom:16px}
+  .field label{font-size:15px}
+  .field input,.field textarea{min-height:52px;padding:14px 15px}
+  .field textarea{min-height:140px}
+  .form-consent-note,.form-reassure{font-size:13.5px}
+  .form-card .btn{min-height:56px;font-size:16.5px}
+
+  /* inline links: a 44px finger target without moving the text */
+  .who-note .link,.faq-item p .link,.form-consent-note a,.foot-legal a{display:inline-block;padding:11px 0;margin:-11px 0}
+
+  /* footer */
+  footer{padding:48px 0 calc(36px + env(safe-area-inset-bottom))}
+  .foot-top{flex-direction:column;align-items:flex-start;gap:20px}
+  .foot-links{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;width:100%;font-size:15px}
+  .foot-links a{min-height:48px;display:flex;align-items:center;padding:0}
+  .foot-legal{font-size:13.5px}
+}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -418,18 +590,22 @@ html.lenis{scroll-behavior:auto}
       </svg>
       <span>Oyzla&nbsp;<span class="ai">AI</span></span>
     </a>
-    <nav class="nav-links" aria-label="Main">
+    <nav class="nav-links" id="mainMenu" aria-label="Main">
       <a href="#how">How it works</a>
       <a href="#services">What we run</a>
       <a href="#pricing">Pricing</a>
       <a href="#crm">Custom CRMs</a>
       <a href="#faq">FAQ</a>
+      <span class="menu-acts m-only">
+        <a class="btn btn-primary" href="#contact">Book a call <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="https://login.oyzla.com/login">Client login</a>
+      </span>
     </nav>
     <div class="nav-cta">
       <a class="btn btn-ghost nav-signin" href="https://login.oyzla.com/login" aria-label="Client login"><span class="lbl-long">Client login</span><span class="lbl-short" aria-hidden="true">Log in</span></a>
-      <a class="btn btn-primary" href="#contact">Book a call</a>
-      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" onclick="var l=document.querySelector('.nav-links');l.classList.toggle('open');var o=l.classList.contains('open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <a class="btn btn-primary nav-book" href="#contact">Book a call</a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainMenu">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="i-open" d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="i-close" d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
@@ -443,7 +619,8 @@ html.lenis{scroll-behavior:auto}
     <div>
       <p class="pill"><i aria-hidden="true">✓</i>Managed AI employees and dashboards, run for you</p>
       <h1>Job done. Invoice drafted. You just <span class="hl">hit approve</span>.</h1>
-      <p class="hero-sub">We give your business AI employees that take the repetitive work off your plate — invoicing, replying to customers, chasing quotes — and one dashboard where you see everything they do. They draft. You approve. Nothing goes out until you say so.</p>
+      <p class="hero-sub d-only">We give your business AI employees that take the repetitive work off your plate — invoicing, replying to customers, chasing quotes — and one dashboard where you see everything they do. They draft. You approve. Nothing goes out until you say so.</p>
+      <p class="hero-sub m-only">AI employees draft the repetitive work — invoices, customer replies, quotes. You approve it from one dashboard. We build, host and run it.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#pricing" data-bit="magnet">Start with a $1,500 pilot <span class="arr" aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
@@ -613,7 +790,7 @@ html.lenis{scroll-behavior:auto}
       <span class="eyebrow">See it in action</span>
       <h2>This is what your website could be doing tonight.</h2>
       <p class="lede">A <strong style="color:var(--ink)">scripted preview</strong> — not a live AI — of the kind of conversation a website assistant handles: answering, helping, capturing the next step. The sample business is made up.</p>
-      <ul class="demo-points">
+      <ul class="demo-points d-only">
         <li>Answers customer questions in your voice, 24/7</li>
         <li>Captures the next step while you sleep — you confirm it</li>
         <li>Hands your team the full conversation, ready to act on</li>
@@ -634,7 +811,7 @@ html.lenis{scroll-behavior:auto}
       </div>
       <div class="chat-body" id="chatBody" aria-live="polite" data-lenis-prevent></div>
       <div class="chat-input">
-        <input id="chatInput" type="text" placeholder="Type a message…" aria-label="Type a message" autocomplete="off">
+        <input id="chatInput" type="text" placeholder="Type a message…" aria-label="Type a message" autocomplete="off" maxlength="300" enterkeyhint="send">
         <button class="chat-send" id="chatSend" type="button" aria-label="Send message to the scripted demo">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12L20 4l-4.5 16-4-6.5L4 12z" fill="currentColor"/></svg>
         </button>
@@ -664,7 +841,13 @@ html.lenis{scroll-behavior:auto}
         <div class="acts"><a class="btn btn-ghost" href="demo/crm/" target="_blank" rel="noopener">Open the full demo <span class="arr" aria-hidden="true">↗</span></a></div>
       </div>
     </div>
-    <div class="crm-stage">
+    <!-- Phones: a still of the demo's phone layout and a link to the full page (the framed desktop app
+         is unreadable at 390px). The demo itself is responsive with 44px controls. -->
+    <a class="crm-shot m-only" href="demo/crm/">
+      <span class="crm-shot-frame"><img src="assets/crm-demo-phone.jpg" width="390" height="600" alt="The demo CRM on a phone: Today screen with open deals, due-today items and drafts to approve" loading="lazy" decoding="async"></span>
+      <span class="btn btn-primary">Open the live demo <span class="arr" aria-hidden="true">→</span></span>
+    </a>
+    <div class="crm-stage d-only">
       <div class="crm-card">
         <div class="browser">
           <div class="browser-bar"><span class="app-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser-url">Team hub · demo workspace</span></div>
@@ -804,26 +987,26 @@ html.lenis{scroll-behavior:auto}
         <div class="form-row">
           <div class="field">
             <label for="f-name">Your name</label>
-            <input id="f-name" name="name" type="text" placeholder="Alex Rivera" autocomplete="name" required>
+            <input id="f-name" name="name" type="text" placeholder="Alex Rivera" autocomplete="name" maxlength="120" enterkeyhint="next" required>
           </div>
           <div class="field">
             <label for="f-biz">Business name</label>
-            <input id="f-biz" name="business" type="text" placeholder="Summit Plumbing Co." autocomplete="organization" required>
+            <input id="f-biz" name="business" type="text" placeholder="Summit Plumbing Co." autocomplete="organization" maxlength="120" enterkeyhint="next" required>
           </div>
         </div>
         <div class="form-row">
           <div class="field">
             <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" placeholder="you@yourbusiness.com" autocomplete="email" required>
+            <input id="f-email" name="email" type="email" placeholder="you@yourbusiness.com" autocomplete="email" maxlength="254" inputmode="email" autocapitalize="off" spellcheck="false" enterkeyhint="next" required>
           </div>
           <div class="field">
             <label for="f-phone">Phone <span class="opt">(optional)</span></label>
-            <input id="f-phone" name="phone" type="tel" placeholder="(555) 123-4567" autocomplete="tel">
+            <input id="f-phone" name="phone" type="tel" placeholder="(555) 123-4567" autocomplete="tel" maxlength="40" inputmode="tel" enterkeyhint="next">
           </div>
         </div>
         <div class="field">
           <label for="f-msg">What would you automate?</label>
-          <textarea id="f-msg" name="message" placeholder="e.g. We re-type every invoice by hand, and customer emails sit unanswered overnight…" required></textarea>
+          <textarea id="f-msg" name="message" placeholder="e.g. We re-type every invoice by hand, and customer emails sit unanswered overnight…" maxlength="3000" required></textarea>
         </div>
         <p class="form-consent-note">By sending this form, you agree to be contacted about your enquiry. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
         <p class="form-reassure">We use these details only to reply to you about this enquiry. No obligation, and nothing is charged from this form. Phone only if you'd rather we called.</p>
@@ -886,7 +1069,8 @@ html.lenis{scroll-behavior:auto}
 (function(){
   var q=document.getElementById('queue'),count=document.getElementById('qCount');if(!q)return;
   function update(){
-    var left=q.querySelectorAll('.q:not([data-state])').length;
+    /* count only the rows on screen: a phone shows one sample card */
+    var left=[].filter.call(q.querySelectorAll('.q:not([data-state])'),function(r){return r.getClientRects().length}).length;
     count.textContent=left?left+' waiting':'All clear';
     count.classList.toggle('is-clear',!left);
   }
@@ -898,6 +1082,27 @@ html.lenis{scroll-behavior:auto}
     else if(b.classList.contains('q-hold')){row.setAttribute('data-state','held');st.textContent='On hold — stays with you';row.querySelector('.q-undo').focus();}
     update();
   });
+  update();
+  var mq=matchMedia('(max-width: 640px)');mq.addEventListener&&mq.addEventListener('change',update);
+})();
+
+/* ---------- Menu: one button opens and closes it, says its state, swaps to an X; Escape and any link close it ---------- */
+(function(){
+  var btn=document.querySelector('.nav-toggle'),menu=document.getElementById('mainMenu');if(!btn||!menu)return;
+  function set(open,refocus){
+    menu.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    document.documentElement.classList.toggle('menu-open',open);
+    var full=matchMedia('(max-width: 640px)').matches;
+    document.querySelectorAll('main,footer').forEach(function(e){e.inert=open&&full});
+    if(open&&full){var f=menu.querySelector('a');f&&f.focus({preventScroll:true})}
+    if(!open&&refocus)btn.focus();
+  }
+  btn.addEventListener('click',function(){set(btn.getAttribute('aria-expanded')!=='true')});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&menu.classList.contains('open'))set(false,true)});
+  ['(min-width: 901px)','(min-width: 641px)'].forEach(function(q){var m=matchMedia(q);m.addEventListener&&m.addEventListener('change',function(e){if(e.matches)set(false)})});
 })();
 
 </script>
@@ -1141,10 +1346,19 @@ var CHAT_API_ENDPOINT = null;
   }else{start()}
 })();
 </script>
+<script>
+/* Phones: prices stay as written (no count-up from $0). Runs before the deferred motion module reads data-bit. */
+if(matchMedia('(max-width: 640px)').matches){document.querySelectorAll('[data-bit="countup"]').forEach(function(e){e.removeAttribute('data-bit')})}
+</script>
 <!-- Motion layer: GSAP + ScrollTrigger, Lenis, React Bits islands, click animations. Deferred module, built from src-bits/.
      Separate from the scripts above, so a failure here can never affect the form or the demo. -->
 <script type="module" src="assets/bits/oyzla-bits.js?v=20261109"></script>
 <!-- The 3D background: its own bundle, so nothing above ever waits on it. -->
-<script type="module" src="assets/bits/oyzla-scene.js?v=20261109"></script>
+<script type="module">
+/* Phones (and landscape phones) get the still glow instead: no 540 KB download, no GPU work, nothing over the text. */
+var sceneMq=matchMedia('(min-width: 641px) and (min-height: 500px), (min-width: 1024px)'),sceneLoaded=false;
+function loadScene(){if(sceneLoaded||!sceneMq.matches)return;sceneLoaded=true;import('./assets/bits/oyzla-scene.js?v=20261109').catch(function(){}) /* the CSS glow on .scene-bg already stands in */}
+loadScene();sceneMq.addEventListener&&sceneMq.addEventListener('change',loadScene);
+</script>
 </body>
 </html>

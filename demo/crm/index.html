@@ -170,6 +170,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .row .tag,.task .tag{display:none}
   .task{grid-template-columns:auto minmax(0,1fr) auto}
 }
+/* Phones: every control a full 44px finger target (break test 2026-11-09). */
+@media(max-width:640px){
+  .tab,.btn{min-height:44px}
+  .tick{min-width:44px;min-height:44px;margin:-12px}
+  .banner{font-size:13px}
+  .banner .pill{font-size:12px}
+  .banner a{display:inline-flex;align-items:center;min-height:44px;padding:0}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 </style>
 </head>
