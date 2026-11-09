@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#070707">
+<title>Team hub — a custom CRM demo by Oyzla AI (fictional data)</title>
+<meta name="description" content="A working example of a custom CRM built by Oyzla AI. The business, people, properties and messages in it are fictional.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect x="14" y="14" width="112" height="112" rx="28" fill="%23161412"/><circle cx="70" cy="70" r="30" fill="none" stroke="%23F2EDE4" stroke-width="9" stroke-linecap="round" stroke-dasharray="141 47.5" transform="rotate(-56 70 70)"/><circle cx="93.5" cy="46.5" r="9.5" fill="%23E8862A"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,400..600&family=Geist+Mono:wght@400..500&display=swap" rel="stylesheet">
+<style>
+/* Demo CRM — a fictional workspace. Every name, property, number and message below is made up. */
+:root{
+  --bg:#070707;--panel:#0E0D0C;--panel-2:#141210;--line:rgba(242,237,228,.08);--line-2:rgba(242,237,228,.14);
+  --ink:#F2EDE4;--muted:#A8A196;--faint:#8A847C;
+  --gold:#E8862A;--gold-2:#F2B544;--gold-soft:rgba(232,134,42,.13);--ok:#5DBB8A;--ok-soft:rgba(93,187,138,.12);
+  --font:"Mona Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.23,1,.32,1);--r:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);height:100vh;height:100dvh}
+.banner{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:8px 18px;background:linear-gradient(90deg,rgba(232,134,42,.16),rgba(232,134,42,.04));border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.banner b{color:var(--ink);font-weight:600}
+.banner .pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:#120A02;border-radius:999px;padding:3px 9px;flex:none}
+.banner a{margin-left:auto;color:var(--ink);font-weight:600;white-space:nowrap;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+
+.side{border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:18px;background:var(--panel);min-height:0;overflow:auto}
+.ws{display:flex;align-items:center;gap:10px;padding:4px 8px}
+.ws-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,#2A1F14,#130F0B);border:1px solid var(--line-2);display:grid;place-items:center;font-weight:600;color:var(--gold-2);flex:none}
+.ws-name{font-weight:600;font-size:14px;letter-spacing:-.01em;line-height:1.2}
+.ws-sub{font-size:11.5px;color:var(--faint)}
+.tabs{display:flex;flex-direction:column;gap:2px}
+.tab{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;color:var(--muted);font-weight:500;text-align:left;transition:background-color .15s ease,color .15s ease;min-height:40px}
+.tab svg{width:17px;height:17px;flex:none;opacity:.85}
+.tab .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.tab[aria-selected="true"]{background:var(--gold-soft);color:var(--ink)}
+.tab[aria-selected="true"] svg{color:var(--gold)}
+.tab[aria-selected="true"] .n{color:var(--gold-2)}
+@media(hover:hover) and (pointer:fine){.tab:hover{background:rgba(242,237,228,.04);color:var(--ink)}}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px 8px;border-top:1px solid var(--line)}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:600;flex:none;color:#120A02}
+.me small{display:block;font-size:11.5px;color:var(--faint)}
+
+.main{min-height:0;overflow:auto;padding:26px clamp(18px,3vw,36px) 40px;overscroll-behavior:contain}
+.screen{display:none}
+.screen.on{display:block;animation:in .32s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.head h1{font-size:26px;font-weight:600;letter-spacing:-.025em;line-height:1.15;font-stretch:108%}
+.head p{color:var(--muted);font-size:13.5px;margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 14px;border-radius:999px;font-weight:600;font-size:13px;border:1px solid var(--line-2);transition:transform .15s var(--ease),background-color .15s ease,border-color .15s ease}
+.btn:active{transform:scale(.96)}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:#120A02}
+@media(hover:hover) and (pointer:fine){.btn:hover{border-color:var(--ink)}.btn-gold:hover{background:#F0953C}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.card-h h2{font-size:13.5px;font-weight:600;letter-spacing:-.005em}
+.card-h small{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;border-radius:999px;padding:2px 8px;white-space:nowrap;border:1px solid var(--line-2);color:var(--muted)}
+.tag.gold{border-color:rgba(232,134,42,.4);color:var(--gold-2);background:var(--gold-soft)}
+.tag.ok{border-color:rgba(93,187,138,.35);color:var(--ok);background:var(--ok-soft)}
+.tick{min-width:32px;min-height:32px;display:grid;place-items:center;margin:-6px}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.stat{padding:16px}
+.stat small{display:block;font-size:12px;color:var(--muted)}
+.stat strong{display:block;font-size:28px;font-weight:500;letter-spacing:-.03em;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat span{font-size:11.5px;color:var(--faint)}
+.today-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+.rows{list-style:none}
+.row{display:grid;grid-template-columns:auto 52px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row time{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.t{font-weight:500}
+.s{font-size:12px;color:var(--muted)}
+.check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line-2);display:grid;place-items:center;transition:background-color .15s ease,border-color .15s ease;flex:none}
+.check svg{width:12px;height:12px;opacity:0;transition:opacity .15s ease}
+.done .check{background:var(--gold);border-color:var(--gold)}
+.done .check svg{opacity:1;color:#120A02}
+.done .t{color:var(--faint);text-decoration:line-through}
+.draft{padding:14px 16px;border-bottom:1px solid var(--line)}
+.draft:last-child{border-bottom:0}
+.draft-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.draft p{color:var(--muted);font-size:13px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0 10px}
+.draft .acts{display:flex;gap:8px}
+.draft.sent .acts{display:none}
+
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.member{padding:18px}
+.member-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.member .av{width:40px;height:40px;font-size:14px}
+.member h3{font-size:15px;font-weight:600}
+.member small{color:var(--muted);font-size:12px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:12px}
+.status i{width:7px;height:7px;border-radius:50%}
+.load{height:5px;border-radius:5px;background:rgba(242,237,228,.07);overflow:hidden;margin:6px 0 4px}
+.load i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform-origin:left}
+.focus{font-size:12.5px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+
+.board{display:grid;grid-template-columns:repeat(5,minmax(200px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px;min-height:280px}
+.col-h{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 10px;font-weight:600;font-size:13px}
+.col-h small{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.deal{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;transition:border-color .2s ease}
+.deal.moved{border-color:rgba(232,134,42,.55);animation:in .35s var(--ease)}
+.deal .t{font-weight:600;font-size:13.5px;line-height:1.3}
+.deal .s{margin:3px 0 10px}
+.deal-f{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.deal-f .v{font-family:var(--mono);font-size:12px;color:var(--gold-2)}
+.adv{font-size:12px;font-weight:600;color:var(--muted);padding:6px 8px;margin:-6px -8px;border-radius:6px;min-height:32px}
+@media(hover:hover) and (pointer:fine){.adv:hover{color:var(--ink);background:rgba(242,237,228,.05)}}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{min-height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line-2);font-size:12.5px;font-weight:500;color:var(--muted);transition:background-color .15s ease,color .15s ease}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.task{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.task:last-child{border-bottom:0}
+.task .due{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+
+.desk{display:grid;grid-template-columns:280px minmax(0,1fr);height:min(620px,calc(100dvh - 190px));min-height:420px}
+.threads{border-right:1px solid var(--line);overflow:auto}
+.thread{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;width:100%;transition:background-color .15s ease}
+.thread[aria-current="true"]{background:var(--gold-soft)}
+.thread .t{font-weight:600;font-size:13.5px;display:flex;justify-content:space-between;gap:8px}
+.thread .t small{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--faint)}
+.thread .s{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.convo{display:flex;flex-direction:column;min-height:0}
+.msgs{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:78%;padding:10px 13px;border-radius:14px;font-size:13.5px}
+.msg.in{background:var(--panel-2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+.msg.out{background:#2A1A0B;border:1px solid rgba(232,134,42,.3);align-self:flex-end;border-bottom-right-radius:5px}
+.msg small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:4px}
+.composer{border-top:1px solid var(--line);padding:14px 18px}
+.composer .lbl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:8px;flex-wrap:wrap}
+.composer textarea{width:100%;min-height:68px;resize:vertical;background:var(--panel-2);color:var(--ink);border:1px solid var(--line-2);border-radius:10px;padding:10px 12px;font:inherit;font-size:13.5px}
+.composer textarea:focus{outline:none;border-color:var(--gold)}
+.composer .acts{display:flex;gap:8px;margin-top:10px;justify-content:flex-end}
+
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.file{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line);font-size:13px}
+.file:last-child{border-bottom:0}
+.file svg{width:16px;height:16px;color:var(--faint)}
+
+@media(max-width:860px){
+  body{overflow:auto}
+  .app{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr;height:auto;min-height:100dvh}
+  .side{border-right:0;border-bottom:1px solid var(--line);padding:12px;gap:10px;overflow:visible;min-width:0}
+  .tabs{flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:2px;scrollbar-width:none}
+  .tab{flex:none}
+  .tab .n,.me{display:none}
+  .main{overflow:visible;padding:20px 16px 40px}
+  .stats{grid-template-columns:1fr 1fr}
+  .today-grid{grid-template-columns:minmax(0,1fr)}
+  .desk{grid-template-columns:minmax(0,1fr);height:auto}
+  .threads{border-right:0;border-bottom:1px solid var(--line);max-height:220px}
+  .msgs{max-height:340px}
+  .banner{flex-wrap:wrap}
+  .banner a{margin-left:0}
+  .row{grid-template-columns:auto 44px minmax(0,1fr)}
+  .row .tag,.task .tag{display:none}
+  .task{grid-template-columns:auto minmax(0,1fr) auto}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="banner" role="note">
+    <span class="pill">Demo</span>
+    <span><b>Sample Realty Co. is fictional.</b> Every person, property, number and message here is made up. A custom CRM built by Oyzla AI, shown as an example.</span>
+    <a href="https://oyzlaleads.com/#crm" target="_top">Back to Oyzla AI</a>
+  </div>
+
+  <aside class="side">
+    <div class="ws">
+      <div class="ws-mark" aria-hidden="true">S</div>
+      <div><div class="ws-name">Sample Realty Co.</div><div class="ws-sub">Team hub · demo workspace</div></div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="CRM screens">
+      <button class="tab" role="tab" id="tab-today" aria-controls="screen-today" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Today<span class="n" id="n-today" aria-hidden="true"></span></button>
+      <button class="tab" role="tab" id="tab-team" aria-controls="screen-team" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="10" r="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c.8-3 3-4.5 5.5-4.5s4.7 1.5 5.5 4.5M15 15c2.6-.4 4.6.9 5.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Team<span class="n" aria-hidden="true">5</span></button>
+      <button class="tab" role="tab" id="tab-pipeline" aria-controls="screen-pipeline" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="4.5" width="4.5" height="15" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="10" y="4.5" width="4.5" height="10" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="16.5" y="4.5" width="4" height="6" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>Pipeline<span class="n" id="n-pipe" aria-hidden="true"></span></button>
+      <button class="tab" role="tab" id="tab-tasks" aria-controls="screen-tasks" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 12.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Tasks<span class="n" id="n-tasks" aria-hidden="true"></span></button>
+      <button class="tab" role="tab" id="tab-texts" aria-controls="screen-texts" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5h16v10.5H9l-5 4V5.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Text desk<span class="n" id="n-texts" aria-hidden="true"></span></button>
+      <button class="tab" role="tab" id="tab-docs" aria-controls="screen-docs" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20V3.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Documents<span class="n" aria-hidden="true">3</span></button>
+    </div>
+    <div class="me"><span class="av" style="background:#E8862A">JO</span><div>Jordan<small>Signed in · demo user</small></div></div>
+  </aside>
+
+  <main class="main" id="main">
+    <section class="screen on" id="screen-today" role="tabpanel" aria-labelledby="tab-today" tabindex="0">
+      <div class="head"><div><h1>Good morning, Jordan</h1><p>Everything your team needs to move today, in one place.</p></div><span class="tag gold">Fictional data</span></div>
+      <div class="stats">
+        <div class="card stat"><small>Open deals</small><strong id="st-deals">0</strong><span>across 5 stages</span></div>
+        <div class="card stat"><small>Due today</small><strong id="st-due">0</strong><span>on the Today list</span></div>
+        <div class="card stat"><small>Drafts to approve</small><strong id="st-drafts">0</strong><span>written by the assistant</span></div>
+        <div class="card stat"><small>Docs out for signature</small><strong>2</strong><span>in 2 deal rooms</span></div>
+      </div>
+      <div class="today-grid">
+        <div class="card"><div class="card-h"><h2>Today</h2><small id="today-left"></small></div><ul class="rows" id="today-list"></ul></div>
+        <div class="card"><div class="card-h"><h2>Waiting for your approval</h2><small>nothing sends until you approve</small></div><div id="drafts"></div></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-team" role="tabpanel" aria-labelledby="tab-team" tabindex="0" hidden>
+      <div class="head"><div><h1>Team board</h1><p>Who is where, and what each person is carrying this week.</p></div></div>
+      <div class="team" id="team"></div>
+    </section>
+
+    <section class="screen" id="screen-pipeline" role="tabpanel" aria-labelledby="tab-pipeline" tabindex="0" hidden>
+      <div class="head"><div><h1>Pipeline</h1><p>Every deal by stage. Move one forward and the team sees it at once.</p></div><span class="tag" id="pipe-total"></span></div>
+      <div class="board" id="board"></div>
+    </section>
+
+    <section class="screen" id="screen-tasks" role="tabpanel" aria-labelledby="tab-tasks" tabindex="0" hidden>
+      <div class="head"><div><h1>Tasks</h1><p>Shared to-dos, filtered by person.</p></div></div>
+      <div class="filters" id="filters" role="group" aria-label="Filter tasks by person"></div>
+      <div class="card"><ul class="rows" id="tasks"></ul></div>
+    </section>
+
+    <section class="screen" id="screen-texts" role="tabpanel" aria-labelledby="tab-texts" tabindex="0" hidden>
+      <div class="head"><div><h1>Text desk</h1><p>One shared inbox for client texts. The assistant drafts; a person approves.</p></div></div>
+      <div class="card desk">
+        <div class="threads" id="threads"></div>
+        <div class="convo">
+          <div class="msgs" id="msgs" aria-live="polite"></div>
+          <div class="composer">
+            <div class="lbl"><span class="tag gold">Assistant draft</span><span>Edit it, then approve. Demo: nothing is actually sent.</span></div>
+            <label for="reply" class="sr">Reply</label>
+            <textarea id="reply"></textarea>
+            <div class="acts"><button class="btn" type="button" id="reply-clear">Clear</button><button class="btn btn-gold" type="button" id="reply-send">Approve &amp; send</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-docs" role="tabpanel" aria-labelledby="tab-docs" tabindex="0" hidden>
+      <div class="head"><div><h1>Document rooms</h1><p>One room per deal: contracts, disclosures and who still has to sign.</p></div></div>
+      <div class="rooms" id="rooms"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* All data below is fictional demo data. Nothing is fetched, stored or sent. */
+(function(){
+  var TEAM=[
+    {id:'jo',name:'Jordan',role:'Lead agent',color:'#E8862A',status:'At the desk',dot:'#5DBB8A',load:.72,focus:'Two offers to review before noon'},
+    {id:'pr',name:'Priya',role:'Buyer agent',color:'#F2B544',status:'In showings until 2 PM',dot:'#E5B25D',load:.88,focus:'Three tours on the north side'},
+    {id:'ma',name:'Marcus',role:'Listing agent',color:'#D9A07A',status:'At the desk',dot:'#5DBB8A',load:.54,focus:'Photos and copy for a new listing'},
+    {id:'el',name:'Elena',role:'Transaction coordinator',color:'#C8B79E',status:'At the desk',dot:'#5DBB8A',load:.66,focus:'Chasing two inspection reports'},
+    {id:'sa',name:'Sam',role:'Office manager',color:'#9FB3A8',status:'Out today',dot:'#8A847C',load:.3,focus:'Back tomorrow morning'}
+  ];
+  function who(id){for(var i=0;i<TEAM.length;i++)if(TEAM[i].id===id)return TEAM[i];return TEAM[0]}
+  var STAGES=['New lead','Touring','Offer','Under contract','Closed'];
+  var DEALS=[
+    {t:'Riverside loft, unit 3',c:'Buyer: the Alvarez family',v:412000,s:0,a:'pr'},
+    {t:'Maple Street duplex',c:'Seller: estate sale',v:538000,s:0,a:'ma'},
+    {t:'Hillcrest 3-bed',c:'Buyer: first-time couple',v:389000,s:1,a:'pr'},
+    {t:'Old Mill office suite',c:'Lease: design studio',v:96000,s:1,a:'jo'},
+    {t:'Lakeview townhome',c:'Buyer: relocating family',v:465000,s:1,a:'jo'},
+    {t:'Willow Court ranch',c:'Buyer: retired couple',v:342000,s:2,a:'pr'},
+    {t:'Downtown condo, 9th floor',c:'Seller: investor',v:298000,s:2,a:'ma'},
+    {t:'Orchard Lane 4-bed',c:'Buyer: growing family',v:612000,s:3,a:'jo'},
+    {t:'Warehouse unit B',c:'Lease: bike workshop',v:72000,s:3,a:'el'},
+    {t:'Parkside bungalow',c:'Buyer: young professional',v:331000,s:4,a:'pr'}
+  ];
+  var TODAY=[
+    {time:'8:30',t:'Team stand-up',s:'Whole team · 15 min',tag:'Meeting',d:true},
+    {time:'9:15',t:'Call the Alvarez family about the loft',s:'Jordan · follow-up after Saturday tour',tag:'Call'},
+    {time:'10:00',t:'Review offer on the downtown condo',s:'Marcus · counter due by 5 PM',tag:'Offer'},
+    {time:'11:30',t:'Inspection report, Orchard Lane',s:'Elena · waiting on the inspector',tag:'Docs'},
+    {time:'1:00',t:'Showing at Hillcrest 3-bed',s:'Priya · access notes in the deal room',tag:'Showing'},
+    {time:'3:30',t:'Send listing copy for Maple Street',s:'Marcus · draft is ready',tag:'Listing'}
+  ];
+  var DRAFTS=[
+    {to:'Alvarez family',ch:'Text',body:'Hi! Thanks for touring the Riverside loft on Saturday. Would you like to see it once more this week, or talk through an offer? Jordan is free Tuesday after 4.'},
+    {to:'Old Mill office tenant',ch:'Email',body:'A quick reminder that your lease renewal window opens next month. Shall we set up 20 minutes to go over terms?'},
+    {to:'New web lead',ch:'Text',body:'Thanks for asking about the Lakeview townhome. It is still available. Would Thursday at 10 or Friday at 2 work for a showing?'}
+  ];
+  var TASKS=[
+    {t:'Order photos for Maple Street',a:'ma',due:'Today'},
+    {t:'Send disclosure packet to the Orchard Lane buyers',a:'el',due:'Today'},
+    {t:'Confirm Thursday showings',a:'pr',due:'Today',d:true},
+    {t:'Update comps for the Hillcrest pricing call',a:'jo',due:'Today'},
+    {t:'Renew the office signage permit',a:'sa',due:'Fri'},
+    {t:'Collect earnest money receipt, warehouse unit B',a:'el',due:'Today'},
+    {t:'Post the open house for Parkside',a:'ma',due:'Sat'},
+    {t:'Book the closing room for Orchard Lane',a:'sa',due:'Mon'}
+  ];
+  var THREADS=[
+    {id:1,name:'Alvarez family',time:'8:02',msgs:[{i:1,t:'Hi, we loved the loft. Is the parking spot included?',at:'Sat 6:40 PM'},{i:0,t:'It is! One covered spot plus a storage cage.',at:'Sat 7:05 PM'},{i:1,t:'Great. Can we come back with my dad this week?',at:'8:02 AM'}],draft:'Of course! Jordan can meet you Tuesday at 4:30 or Wednesday at 5. Which works better for your dad?'},
+    {id:2,name:'Hillcrest buyers',time:'7:48',msgs:[{i:1,t:'Running about 10 minutes late to the 1 PM showing, sorry!',at:'7:48 AM'}],draft:'No problem at all. Priya will wait for you out front. See you soon!'},
+    {id:3,name:'Maple Street seller',time:'Yesterday',msgs:[{i:1,t:'When will the photos go up?',at:'Yesterday 4:12 PM'},{i:0,t:'Photographer is booked; the listing goes live by Friday.',at:'Yesterday 4:30 PM'}],draft:'Quick update: photos are scheduled for tomorrow morning. Marcus will send you the proofs by evening.'}
+  ];
+  var ROOMS=[
+    {t:'Orchard Lane 4-bed',st:'Under contract',files:[['Purchase agreement','Signed','ok'],['Seller disclosures','Signed','ok'],['Inspection report','Waiting','gold'],['Appraisal','Ordered','']]},
+    {t:'Downtown condo, 9th floor',st:'Offer',files:[['Offer, version 2','Out for signature','gold'],['HOA documents','Received','ok'],['Pre-approval letter','Received','ok']]},
+    {t:'Warehouse unit B',st:'Under contract',files:[['Lease agreement','Out for signature','gold'],['Certificate of insurance','Received','ok'],['Floor plan','Received','ok']]}
+  ];
+
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function money(v){return '$'+v.toLocaleString('en-US')}
+  function avatar(m,size){return '<span class="av" aria-hidden="true" style="background:'+m.color+(size?';width:'+size+'px;height:'+size+'px':'')+'">'+esc(m.name.slice(0,2).toUpperCase())+'</span>'}
+  var CHECK='<span class="check" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.3l2.2 2.2 4.8-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+  function tick(cls,i,on,label){return '<button type="button" class="tick '+cls+'" data-i="'+i+'" aria-pressed="'+!!on+'" aria-label="Done: '+esc(label)+'">'+CHECK+'</button>'}
+
+  /* tabs: roving tabindex, arrow keys */
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  function select(tab,focus){
+    tabs.forEach(function(t){var on=t===tab;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;var p=$(t.getAttribute('aria-controls'));p.hidden=!on;p.classList.toggle('on',on)});
+    if(focus)tab.focus();
+    $('main').scrollTop=0;
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t)});
+    t.addEventListener('keydown',function(e){
+      var n=null,k=e.key;
+      if(k==='ArrowDown'||k==='ArrowRight')n=tabs[(i+1)%tabs.length];
+      else if(k==='ArrowUp'||k==='ArrowLeft')n=tabs[(i-1+tabs.length)%tabs.length];
+      else if(k==='Home')n=tabs[0];else if(k==='End')n=tabs[tabs.length-1];
+      if(n){e.preventDefault();select(n,true)}
+    });
+  });
+
+  function renderToday(){
+    $('today-list').innerHTML=TODAY.map(function(r,i){return '<li class="row'+(r.d?' done':'')+'">'+tick('today-btn',i,r.d,r.t)+'<time>'+r.time+'</time><div><div class="t">'+esc(r.t)+'</div><div class="s">'+esc(r.s)+'</div></div><span class="tag">'+r.tag+'</span></li>'}).join('');
+    var left=TODAY.filter(function(r){return !r.d}).length;
+    $('today-left').textContent=left+' open';$('n-today').textContent=left;$('st-due').textContent=left;
+  }
+  $('today-list').addEventListener('click',function(e){var b=e.target.closest('.today-btn');if(!b)return;var i=+b.dataset.i;TODAY[i].d=!TODAY[i].d;renderToday();$('today-list').querySelector('[data-i="'+i+'"]').focus()});
+
+  function renderDrafts(){
+    $('drafts').innerHTML=DRAFTS.map(function(d,i){return '<div class="draft'+(d.sent?' sent':'')+'"><div class="draft-top"><b>To: '+esc(d.to)+'</b><span class="tag">'+d.ch+'</span>'+(d.sent?'<span class="tag ok">'+(d.sent==='held'?'Held':'Approved')+'</span>':'<span class="tag gold">Draft</span>')+'</div><p>'+esc(d.body)+'</p><div class="acts"><button class="btn btn-gold" type="button" data-a="ok" data-i="'+i+'">Approve</button><button class="btn" type="button" data-a="hold" data-i="'+i+'">Hold</button></div></div>'}).join('');
+    $('st-drafts').textContent=DRAFTS.filter(function(d){return !d.sent}).length;
+  }
+  $('drafts').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;DRAFTS[+b.dataset.i].sent=b.dataset.a==='ok'?'ok':'held';renderDrafts()});
+
+  $('team').innerHTML=TEAM.map(function(m){
+    var open=DEALS.filter(function(d){return d.a===m.id&&d.s<4}).length;
+    return '<article class="card member"><div class="member-top">'+avatar(m)+'<div><h3>'+esc(m.name)+'</h3><small>'+esc(m.role)+'</small></div></div><div class="status"><i style="background:'+m.dot+'"></i>'+esc(m.status)+'</div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>This week</span><span class="mono">'+Math.round(m.load*100)+'%</span></div><div class="load"><i style="transform:scaleX('+m.load+')"></i></div><div class="s">'+open+' open deal'+(open===1?'':'s')+'</div><div class="focus">'+esc(m.focus)+'</div></article>'}).join('');
+
+  var lastMoved=-1;
+  function renderBoard(){
+    $('board').innerHTML=STAGES.map(function(st,si){
+      var ds=DEALS.map(function(d,i){return [d,i]}).filter(function(p){return p[0].s===si});
+      var sum=ds.reduce(function(a,p){return a+p[0].v},0);
+      return '<div class="col"><div class="col-h"><span>'+st+'</span><small>'+ds.length+(ds.length?' · '+money(Math.round(sum/1000))+'k':'')+'</small></div>'+ds.map(function(p){var d=p[0],m=who(d.a);return '<div class="deal'+(p[1]===lastMoved?' moved':'')+'"><div class="t">'+esc(d.t)+'</div><div class="s">'+esc(d.c)+'</div><div class="deal-f">'+avatar(m,24)+'<span class="v">'+money(d.v)+'</span>'+(si<4?'<button class="adv" type="button" data-i="'+p[1]+'" aria-label="Move '+esc(d.t)+' to '+STAGES[si+1]+'">Advance →</button>':'<span class="tag ok">Closed</span>')+'</div></div>'}).join('')+'</div>'}).join('');
+    var open=DEALS.filter(function(d){return d.s<4});
+    $('n-pipe').textContent=open.length;$('st-deals').textContent=open.length;
+    $('pipe-total').textContent=money(open.reduce(function(a,d){return a+d.v},0))+' open';
+  }
+  $('board').addEventListener('click',function(e){var b=e.target.closest('.adv');if(!b)return;var i=+b.dataset.i;DEALS[i].s=Math.min(4,DEALS[i].s+1);lastMoved=i;renderBoard();var nb=$('board').querySelector('[data-i="'+i+'"]');(nb||$('screen-pipeline')).focus()});
+
+  var filter='all';
+  $('filters').innerHTML=[{id:'all',name:'Everyone'}].concat(TEAM).map(function(m){return '<button class="chip" type="button" data-f="'+m.id+'" aria-pressed="'+(m.id==='all')+'">'+esc(m.name)+'</button>'}).join('');
+  $('filters').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;filter=b.dataset.f;[].forEach.call($('filters').children,function(c){c.setAttribute('aria-pressed',c===b)});renderTasks()});
+  function renderTasks(){
+    var list=TASKS.map(function(t,i){return [t,i]}).filter(function(p){return filter==='all'||p[0].a===filter});
+    $('tasks').innerHTML=list.length?list.map(function(p){var t=p[0],m=who(t.a);return '<li class="task'+(t.d?' done':'')+'">'+tick('task-btn',p[1],t.d,t.t)+'<div><div class="t">'+esc(t.t)+'</div><div class="s">'+esc(m.name)+'</div></div><span class="tag">'+esc(m.role)+'</span><span class="due">'+t.due+'</span></li>'}).join(''):'<li class="task"><span></span><div class="s">Nothing assigned.</div></li>';
+    $('n-tasks').textContent=TASKS.filter(function(t){return !t.d}).length;
+  }
+  $('tasks').addEventListener('click',function(e){var b=e.target.closest('.task-btn');if(!b)return;var i=+b.dataset.i;TASKS[i].d=!TASKS[i].d;renderTasks();var nb=$('tasks').querySelector('[data-i="'+i+'"]');if(nb)nb.focus()});
+
+  var cur=THREADS[0];
+  function renderThreads(){
+    $('threads').innerHTML=THREADS.map(function(th){var last=th.msgs[th.msgs.length-1];return '<button class="thread" type="button" data-id="'+th.id+'" aria-current="'+(th===cur)+'"><span class="av" aria-hidden="true" style="background:#3A2A1A;color:var(--gold-2)">'+esc(th.name.slice(0,2).toUpperCase())+'</span><span style="min-width:0"><span class="t">'+esc(th.name)+'<small>'+esc(th.time)+'</small></span><span class="s">'+esc(last.t)+'</span></span></button>'}).join('');
+    $('n-texts').textContent=THREADS.filter(function(t){return t.draft}).length;
+  }
+  function renderConvo(){
+    $('msgs').innerHTML=cur.msgs.map(function(m){return '<div class="msg '+(m.i?'in':'out')+'">'+esc(m.t)+'<small>'+esc(m.at)+'</small></div>'}).join('');
+    $('reply').value=cur.draft||'';
+    $('msgs').scrollTop=$('msgs').scrollHeight;
+  }
+  $('threads').addEventListener('click',function(e){var b=e.target.closest('.thread');if(!b)return;THREADS.forEach(function(t){if(String(t.id)===b.dataset.id)cur=t});renderThreads();renderConvo();$('threads').querySelector('[data-id="'+cur.id+'"]').focus()});
+  $('reply-send').addEventListener('click',function(){var v=$('reply').value.trim();if(!v)return;cur.msgs.push({i:0,t:v,at:'Just now · demo, not sent'});cur.draft='';cur.time='Now';renderThreads();renderConvo()});
+  $('reply-clear').addEventListener('click',function(){$('reply').value='';$('reply').focus()});
+
+  $('rooms').innerHTML=ROOMS.map(function(r){return '<article class="card"><div class="card-h"><h2>'+esc(r.t)+'</h2><span class="tag">'+esc(r.st)+'</span></div>'+r.files.map(function(f){return '<div class="file"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20V3.5z" stroke="currentColor" stroke-width="1.7"/></svg><span>'+esc(f[0])+'</span><span class="tag '+f[2]+'">'+esc(f[1])+'</span></div>'}).join('')+'</article>'}).join('');
+
+  renderToday();renderDrafts();renderBoard();renderTasks();renderThreads();renderConvo();
+})();
+</script>
+</body>
+</html>
