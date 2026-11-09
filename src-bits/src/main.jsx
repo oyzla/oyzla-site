@@ -6,9 +6,10 @@
  *
  * Ground rules (from the 2026-11-05 blank-on-mobile fix, aa6d838):
  *  - The HTML is complete and visible on its own. Nothing here hides content up front.
- *  - Entrance animations set their hidden state only at the moment they start
- *    (ScrollTrigger onEnter -> gsap.from), so a never-firing trigger leaves content visible.
- *  - prefers-reduced-motion: no Lenis, no entrance animations, no Threads, no magnet.
+ *  - Nothing fades in on scroll (removed 2026-11-08): content is readable the moment it is
+ *    on screen. The only scroll-linked motion is the Orbit background (orbit.js).
+ *  - The hero enters once on load; that is the only entrance.
+ *  - prefers-reduced-motion: no Lenis, no hero entrance, no Orbit motion, no magnet, no counts.
  *  - Every island is mounted inside its own try/catch; one failing never affects the others.
  */
 import { useLayoutEffect, useRef, createElement } from 'react';
@@ -18,11 +19,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-import Threads from './bits/Threads.jsx';
 import SplitText from './bits/SplitText.jsx';
 import SpotlightCard from './bits/SpotlightCard.jsx';
 import Magnet from './bits/Magnet.jsx';
 import CountUp from './bits/CountUp.jsx';
+import { mountOrbit } from './orbit.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,33 +76,6 @@ function mountInPlace(el, element) {
   return host;
 }
 
-/* ---------- 1. Threads (React Bits background) behind the hero ---------- */
-safe('threads', () => {
-  if (reduce) return;
-  const slot = document.querySelector('[data-bit="threads"]');
-  if (!slot) return;
-  const narrow = window.innerWidth < 720;
-  createRoot(slot).render(
-    createElement(Threads, {
-      color: '#4F46E5',
-      accentColor: '#7C3AED',
-      amplitude: narrow ? 1.2 : 1.5,
-      distance: 0.25,
-      lineCount: narrow ? 46 : 72,
-      thickness: 0.7,
-      softness: 1.1,
-      speed: 0.35,
-      angle: -12,
-      taper: 0.9,
-      brightness: 1.1,
-      fade: 0.35,
-      opacity: 0.85,
-      enableMouseInteraction: finePointer
-    })
-  );
-  slot.classList.add('is-live');
-});
-
 /* ---------- 2. SpotlightCard on the service + promise cards ---------- */
 safe('spotlight', () => {
   document.querySelectorAll('.svc-grid, .commit-grid').forEach(grid => {
@@ -117,8 +91,8 @@ safe('spotlight', () => {
           key: i,
           className: card.className,
           theme: dark ? 'dark' : 'light',
-          spotlightColor: dark ? '#B9B4FF' : '#4F46E5',
-          intensity: dark ? 0.22 : 0.42,
+          spotlightColor: '#E8862A',
+          intensity: dark ? 0.2 : 0.3,
           spotlightSize: 260,
           borderGlow: 0.9,
           proximity: 60,
@@ -182,16 +156,21 @@ function mountCounts() {
 
 /* ---------- 5. SplitText headline + GSAP entrances ---------- */
 function heroIntro(splitOk) {
+  // Choreography (2026-11-08): the headline leads (SplitText word wave); the lead line, the
+  // buttons and the dashboard frame follow as overlapping support beats; the queue rows ride
+  // in with their frame (one entrance per container). Played once, on load only.
   const hero = document.querySelector('.hero');
   if (!hero) return;
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  const bits = ['.hero .eyebrow', '.hero-sub', '.hero-ctas', '.hero-note'].map(s => hero.querySelector(s)).filter(Boolean);
-  tl.from(bits[0], { y: 14, opacity: 0, duration: 0.7, clearProps: 'transform,opacity' }, 0);
-  tl.from(bits.slice(1), { y: 22, opacity: 0, duration: 0.9, stagger: 0.09, clearProps: 'transform,opacity' }, splitOk ? 0.45 : 0.1);
-  const cards = hero.querySelectorAll('.float-card');
-  if (cards.length) {
-    tl.from(cards, { opacity: 0, duration: 1, stagger: 0.14, ease: 'power2.out', clearProps: 'opacity' }, 0.35);
-  }
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'transform,opacity' } });
+  const at = splitOk ? 0.35 : 0;
+  const pick = s => hero.querySelector(s);
+  [pick('.pill'), pick('.hero-sub'), pick('.hero-ctas')].filter(Boolean).forEach((el, i) => {
+    tl.from(el, { y: 12 - i * 2, opacity: 0, duration: 0.6 }, (i === 0 ? 0 : at) + i * 0.09);
+  });
+  const facts = pick('.hero-facts');
+  if (facts) tl.from(facts, { opacity: 0, duration: 0.5 }, at + 0.3);
+  const app = pick('.app');
+  if (app) tl.from(app, { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out' }, at * 0.6 + 0.1);
 }
 
 function headline() {
@@ -230,63 +209,6 @@ function headline() {
       mounted = true;
     });
     return mounted;
-  });
-}
-
-function entrances() {
-  // Section headers.
-  document.querySelectorAll('main section:not(.hero)').forEach(sec => {
-    const head = Array.from(sec.querySelectorAll(':scope > .wrap > .eyebrow, :scope > .wrap > .section-title, :scope > .wrap > .section-sub, .demo-grid > div > .section-title, .demo-grid > div > .section-sub'));
-    if (!head.length) return;
-    ScrollTrigger.create({
-      trigger: head[0],
-      start: 'top 92%',
-      once: true,
-      onEnter: () => gsap.from(head, { y: 24, opacity: 0, duration: 0.9, stagger: 0.08, ease: 'power3.out', clearProps: 'transform,opacity' })
-    });
-  });
-
-  // Cards and blocks, staggered in batches as they arrive.
-  ScrollTrigger.batch(
-    '.step, .svc, .commit, .who-card, .faq-item, .pilot-box, .price-band, .vs-employee, .quote-card, .form-card, .honesty, .demo-points li, .demo-note, .svc-cta, .who-note',
-    {
-      start: 'top 94%',
-      once: true,
-      onEnter: batch =>
-        gsap.from(batch, { y: 30, opacity: 0, duration: 0.85, stagger: 0.08, ease: 'power3.out', clearProps: 'transform,opacity' })
-    }
-  );
-
-  // The scripted chat slides in with a little weight.
-  const chat = document.getElementById('chat');
-  if (chat) {
-    ScrollTrigger.create({
-      trigger: chat,
-      start: 'top 92%',
-      once: true,
-      onEnter: () => gsap.from(chat, { y: 48, rotate: 1.5, opacity: 0, duration: 1.1, ease: 'expo.out', clearProps: 'transform,opacity' })
-    });
-  }
-
-  // Step numbers pop as their card lands.
-  document.querySelectorAll('.step-num').forEach(n => {
-    ScrollTrigger.create({
-      trigger: n,
-      start: 'top 92%',
-      once: true,
-      onEnter: () => gsap.from(n, { scale: 0.4, duration: 0.8, delay: 0.15, ease: 'back.out(2.2)', clearProps: 'transform' })
-    });
-  });
-
-  // Gentle parallax on the hero card stack (desktop layout only).
-  ScrollTrigger.matchMedia({
-    '(min-width: 961px)': () => {
-      gsap.to('.hero-visual', {
-        y: -70,
-        ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-      });
-    }
   });
 }
 
@@ -355,7 +277,7 @@ document.querySelectorAll('details').forEach(d =>
 root.classList.add('bits-ready');
 if (!reduce) {
   safe('countup', mountCounts);
-  safe('entrances', entrances);
+  safe('orbit', mountOrbit);
   headline().then(ok => ok !== null && safe('hero', () => heroIntro(ok)));
 }
 window.addEventListener('load', () => ScrollTrigger.refresh());
