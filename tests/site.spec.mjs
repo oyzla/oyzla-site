@@ -83,7 +83,7 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
 // 3. CRM proof section: the GENERIC demo, same origin, no specific business, no Lovable
 {
   const { ctx, page } = await open(1440, 900);
-  const frame = page.locator('#crm iframe');
+  const frame = page.locator('#crm .crm-view iframe');
   const src = (await frame.count()) ? (await frame.getAttribute('src')) || (await frame.getAttribute('data-src')) : null;
   check('CRM iframe points at the generic demo (demo/crm/)', !!src && /^\/?demo\/crm\/$/.test(src), String(src));
   const link = page.locator('#crm a[href$="demo/crm/"]').first();

@@ -7,9 +7,11 @@
  * Ground rules (from the 2026-11-05 blank-on-mobile fix, aa6d838):
  *  - The HTML is complete and visible on its own. Nothing here hides content up front.
  *  - Nothing fades in on scroll (removed 2026-11-08): content is readable the moment it is
- *    on screen. The only scroll-linked motion is the Orbit background (orbit.js).
+ *    on screen. The only scroll-linked motion is the 3D background (scene/scene.js, its own bundle).
+ *  - Full animations play only on click (clicks.js): click = consent (Matai, 2026-11-09).
  *  - The hero enters once on load; that is the only entrance.
- *  - prefers-reduced-motion: no Lenis, no hero entrance, no Orbit motion, no magnet, no counts.
+ *  - prefers-reduced-motion: no Lenis, no hero entrance, no scene motion, no magnet, no counts,
+ *    and click flights open/close instantly.
  *  - Every island is mounted inside its own try/catch; one failing never affects the others.
  */
 import { useLayoutEffect, useRef, createElement } from 'react';
@@ -23,7 +25,7 @@ import SplitText from './bits/SplitText.jsx';
 import SpotlightCard from './bits/SpotlightCard.jsx';
 import Magnet from './bits/Magnet.jsx';
 import CountUp from './bits/CountUp.jsx';
-import { mountOrbit } from './orbit.js';
+import { mountClicks } from './clicks.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,9 +92,9 @@ safe('spotlight', () => {
         {
           key: i,
           className: card.className,
-          theme: dark ? 'dark' : 'light',
+          theme: 'dark',
           spotlightColor: '#E8862A',
-          intensity: dark ? 0.2 : 0.3,
+          intensity: dark ? 0.24 : 0.18,
           spotlightSize: 260,
           borderGlow: 0.9,
           proximity: 60,
@@ -256,6 +258,9 @@ safe('anchors', () => {
   });
 });
 
+/* ---------- Click = consent: the full animations (CRM fly-in, service sheet, approve streak) ---------- */
+safe('clicks', () => mountClicks({ lenis, reduce }));
+
 /* ---------- 7. Small polish ---------- */
 safe('nav', () => {
   const nav = document.querySelector('.nav');
@@ -277,7 +282,6 @@ document.querySelectorAll('details').forEach(d =>
 root.classList.add('bits-ready');
 if (!reduce) {
   safe('countup', mountCounts);
-  safe('orbit', mountOrbit);
   headline().then(ok => ok !== null && safe('hero', () => heroIntro(ok)));
 }
 window.addEventListener('load', () => ScrollTrigger.refresh());

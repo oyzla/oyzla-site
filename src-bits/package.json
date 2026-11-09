@@ -5,14 +5,15 @@
   "description": "React Bits islands + GSAP/Lenis motion for oyzlaleads.com. Builds a committed bundle into ../assets/bits/ (GitHub Pages has no build step).",
   "type": "module",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build && vite build -c vite.scene.config.js"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "gsap": "^3.15.1",
     "lenis": "^1.3.27",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.2.1",
