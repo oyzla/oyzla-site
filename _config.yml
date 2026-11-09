@@ -1,0 +1,6 @@
+# GitHub Pages (Jekyll) publish settings. The site itself is plain static HTML; these folders are
+# working files (design notes, motion-bundle source, headless checks) and are not served.
+exclude:
+  - docs
+  - src-bits
+  - tests

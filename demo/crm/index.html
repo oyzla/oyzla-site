@@ -345,7 +345,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     $('drafts').innerHTML=DRAFTS.map(function(d,i){return '<div class="draft'+(d.sent?' sent':'')+'"><div class="draft-top"><b>To: '+esc(d.to)+'</b><span class="tag">'+d.ch+'</span>'+(d.sent?'<span class="tag ok">'+(d.sent==='held'?'Held':'Approved')+'</span>':'<span class="tag gold">Draft</span>')+'</div><p>'+esc(d.body)+'</p><div class="acts"><button class="btn btn-gold" type="button" data-a="ok" data-i="'+i+'">Approve</button><button class="btn" type="button" data-a="hold" data-i="'+i+'">Hold</button></div></div>'}).join('');
     $('st-drafts').textContent=DRAFTS.filter(function(d){return !d.sent}).length;
   }
-  $('drafts').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;DRAFTS[+b.dataset.i].sent=b.dataset.a==='ok'?'ok':'held';renderDrafts()});
+  $('drafts').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var i=+b.dataset.i;DRAFTS[i].sent=b.dataset.a==='ok'?'ok':'held';renderDrafts();
+    /* keep keyboard focus: the next draft still waiting, else the card itself */
+    var next=$('drafts').querySelector('.draft:not(.sent) .btn-gold');if(next)next.focus();else{var c=$('drafts');c.tabIndex=-1;c.focus()}});
 
   $('team').innerHTML=TEAM.map(function(m){
     var open=DEALS.filter(function(d){return d.a===m.id&&d.s<4}).length;

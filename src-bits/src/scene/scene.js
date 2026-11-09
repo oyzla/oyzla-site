@@ -350,7 +350,16 @@ export function mountScene(canvas) {
   window.__oyzlaScene = api;
 
   resize();
-  window.addEventListener('resize', () => { resize(); if (reduce) frame(0, 0); }, { passive: true });
+  // Phones fire resize when the URL bar collapses mid-scroll; reallocating the buffer then would
+  // hitch, so small height-only changes just let CSS stretch the canvas.
+  let sizeW = window.innerWidth, sizeH = window.innerHeight;
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth, h = window.innerHeight;
+    if (w === sizeW && Math.abs(h - sizeH) < 150) return;
+    sizeW = w; sizeH = h;
+    resize();
+    if (reduce) frame(0, 0);
+  }, { passive: true });
 
   if (reduce) {
     // one still frame: the hero composition, no motion at all
@@ -372,7 +381,9 @@ export function mountScene(canvas) {
   let last = performance.now();
   let slow = 0;
   let running = !document.hidden;
+  let rafId = 0;
   function loop(now) {
+    rafId = 0;
     if (!running) return;
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
@@ -389,18 +400,21 @@ export function mountScene(canvas) {
       resize();
       slow = 0;
     }
-    requestAnimationFrame(loop);
+    rafId = requestAnimationFrame(loop);
   }
+  // Exactly one loop, ever: cancel on hide, start once on show.
   document.addEventListener('visibilitychange', () => {
-    const was = running;
     running = !document.hidden;
-    if (running && !was) {
+    if (!running) {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+    } else if (!rafId) {
       last = performance.now();
-      requestAnimationFrame(loop);
+      rafId = requestAnimationFrame(loop);
     }
   });
   frame(0, 0);
-  if (running) requestAnimationFrame(loop);
+  if (running) rafId = requestAnimationFrame(loop);
   document.documentElement.classList.add('scene-ready');
   return api;
 }

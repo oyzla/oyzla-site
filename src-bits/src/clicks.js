@@ -38,6 +38,7 @@ export function mountClicks({ lenis, reduce }) {
     const open = e => {
       e.preventDefault();
       if (dlg.open) return;
+      closing = false; // a close flight cut short by a native close must not leave us stuck
       if (!frame.getAttribute('src')) frame.setAttribute('src', frame.dataset.src);
       lenis?.stop();
       dlg.showModal();
@@ -135,7 +136,13 @@ export function mountClicks({ lenis, reduce }) {
     };
     sheet.querySelectorAll('[data-sheet-close]').forEach(b => b.addEventListener('click', () => closeSheet(false)));
     sheet.addEventListener('cancel', e => { e.preventDefault(); closeSheet(false); });
-    sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(false); });
+    // Backdrop clicks land on the <dialog> itself; so do clicks in its padding, so check the box.
+    sheet.addEventListener('click', e => {
+      if (e.target !== sheet) return;
+      const r = sheet.getBoundingClientRect();
+      const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) closeSheet(false);
+    });
     // "Ask us about it": close, prefill the enquiry (only if it's empty); the anchor handler scrolls.
     ask.addEventListener('click', () => {
       closeSheet(true);
