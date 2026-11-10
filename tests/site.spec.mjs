@@ -80,6 +80,96 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   await ctx.close();
 }
 
+// 2b. W3 — success waits for Google's answer; a failed send shows an error + Try again and keeps the details
+const fillForm = async page => {
+  await page.fill('#f-name', 'Test Person');
+  await page.fill('#f-biz', 'Test Co');
+  await page.fill('#f-email', 'test@example.com');
+  await page.fill('#f-msg', 'Headless form test — intercepted, not sent.');
+};
+const GF = '**/docs.google.com/forms/**';
+{
+  const { ctx, page, posts } = await open(1440, 900);
+  await page.unroute(GF);
+  await page.route(GF, async route => { posts.push(route.request()); await new Promise(r => setTimeout(r, 1500)); route.fulfill({ status: 200, body: 'ok' }); });
+  await fillForm(page);
+  await page.locator('#formSend').click();
+  await page.waitForTimeout(500);
+  const pending = await page.evaluate(() => ({ ok: getComputedStyle(document.getElementById('formSuccess')).display, label: document.getElementById('formSendLabel').textContent, dis: document.getElementById('formSend').getAttribute('aria-disabled') === 'true' }));
+  check('no success shown while Google has not answered (button says Sending…, disabled)', pending.ok === 'none' && pending.label === 'Sending…' && pending.dis, JSON.stringify(pending));
+  await page.waitForTimeout(1800);
+  check('success shows once Google answers', await page.locator('#formSuccess').isVisible() && posts.length === 1);
+  check('success check animates in (Transitions.dev 10)', await page.getAttribute('#formCheck', 'data-state') === 'in');
+  check('honeypot value is never posted', !(posts[0].postData() || '').includes('oz_ref'));
+  await ctx.close();
+}
+{
+  const { ctx, page, posts } = await open(1440, 900);
+  await page.unroute(GF);
+  await page.route(GF, route => { posts.push(route.request()); route.abort('failed'); });
+  await fillForm(page);
+  await page.locator('#formSend').click();
+  await page.waitForTimeout(1200);
+  const st = await page.evaluate(() => ({
+    err: !document.getElementById('formError').hidden && getComputedStyle(document.getElementById('formError')).visibility === 'visible',
+    ok: getComputedStyle(document.getElementById('formSuccess')).display,
+    form: getComputedStyle(document.getElementById('contactForm')).display,
+    label: document.getElementById('formSendLabel').textContent,
+    dis: document.getElementById('formSend').getAttribute('aria-disabled') === 'true',
+    kept: document.getElementById('f-email').value
+  }));
+  check('blocked post: error shows, success does NOT', st.err && st.ok === 'none' && st.form !== 'none', JSON.stringify(st));
+  check('blocked post: details kept, button reads Try again and is enabled', st.kept === 'test@example.com' && st.label === 'Try again' && !st.dis, JSON.stringify(st));
+  check('after a failed send, focus stays on the button', await page.evaluate(() => document.activeElement === document.getElementById('formSend')));
+  await page.unroute(GF);
+  await page.route(GF, route => { posts.push(route.request()); route.fulfill({ status: 200, body: 'ok' }); });
+  await page.locator('#formSend').click();
+  await page.waitForTimeout(1200);
+  check('Try again re-sends and then shows success', posts.length === 2 && await page.locator('#formSuccess').isVisible() && await page.locator('#formError').isHidden(), `${posts.length} post(s)`);
+  await ctx.close();
+}
+// 2c. S3 — honeypot: invisible to people, and a filled one is dropped silently (bot sees success)
+for (const [w, h] of [[1440, 900], [390, 844]]) {
+  const { ctx, page, posts } = await open(w, h);
+  const hp = await page.evaluate(() => { const i = document.getElementById('f-hp'), r = i.getBoundingClientRect(); return { tab: i.tabIndex, aria: i.closest('[aria-hidden="true"]') !== null, offscreen: r.right <= 0 || r.width <= 1, name: i.name }; });
+  check(`honeypot is off-screen, untabbable, aria-hidden at ${w}`, hp.tab === -1 && hp.aria && hp.offscreen, JSON.stringify(hp));
+  await fillForm(page);
+  await page.evaluate(() => { document.getElementById('f-hp').value = 'http://spam.example'; });
+  await page.locator('#formSend').click();
+  await page.waitForTimeout(1000);
+  check(`filled honeypot: no post sent, success shown (no error to the bot) at ${w}`, posts.length === 0 && await page.locator('#formSuccess').isVisible() && await page.locator('#formError').isHidden(), `${posts.length} post(s)`);
+  await ctx.close();
+}
+// 2d. Hero queue count: number pop-in on change, text swap to "All clear" (Transitions.dev 02 + 04)
+{
+  const { ctx, page } = await open(1440, 900);
+  await page.locator('#queue .q-approve').first().click();
+  await page.waitForTimeout(100);
+  const mid = await page.evaluate(() => ({ t: document.getElementById('qCount').textContent.replace(/\s+/g, ' ').trim(), anim: !!document.querySelector('#qCount .t-digit-group.is-animating') }));
+  await page.waitForTimeout(800);
+  const after = await page.evaluate(() => document.getElementById('qCount').innerText.trim());
+  check('queue count pops 3 → 2 (number pop-in)', mid.anim && after === '2 waiting', JSON.stringify(mid) + ' ' + after);
+  for (let i = 0; i < 2; i++) { await page.locator('#queue .q:not([data-state]) .q-approve').first().click(); await page.waitForTimeout(700); }
+  check('queue count swaps to All clear', await page.evaluate(() => document.getElementById('qCount').innerText.trim()) === 'All clear');
+  await page.locator('#queue .q-undo').first().click(); await page.waitForTimeout(700);
+  check('Undo brings back 1 waiting', await page.evaluate(() => document.getElementById('qCount').innerText.trim()) === '1 waiting');
+  await ctx.close();
+}
+// 2e. W5 — desktop: no big black bands between sections, and no section overlaps the next
+{
+  const { ctx, page } = await open(1440, 900);
+  const r = await page.evaluate(() => Array.from(document.querySelectorAll('main section')).map(s => {
+    const sr = s.getBoundingClientRect(); let top = Infinity, bot = -Infinity;
+    for (const el of s.querySelectorAll('*')) { const b = el.getBoundingClientRect(); if (!b.width || !b.height || el.closest('[hidden]')) continue; top = Math.min(top, b.top); bot = Math.max(bot, b.bottom); }
+    return { id: s.id, top: sr.top + scrollY, bottom: sr.bottom + scrollY, cTop: top + scrollY, cBot: bot + scrollY };
+  }));
+  const gaps = r.slice(1).map((s, i) => Math.round(s.cTop - r[i].cBot));
+  const overlaps = r.slice(1).filter((s, i) => s.top < r[i].bottom - 1).map(s => s.id);
+  check('1440: every gap between sections ≤ 200px', Math.max(...gaps) <= 200, gaps.join(','));
+  check('1440: no section overlaps the next', overlaps.length === 0, overlaps.join(','));
+  await ctx.close();
+}
+
 // 3. CRM proof section: the GENERIC demo, same origin, no specific business, no Lovable
 {
   const { ctx, page } = await open(1440, 900);
@@ -187,7 +277,7 @@ const sceneZ = page => page.evaluate(() => window.__oyzlaScene ? window.__oyzlaS
 {
   const { ctx, page } = await open(1440, 900);
   const hidden = await page.evaluate(() => Array.from(document.querySelectorAll('main section h2, main section p, main section h3'))
-    .filter(e => { for (let n = e; n && n !== document.body; n = n.parentElement) { const cs = getComputedStyle(n); if (cs.opacity === '0' || cs.visibility === 'hidden') return true; } return false; })
+    .filter(e => { if (e.closest('[hidden]')) return false; for (let n = e; n && n !== document.body; n = n.parentElement) { const cs = getComputedStyle(n); if (cs.opacity === '0' || cs.visibility === 'hidden') return true; } return false; })
     .map(e => e.textContent.trim().slice(0, 40)));
   check('no hidden section text before scroll', hidden.length === 0, hidden.slice(0, 3).join(' | '));
   await ctx.close();
