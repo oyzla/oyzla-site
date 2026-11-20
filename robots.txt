@@ -1,4 +1,54 @@
+# Oyzla AI - search and AI crawlers are welcome on the public marketing pages.
 User-agent: *
+Allow: /
+Disallow: /demo/
+
+# AI search / assistant crawlers (explicitly allowed)
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /demo/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /demo/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /demo/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /demo/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /demo/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /demo/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /demo/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /demo/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /demo/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /demo/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /demo/
+
+User-agent: Googlebot
 Allow: /
 Disallow: /demo/
 

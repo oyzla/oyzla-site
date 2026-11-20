@@ -1,0 +1,20 @@
+# Oyzla AI
+
+> Oyzla AI (Oyzla Leads LLC, trading as Oyzla AI) is a managed AI-automation service in Saratoga Springs, Utah. We design, build, host and run custom AI employees, automations and CRMs for small and medium-sized businesses (typically 5-50 people), starting with commercial cleaning companies in Utah. The AI drafts the repetitive work (invoices, customer replies, quotes, scheduling, document and data entry); the owner approves it from one dashboard. Nothing goes out until the owner approves it. Clients connect their own accounts through OAuth; Oyzla never holds their passwords.
+
+Key facts:
+- Business type: managed service, not software the client sets up alone. Oyzla builds, hosts and runs the tools on its own accounts and hosting; the monthly fee covers hosting, monitoring and improvements; the live system stops if the service ends.
+- Location: Saratoga Springs, Utah, United States. Service area focus: Utah.
+- Services: AI Website Assistant, AI Front Desk, Scheduling & Quoting Engine, Document & Data Automation, Custom AI Build (including custom CRMs).
+- Pricing (estimates, not offers, plus applicable sales tax; exact number confirmed on a call): typical build about $5,000 setup plus about $2,000/month to run; paid pilot $1,500 plus $300/month for one workflow, live in about two weeks, 100% credited toward full setup if the client moves forward within 30 days.
+- Contact: oyzla.ai@gmail.com
+
+## Pages
+- [Home: services, pricing, FAQ, contact](https://oyzlaleads.com/): what Oyzla AI does, how it works, FAQ.
+- [AI automation for commercial cleaning companies in Utah](https://oyzlaleads.com/ai-automation-commercial-cleaning-utah/): what AI employees can take off a cleaning company's office, with FAQ.
+- [AI automation for Utah small businesses](https://oyzlaleads.com/ai-automation-utah/): the five services and how a managed engagement works.
+
+## Policies
+- [Terms of Service](https://oyzlaleads.com/terms-of-service.html)
+- [Privacy Policy](https://oyzlaleads.com/privacy-policy.html)
+- [Refund & Cancellation Policy](https://oyzlaleads.com/refund-policy.html)
